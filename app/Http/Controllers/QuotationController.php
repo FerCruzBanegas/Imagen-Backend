@@ -17,6 +17,7 @@ use App\Http\Resources\Quotation\QuotationProductResource;
 use App\Http\Resources\Quotation\QuotationCollection;
 use App\Http\Resources\Quotation\QuotationReceivableCollection;
 use App\Services\QuotationService;
+use Illuminate\Support\Facades\DB;
 
 class QuotationController extends ApiController
 {
@@ -97,77 +98,31 @@ class QuotationController extends ApiController
 
     public function store(QuotationRequest $request)
     {
-        $quotation = $this->quotation->create([
-            'cite' => '',
-            'attends' => $request->quotation['attends'],
-            'attends_phone' => $request->quotation['attends_phone'],
-            'installment' => $request->quotation['installment'],
-            'date' => $request->quotation['date'],
-            'amount' => $request->quotation['amount'],
-            'discount' => $request->quotation['discount'],
-            'term' => $request->quotation['term'],
-            'payment' => $request->quotation['payment'],
-            'validity' => $request->quotation['validity'],
-            'note' => $request->quotation['note'],
-            'customer_id' => $request->quotation['customer_id']['id'],
-            'user_id' => $request->quotation['user_id'],
-            'office_id' => $request->quotation['office_id'],
-        ]);
-
-        foreach ($request->products as $key => $value) {
-            $quotation->products()->attach($value['id'], [
-                'uuid' => $value['uuid'], 
-                'quantity' => $value['quantity'], 
-                'dimension' => $value['dimension'], 
-                'description' => $value['description'], 
-                //agreado nuevo
-                'material' => $value['materialCheck'] ? $value['material'] : NULL,
-                'quality' => $value['qualityCheck'] ? $value['quality'] : NULL,
-                'finish' => $value['finishCheck'] ? $value['finish'] : NULL,
-                'materialCheck' => $value['materialCheck'],
-                'qualityCheck' => $value['qualityCheck'],
-                'finishCheck' => $value['finishCheck'],
-                //aqui
-                'price' => $value['price'], 
-                'subtotal' => $value['subtotal'],
-                'price_type' => $value['price_type'],
-                'type' => $value['type'],
-                'unit' => $value['unit'],
-                'cooldown' => $value['cooldown'],
+        DB::beginTransaction();
+        try {
+            $quotation = $this->quotation->create([
+                'cite' => '',
+                'attends' => $request->quotation['attends'],
+                'attends_phone' => $request->quotation['attends_phone'],
+                'installment' => $request->quotation['installment'],
+                'date' => $request->quotation['date'],
+                'amount' => $request->quotation['amount'],
+                'discount' => $request->quotation['discount'],
+                'term' => $request->quotation['term'],
+                'payment' => $request->quotation['payment'],
+                'validity' => $request->quotation['validity'],
+                'note' => $request->quotation['note'],
+                'customer_id' => $request->quotation['customer_id']['id'],
+                'user_id' => $request->quotation['user_id'],
+                'office_id' => $request->quotation['office_id'],
             ]);
-        }
 
-        $this->service->syncImagesQuotation($quotation, $request);
-
-        return $this->respondCreated($quotation->refresh());
-        // return $request->products;
-    }
-
-    public function update(Quotation $quotation, QuotationRequest $request)
-    {
-        $quotation->update([
-            'attends' => $request->quotation['attends'],
-            'attends_phone' => $request->quotation['attends_phone'],
-            'installment' => $request->quotation['installment'],
-            'date' => $request->quotation['date'],
-            'amount' => $request->quotation['amount'],
-            'discount' => $request->quotation['discount'],
-            'term' => $request->quotation['term'],
-            'payment' => $request->quotation['payment'],
-            'validity' => $request->quotation['validity'],
-            'note' => $request->quotation['note'],
-            'customer_id' => $request->quotation['customer_id']['id'],
-            'office_id' => $request->quotation['office_id'],
-        ]);
-
-        if (!$this->service->checkDataChange($quotation, $request)) {
-            $quotation->products()->detach();
             foreach ($request->products as $key => $value) {
                 $quotation->products()->attach($value['id'], [
                     'uuid' => $value['uuid'], 
                     'quantity' => $value['quantity'], 
                     'dimension' => $value['dimension'], 
-                    'description' => $value['description'],
+                    'description' => $value['description'], 
                     //agreado nuevo
                     'material' => $value['materialCheck'] ? $value['material'] : NULL,
                     'quality' => $value['qualityCheck'] ? $value['quality'] : NULL,
@@ -175,7 +130,7 @@ class QuotationController extends ApiController
                     'materialCheck' => $value['materialCheck'],
                     'qualityCheck' => $value['qualityCheck'],
                     'finishCheck' => $value['finishCheck'],
-                    //aqui 
+                    //aqui
                     'price' => $value['price'], 
                     'subtotal' => $value['subtotal'],
                     'price_type' => $value['price_type'],
@@ -185,7 +140,68 @@ class QuotationController extends ApiController
                 ]);
             }
 
-            $this->service->syncImagesQuotation($quotation->refresh(), $request);
+            $this->service->syncImagesQuotation($quotation, $request);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->respondInternalError();
+        }
+
+        return $this->respondCreated($quotation->refresh());
+        // return $request->products;
+    }
+
+    public function update(Quotation $quotation, QuotationRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $quotation->update([
+                'attends' => $request->quotation['attends'],
+                'attends_phone' => $request->quotation['attends_phone'],
+                'installment' => $request->quotation['installment'],
+                'date' => $request->quotation['date'],
+                'amount' => $request->quotation['amount'],
+                'discount' => $request->quotation['discount'],
+                'term' => $request->quotation['term'],
+                'payment' => $request->quotation['payment'],
+                'validity' => $request->quotation['validity'],
+                'note' => $request->quotation['note'],
+                'customer_id' => $request->quotation['customer_id']['id'],
+                'office_id' => $request->quotation['office_id'],
+            ]);
+
+            if (!$this->service->checkDataChange($quotation, $request)) {
+                $quotation->products()->detach();
+                foreach ($request->products as $key => $value) {
+                    $quotation->products()->attach($value['id'], [
+                        'uuid' => $value['uuid'], 
+                        'quantity' => $value['quantity'], 
+                        'dimension' => $value['dimension'], 
+                        'description' => $value['description'],
+                        //agreado nuevo
+                        'material' => $value['materialCheck'] ? $value['material'] : NULL,
+                        'quality' => $value['qualityCheck'] ? $value['quality'] : NULL,
+                        'finish' => $value['finishCheck'] ? $value['finish'] : NULL,
+                        'materialCheck' => $value['materialCheck'],
+                        'qualityCheck' => $value['qualityCheck'],
+                        'finishCheck' => $value['finishCheck'],
+                        //aqui 
+                        'price' => $value['price'], 
+                        'subtotal' => $value['subtotal'],
+                        'price_type' => $value['price_type'],
+                        'type' => $value['type'],
+                        'unit' => $value['unit'],
+                        'cooldown' => $value['cooldown'],
+                    ]);
+                }
+
+                $this->service->syncImagesQuotation($quotation->refresh(), $request);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->respondInternalError();
         }
         // devolver nuevas imagenes para no activar actualizacion
         return $this->respondUpdated($quotation->refresh());

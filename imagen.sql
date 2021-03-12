@@ -24,66 +24,12 @@ CREATE TABLE IF NOT EXISTS `actions` (
   `title` varchar(120) NOT NULL,
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.actions: ~55 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.actions: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `actions` DISABLE KEYS */;
 INSERT INTO `actions` (`id`, `name`, `method`, `title`, `order`) VALUES
-	(1, 'Acesso total al sistema', '*', 'Sistema', 1),
-	(2, 'Ver Todos', 'quotations.index|quotations.pending|quotations.approved|quotations.executed', 'Cotizaciones', 2),
-	(3, 'Ver Pendientes', 'quotations.pending', 'Cotizaciones', 3),
-	(4, 'Ver Aprobadas', 'quotations.approved', 'Cotizaciones', 4),
-	(5, 'Ver Ejecutadas', 'quotations.executed', 'Cotizaciones', 5),
-	(6, 'Registrar', 'quotations.create', 'Cotizaciones', 6),
-	(7, 'Ver Detalle Sucursal', 'quotations.show', 'Cotizaciones', 7),
-	(8, 'Ver Detalle Todos', 'quotations.show|quotations.showall', 'Cotizaciones', 8),
-	(9, 'Actualizar', 'quotations.update', 'Cotizaciones', 9),
-	(10, 'Eliminar', 'quotations.destroy', 'Cotizaciones', 10),
-	(11, 'Registrar', 'designs.create', 'Arte guía', 11),
-	(12, 'Actualizar', 'designs.update', 'Arte guía', 12),
-	(13, 'Ver Lista', 'workorders.index', 'Orden de trabajo', 13),
-	(14, 'Registrar', 'workorders.create', 'Orden de trabajo', 14),
-	(15, 'Actualizar', 'workorders.update', 'Orden de trabajo', 15),
-	(16, 'Ver Lista', 'products.index', 'Productos', 16),
-	(17, 'Registrar', 'products.create', 'Productos', 17),
-	(18, 'Ver Detalle', 'products.show', 'Productos', 18),
-	(19, 'Actualizar', 'products.update', 'Productos', 19),
-	(20, 'Eliminar', 'products.destroy', 'Productos', 20),
-	(21, 'Ver Lista', 'costs.index', 'Costos', 21),
-	(22, 'Registrar', 'costs.create', 'Costos', 22),
-	(23, 'Actualizar', 'costs.update', 'Costos', 23),
-	(24, 'Ver Lista', 'customers.index', 'Clientes', 24),
-	(25, 'Registrar', 'customers.create', 'Clientes', 25),
-	(26, 'Ver Detalle', 'customers.show', 'Clientes', 26),
-	(27, 'Actualizar', 'customers.update', 'Clientes', 27),
-	(28, 'Eliminar', 'customers.destroy', 'Clientes', 28),
-	(29, 'Ver Lista', 'employees.index', 'Empleados', 29),
-	(30, 'Registrar', 'employees.create', 'Empleados', 30),
-	(31, 'Actualizar', 'employees.show|employees.update', 'Empleados', 31),
-	(32, 'Eliminar', 'employees.destroy', 'Empleados', 32),
-	(33, 'Ver Lista', 'profiles.index', 'Perfiles', 33),
-	(34, 'Registrar', 'profiles.create', 'Perfiles', 34),
-	(35, 'Actualizar', 'profiles.show|profiles.update', 'Perfiles', 35),
-	(36, 'Eliminar', 'profiles.destroy', 'Perfiles', 36),
-	(37, 'Ver Lista', 'users.index', 'Usuarios', 37),
-	(38, 'Registrar', 'users.create', 'Usuarios', 38),
-	(39, 'Actualizar', 'users.show|users.update', 'Usuarios', 39),
-	(40, 'Eliminar', 'users.destroy', 'Usuarios', 40),
-	(41, 'Ver Todos', 'reports.index', 'Informes', 41),
-	(42, 'Ver Lista', 'invoices.index', 'Facturas', 42),
-	(43, 'Registrar', 'invoices.create', 'Facturas', 43),
-	(44, 'Anular', 'invoices.cancel', 'Facturas', 44),
-	(45, 'Ver Lista', 'notes.index', 'Notas de Remision', 45),
-	(46, 'Registrar', 'notes.create', 'Notas de Remision', 46),
-	(47, 'Actualizar', 'notes.update', 'Notas de Remision', 47),
-	(48, 'Ver Lista', 'accounts.index', 'Cuentas', 48),
-	(49, 'Cerrar Cuenta', 'accounts.close', 'Cuentas', 49),
-	(50, 'Ver Lista Sucursal', 'quotations.single', 'Cotizaciones', 50),
-	(51, 'Ver Lista Todos', 'quotations.all', 'Cotizaciones', 51),
-	(52, 'Ver Lista Sucursal', 'invoices.single', 'Facturas', 52),
-	(53, 'Var Lista Todos', 'invoices.all', 'Facturas', 53),
-	(54, 'Ver Lista Sucursal', 'notes.single', 'Notas de Remision', 54),
-	(55, 'Ver Lista Todos', 'notes.all', 'Notas de Remision', 55);
+	(1, 'Acesso total al sistema', '*', 'Sistema', 1);
 /*!40000 ALTER TABLE `actions` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.action_profile
@@ -96,75 +42,12 @@ CREATE TABLE IF NOT EXISTS `action_profile` (
   KEY `action_profile_action_id_foreign` (`action_id`),
   CONSTRAINT `action_profile_action_id_foreign` FOREIGN KEY (`action_id`) REFERENCES `actions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `action_profile_profile_id_foreign` FOREIGN KEY (`profile_id`) REFERENCES `profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.action_profile: ~64 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.action_profile: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `action_profile` DISABLE KEYS */;
 INSERT INTO `action_profile` (`id`, `profile_id`, `action_id`) VALUES
-	(1, 1, 1),
-	(6, 6, 14),
-	(7, 6, 16),
-	(8, 6, 20),
-	(12, 6, 19),
-	(24, 6, 18),
-	(25, 6, 21),
-	(26, 6, 22),
-	(27, 6, 23),
-	(28, 6, 7),
-	(29, 6, 13),
-	(30, 6, 15),
-	(31, 6, 17),
-	(32, 7, 2),
-	(33, 7, 6),
-	(34, 7, 9),
-	(36, 7, 11),
-	(37, 7, 12),
-	(39, 7, 24),
-	(40, 7, 25),
-	(41, 7, 26),
-	(42, 7, 27),
-	(43, 7, 28),
-	(44, 7, 7),
-	(52, 6, 11),
-	(53, 6, 12),
-	(54, 6, 29),
-	(55, 6, 30),
-	(56, 6, 31),
-	(57, 6, 32),
-	(58, 8, 2),
-	(59, 8, 7),
-	(60, 8, 11),
-	(61, 8, 12),
-	(62, 7, 42),
-	(63, 9, 2),
-	(64, 9, 27),
-	(65, 9, 42),
-	(66, 9, 43),
-	(67, 9, 41),
-	(68, 9, 44),
-	(70, 9, 8),
-	(72, 7, 48),
-	(75, 6, 2),
-	(79, 6, 50),
-	(80, 7, 50),
-	(81, 9, 51),
-	(82, 9, 49),
-	(83, 9, 48),
-	(84, 9, 45),
-	(85, 9, 46),
-	(86, 9, 47),
-	(87, 7, 52),
-	(88, 7, 43),
-	(89, 6, 42),
-	(91, 7, 45),
-	(92, 7, 46),
-	(93, 7, 54),
-	(95, 9, 54),
-	(97, 9, 52),
-	(98, 6, 45),
-	(102, 6, 52),
-	(103, 6, 54),
-	(104, 6, 48);
+	(1, 1, 1);
 /*!40000 ALTER TABLE `action_profile` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.categories
@@ -224,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `code_cities` (
 -- Volcando datos para la tabla imagen.code_cities: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `code_cities` DISABLE KEYS */;
 INSERT INTO `code_cities` (`id`, `number_quotation`, `city_id`) VALUES
-	(1, 149, 2),
+	(1, 152, 2),
 	(2, 9, 1);
 /*!40000 ALTER TABLE `code_cities` ENABLE KEYS */;
 
@@ -811,7 +694,7 @@ CREATE TABLE IF NOT EXISTS `designs` (
   PRIMARY KEY (`id`),
   KEY `designs_product_quotation_id_foreign` (`product_quotation_id`),
   CONSTRAINT `designs_product_quotation_id_foreign` FOREIGN KEY (`product_quotation_id`) REFERENCES `product_quotation` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=235 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla imagen.designs: ~210 rows (aproximadamente)
 /*!40000 ALTER TABLE `designs` DISABLE KEYS */;
@@ -1027,7 +910,9 @@ INSERT INTO `designs` (`id`, `filename`, `machine`, `quality`, `material`, `cutt
 	(231, 'gfhhfh', 'fhfhfh', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-11', '2021-02-11', NULL, '16130761086025968c5c85d.png', NULL, 0, NULL, 609, NULL, '2021-02-11 20:41:48', '2021-02-17 13:52:14'),
 	(232, 'SFSFSFSF', 'SFSFSFSF', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-11', '2021-02-11', NULL, '161307802960259e0d3a71a.jpeg', '1613570043602d1ffbd9d46.jpeg', 1, NULL, 606, NULL, '2021-02-11 21:13:49', '2021-02-17 13:54:03'),
 	(233, 'SFSFSF', 'SFSFSF', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-25', '2021-02-25', NULL, '16142652246037bb887efaf.png', NULL, 0, NULL, 623, NULL, '2021-02-25 15:00:28', '2021-02-25 15:00:28'),
-	(234, 'adadada', 'dadada', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-25', '2021-02-25', NULL, '1614287290603811bac29a8.jpeg', NULL, 0, NULL, 625, NULL, '2021-02-25 21:08:11', '2021-02-25 21:08:11');
+	(234, 'adadada', 'dadada', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-25', '2021-02-25', NULL, '1614287290603811bac29a8.jpeg', NULL, 0, NULL, 625, NULL, '2021-02-25 21:08:11', '2021-02-25 21:08:11'),
+	(235, 'adasdasd', 'asdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-26', '2021-02-26', NULL, '16143466796038f9b7404ae.jpeg', NULL, 0, NULL, 626, NULL, '2021-02-26 13:38:00', '2021-02-26 13:38:00'),
+	(236, 'impresión', 'laser', '720 dpi', 'Acrílico de 5mm, perfil de aluminio champagne, bisagras, tornillos, ramplus, doble contacto, silicona, tek bond.', NULL, NULL, 'Cortado de acrílico e instalado en pared como fotomontaje con bisagras para poder mover el panel y un triángulo de soporte, en ambos cuartos de muestras.', NULL, '2021-03-03', '2021-03-03', NULL, '1614778586603f90da8e827.png', NULL, 0, NULL, 627, NULL, '2021-03-03 13:36:28', '2021-03-03 13:36:28');
 /*!40000 ALTER TABLE `designs` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.employees
@@ -1074,7 +959,7 @@ CREATE TABLE IF NOT EXISTS `employee_work_order` (
   KEY `work_order_id_foreign` (`work_order_id`),
   CONSTRAINT `employee_id_foreign` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `work_order_id_foreign` FOREIGN KEY (`work_order_id`) REFERENCES `work_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla imagen.employee_work_order: ~103 rows (aproximadamente)
 /*!40000 ALTER TABLE `employee_work_order` DISABLE KEYS */;
@@ -1184,7 +1069,9 @@ INSERT INTO `employee_work_order` (`id`, `work_order_id`, `employee_id`) VALUES
 	(107, 103, 9),
 	(108, 104, 8),
 	(109, 105, 5),
-	(110, 106, 8);
+	(110, 106, 8),
+	(111, 107, 8),
+	(112, 108, 8);
 /*!40000 ALTER TABLE `employee_work_order` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.entries
@@ -1388,7 +1275,7 @@ CREATE TABLE IF NOT EXISTS `invoices` (
   CONSTRAINT `license_id_foreign` FOREIGN KEY (`license_id`) REFERENCES `licenses` (`id`),
   CONSTRAINT `quotation_id_foreign` FOREIGN KEY (`quotation_id`) REFERENCES `quotations` (`id`),
   CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla imagen.invoices: ~33 rows (aproximadamente)
 /*!40000 ALTER TABLE `invoices` DISABLE KEYS */;
@@ -1417,7 +1304,7 @@ INSERT INTO `invoices` (`id`, `date`, `number`, `control_code`, `total`, `nit_na
 	(22, '2021-01-06 10:19:51', '22', 'CC-F0-9A-95', 200.00, NULL, '397209021', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, 84, 2, 131, 'FACTURA', '2021-02-02', NULL, '2021-01-06 06:19:51', '2021-02-02 09:42:34'),
 	(23, '2021-01-08 13:06:06', '23', '44-DC-45-DF-3F', 13920.00, NULL, '344140025', 'Alquiler Publicitario en la ciudad de', 'Correspondiente al mes de Enero 2021', NULL, NULL, NULL, 0, 1, 1, 70, 2, 139, 'FACTURA', NULL, NULL, '2021-01-08 09:06:06', '2021-01-08 09:06:06'),
 	(24, '2021-01-08 13:12:56', '24', 'DB-32-C5-19', 20880.00, NULL, '344140025', 'Alquiler Publicitario en la ciudad de', 'Correspondiente al mes de Enero 2021', NULL, NULL, NULL, 0, 1, 1, 70, 2, 138, 'FACTURA', NULL, NULL, '2021-01-08 09:12:56', '2021-01-08 09:12:56'),
-	(25, '2021-01-08 13:34:58', '25', '8E-7F-A2-AE-86', 33640.00, NULL, '344140025', 'Alquiler Publicitario en la ciudad de', 'Correspondiente al mes de Enero 2021', NULL, NULL, NULL, 0, 1, 2, 70, 6, 137, 'FACTURA', NULL, NULL, '2021-01-08 09:34:58', '2021-01-08 09:34:58'),
+	(25, '2021-01-08 13:34:58', '25', '8E-7F-A2-AE-86', 33640.00, NULL, '344140025', 'Alquiler Publicitario en la ciudad de', 'Correspondiente al mes de Enero 2021', NULL, NULL, NULL, 1, 1, 2, 70, 6, 137, 'FACTURA', '2021-03-05', NULL, '2021-01-08 09:34:58', '2021-03-05 09:29:31'),
 	(26, '2021-01-13 12:16:56', '26', '53-91-FC-82-2B', 24560.00, NULL, '1020233028', NULL, NULL, NULL, NULL, NULL, 1, 1, 2, 66, 6, 95, 'FACTURA', '2021-02-01', NULL, '2021-01-13 08:16:56', '2021-02-01 17:41:37'),
 	(27, '2021-01-13 12:31:10', '27', 'E0-52-D5-11', 8120.00, NULL, '1023281020', 'Alquiler Publicitario ubicado en', 'Correspondiente de 18 diciembre de 2020 al 17 enero 2021', NULL, NULL, NULL, 1, 1, 1, 70, 6, 141, 'FACTURA', '2021-02-01', NULL, '2021-01-13 08:31:10', '2021-02-01 17:38:14'),
 	(28, '2021-02-09 17:31:15', '28', '24-FB-36-9C-89', 11520.00, NULL, '7708590', NULL, NULL, NULL, NULL, NULL, 0, 1, 1, 83, 4, 132, 'FACTURA', NULL, NULL, '2021-02-09 17:31:15', '2021-02-09 17:31:15'),
@@ -1428,7 +1315,11 @@ INSERT INTO `invoices` (`id`, `date`, `number`, `control_code`, `total`, `nit_na
 	(33, '2021-02-09 17:46:47', '33', '89-FE-05-91-EE', 1630.20, NULL, '173342029', NULL, NULL, NULL, NULL, NULL, 0, 1, 1, 36, 4, 54, 'FACTURA', NULL, NULL, '2021-02-09 17:46:47', '2021-02-09 17:46:47'),
 	(34, '2021-02-25 10:31:23', '34', '01-70-62-36', 4400.00, NULL, '5956471', NULL, NULL, NULL, NULL, NULL, 0, 1, 1, 13, 4, 161, 'FACTURA', NULL, NULL, '2021-02-25 10:31:23', '2021-02-25 10:31:23'),
 	(35, '2021-02-25 10:31:44', '35', 'BA-9D-DB-72-99', 1630.40, NULL, '5956471', NULL, NULL, NULL, NULL, NULL, 0, 1, 1, 13, 4, 160, 'FACTURA', NULL, NULL, '2021-02-25 10:31:44', '2021-02-25 10:31:44'),
-	(36, '2021-02-25 10:34:59', '36', 'E0-AA-32-4B-9D', 50.00, NULL, '111111', NULL, NULL, NULL, NULL, NULL, 0, 1, 1, 87, 4, 145, 'FACTURA', NULL, NULL, '2021-02-25 10:34:59', '2021-02-25 10:34:59');
+	(36, '2021-02-25 10:34:59', '36', 'E0-AA-32-4B-9D', 50.00, NULL, '111111', NULL, NULL, NULL, NULL, NULL, 0, 1, 1, 87, 4, 145, 'FACTURA', NULL, NULL, '2021-02-25 10:34:59', '2021-02-25 10:34:59'),
+	(37, '2021-03-02 11:20:16', '1', 'DE-34-B5-E7-7A', 9620.00, NULL, '7708590', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 83, 4, 133, 'FACTURA', NULL, NULL, '2021-03-02 11:20:16', '2021-03-02 11:20:16'),
+	(38, '2021-03-02 11:22:25', '1', '3C-50-43-C2', 140.00, NULL, '77078147', NULL, NULL, NULL, NULL, 'Producto: Coca-Cola|Campaña: 2RP SUCRE|Nº orden embol: 82002061|Periodo de pauta: Febrero 2021', 0, 1, 4, 57, 4, 135, 'FACTURA', NULL, NULL, '2021-03-02 11:22:25', '2021-03-02 11:22:25'),
+	(39, '2021-03-02 11:23:02', '2', 'EA-E8-0A-7C-0E', 1091.80, NULL, '56248712', NULL, 'Marca: Fanta', NULL, NULL, 'Campaña: Colorful People|Nº orden Embol: 82002061|Periodo de pauta: Febrero 2021', 0, 1, 3, 22, 4, 119, 'FACTURA', NULL, NULL, '2021-03-02 11:23:02', '2021-03-02 11:23:02'),
+	(40, '2021-03-02 11:29:45', '3', 'D4-CB-7C-9E-E4', 200.00, NULL, '564563454', 'Impresión de adhesivo', 'Marca: Coca-Cola', NULL, NULL, 'Campaña: 2RP SUCRE|Nº orden embol: 8200206', 0, 1, 3, 77, 4, 121, 'FACTURA', NULL, NULL, '2021-03-02 11:29:45', '2021-03-12 17:25:23');
 /*!40000 ALTER TABLE `invoices` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.invoice_product
@@ -1445,7 +1336,7 @@ CREATE TABLE IF NOT EXISTS `invoice_product` (
   KEY `invoice_products_product_id_foreign` (`product_id`),
   CONSTRAINT `invoice_products_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `invoice_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla imagen.invoice_product: ~86 rows (aproximadamente)
 /*!40000 ALTER TABLE `invoice_product` DISABLE KEYS */;
@@ -1538,7 +1429,12 @@ INSERT INTO `invoice_product` (`id`, `invoice_id`, `product_id`, `quantity`, `de
 	(86, 33, 1, 11, 'Característica: Impresión de lona, tipo banner acabado con tubo  en la parte superior e inferior  y pita para colgar', 148.20, 1630.20),
 	(87, 34, 1, 2, 'holas', 2200.00, 4400.00),
 	(88, 35, 2, 1, 'sdfsdfsdfsdf', 1630.40, 1630.40),
-	(89, 36, 1, 1, 'impresión de lona: acabado tipo banner, con ojales en las esquinas', 50.00, 50.00);
+	(89, 36, 1, 1, 'impresión de lona: acabado tipo banner, con ojales en las esquinas', 50.00, 50.00),
+	(90, 37, 31, 2, 'Alquiler Publicitario en Santa Cruz:: 4to anillo canal isuto cara A cod. 85 scz por dos(2) meses.', 4000.00, 8000.00),
+	(91, 37, 31, 1, 'Impresión de lona de 13 OZ, a 720 de resolución protección Uv y tratamiento antihongos', 1620.00, 1620.00),
+	(92, 38, 1, 2, 'Impresión de lona   tipo banner  acabado con tubo ambos lado y pita para colgar', 70.00, 140.00),
+	(93, 39, 31, 2, 'Señaletica Vial :Tubo galvanizado de  1 pulg. con plancha galvanizada de 60 x 40 cm. revestido  de adhesivo reflectivo, a una altura de 2.50 mts.   dos caras', 545.90, 1091.80),
+	(94, 40, 13, 1, 'Opción 1: Cuadro de foam de 3 mm revestido de adhesivo impreso a ful color', 200.00, 200.00);
 /*!40000 ALTER TABLE `invoice_product` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.licenses
@@ -1559,13 +1455,15 @@ CREATE TABLE IF NOT EXISTS `licenses` (
   PRIMARY KEY (`id`),
   KEY `office_id_foreign` (`office_id`),
   CONSTRAINT `office_id_foreign` FOREIGN KEY (`office_id`) REFERENCES `offices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.licenses: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.licenses: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `licenses` DISABLE KEYS */;
 INSERT INTO `licenses` (`id`, `nit`, `authorization`, `key`, `starting_number`, `deadline`, `activity`, `legend`, `status_date`, `office_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-	(1, 164692025, 361401000148061, '28+Z]V5tswPg9i9b#FpLw+B9rA_PT*ZEKwhE5vA@V%VE[_U6G@Km98BLqV6K+HR8', 37, '2021-02-24 23:59:59', 'Publicidad', 'Ley Nº 453: Las publicaciones, mensajes e imágenes no deben deshonrar y atentar contra la dignidad e imagen de la mujer.', 1, 1, NULL, '2020-11-23 20:00:00', '2020-11-23 20:00:00'),
-	(2, 164692025, 361401000148057, 'kS@muW6frq6]6X$={Dv[PGL*(C{H_H@@*E6\\bL9[3cb)quI9PBtKuz*7+7EPD{j-', 1, '2021-02-24 23:59:59', 'Publicidad', 'Ley Nº 453: Las publicaciones, mensajes e imágenes no deben deshonrar y atentar contra la dignidad e imagen de la mujer.', 1, 2, NULL, '2020-11-23 20:00:00', '2020-11-23 20:00:00');
+	(1, 164692025, 361401000148061, '28+Z]V5tswPg9i9b#FpLw+B9rA_PT*ZEKwhE5vA@V%VE[_U6G@Km98BLqV6K+HR8', 37, '2021-02-24 23:59:59', 'Publicidad', 'Ley Nº 453: Las publicaciones, mensajes e imágenes no deben deshonrar y atentar contra la dignidad e imagen de la mujer.', 0, 1, NULL, '2020-11-23 20:00:00', '2020-11-23 20:00:00'),
+	(2, 164692025, 361401000148057, 'kS@muW6frq6]6X$={Dv[PGL*(C{H_H@@*E6\\bL9[3cb)quI9PBtKuz*7+7EPD{j-', 2, '2021-02-24 23:59:59', 'Publicidad', 'Ley Nº 453: Las publicaciones, mensajes e imágenes no deben deshonrar y atentar contra la dignidad e imagen de la mujer.', 0, 2, NULL, '2020-11-23 20:00:00', '2020-11-23 20:00:00'),
+	(3, 164692025, 457401600000321, '(B{$$pp9i@-[%W48e]B4t2DFCZ+fKMM4J%sLK#I\\2CyEk\\Z=8=WXHGbVtTttXGQW', 4, '2021-08-28 23:59:59', 'Publicidad', 'Ley N° 453: El proveedor debe exhibir certificaciones de habilitación o documentos que acrediten las capacidades u ofertas de servicios especializados.', 1, 1, NULL, '2021-03-01 16:41:07', '2021-03-01 16:41:07'),
+	(4, 164692025, 359401600000460, 'FR5g)BD=%ee%e(uAeMKeMU9\\L[7QMUB@)GLRz=8L(Iz)Z@f[4QS$JursIYBSswh6', 2, '2021-08-28 23:59:59', 'Publicidad', 'Ley N° 453: El proveedor debe exhibir certificaciones de habilitación o documentos que acrediten las capacidades u ofertas de servicios especializados.', 1, 2, NULL, '2021-03-02 11:06:31', '2021-03-02 11:06:33');
 /*!40000 ALTER TABLE `licenses` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.materials
@@ -1730,7 +1628,7 @@ CREATE TABLE IF NOT EXISTS `notes` (
   CONSTRAINT `notes_voucher_id_foreign` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.notes: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.notes: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `notes` DISABLE KEYS */;
 INSERT INTO `notes` (`id`, `number`, `date`, `total`, `discount`, `nit`, `cancelled`, `voucher_id`, `customer_id`, `user_id`, `quotation_id`, `type`, `closing_date`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, '1', '2021-01-05 12:23:03', 75.00, 0.00, '348410028', 1, 1, 65, 2, 87, 'N.REMISION', '2021-01-05', '2021-01-05 08:23:03', '2021-01-05 12:43:34', NULL),
@@ -1760,7 +1658,7 @@ CREATE TABLE IF NOT EXISTS `note_product` (
   CONSTRAINT `note_product_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.note_product: ~12 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.note_product: ~15 rows (aproximadamente)
 /*!40000 ALTER TABLE `note_product` DISABLE KEYS */;
 INSERT INTO `note_product` (`id`, `note_id`, `product_id`, `quantity`, `description`, `price`, `subtotal`) VALUES
 	(1, 1, 13, 2, 'Caracteristica:  señaletica  foam de 3 mm revestido en adhesivo impreso  full color', 30.00, 60.00),
@@ -1861,10 +1759,11 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('1c612a8e3a47b741c037fa8a7311c390676d70e7af5bb96ee8fd7ebc8bce54fa7c0335ec699d2fc3', 4, 2, NULL, '[]', 0, '2021-02-01 15:41:48', '2021-02-01 15:41:48', '2022-02-01 15:41:48'),
 	('1d00179d210fb3ce73c899283a8ea5e6a2d7f78400e822994d3e3b8b6d3b83cd63a05dc1ef8fb182', 8, 2, NULL, '[]', 0, '2020-12-21 15:23:38', '2020-12-21 15:23:38', '2021-12-21 19:23:38'),
 	('1d2d680d25296df05a427d9888fb141cc7947466443c49a14221f8d1de26e7c6eb5e4c53357268da', 4, 2, NULL, '[]', 1, '2021-02-05 20:19:40', '2021-02-05 20:19:40', '2022-02-05 20:19:40'),
+	('1d7c13433981e8e6e63fedc63837bcc920d0acd4bc92e8dda428569e79cc4b0829189382fec2052a', 11, 2, NULL, '[]', 1, '2021-03-05 13:29:15', '2021-03-05 13:29:15', '2022-03-05 13:29:15'),
 	('1e7887e32995aa609387b7345d3987d453ef1c3cdf1d74e27b69cf45417d65d65f9cf02f5752d1a8', 4, 2, NULL, '[]', 1, '2021-02-02 21:10:34', '2021-02-02 21:10:34', '2022-02-02 21:10:34'),
 	('1f8de072d20b2675db74cd95c01cdc51055456f1cbadd62d2c16d1d2bba61848bf8b890e8cbc1f68', 1, 2, NULL, '[]', 1, '2020-07-02 10:55:12', '2020-07-02 10:55:12', '2021-07-02 14:55:12'),
 	('208afa868795b2b2add9dd17555bc0cbaf546671670b600ee038ad61d77568ebd4d9c4ff1e5851ec', 2, 2, NULL, '[]', 1, '2020-06-11 10:15:22', '2020-06-11 10:15:22', '2021-06-11 14:15:22'),
-	('21682b01fa85b8e0c3f0559d0751dde36608af0e0cb612c1a806fe4bdc7f8576ab4563d4566f903e', 4, 2, NULL, '[]', 0, '2021-02-25 18:29:21', '2021-02-25 18:29:21', '2022-02-25 18:29:21'),
+	('21682b01fa85b8e0c3f0559d0751dde36608af0e0cb612c1a806fe4bdc7f8576ab4563d4566f903e', 4, 2, NULL, '[]', 1, '2021-02-25 18:29:21', '2021-02-25 18:29:21', '2022-02-25 18:29:21'),
 	('2177f009d3ddce934d7348f1c92ada8370077e43a27c810acc55ac5b5cb566753bd63501478d5b16', 2, 2, NULL, '[]', 1, '2020-06-17 15:45:32', '2020-06-17 15:45:32', '2020-06-17 19:46:29'),
 	('21a3773365a20a746eb0371f9b9fae936af67a86356c2617ec82c4ce7e27bce5de3c590f459b3a23', 1, 2, NULL, '[]', 1, '2020-06-12 15:22:59', '2020-06-12 15:22:59', '2021-06-12 19:22:59'),
 	('21a7e1acb60594ada855940aea22c3886ba69d9346605a0e02e368c188a5fdffec93079aa79b322e', 2, 2, NULL, '[]', 1, '2020-06-10 16:33:34', '2020-06-10 16:33:34', '2021-06-10 20:33:34'),
@@ -1905,6 +1804,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('356a1ddd4eeca3b4d0de1dc24695af96f42dcf5ce5552d6ac56238bfe235433d3badc612367ef402', 1, 2, NULL, '[]', 1, '2021-01-26 13:38:14', '2021-01-26 13:38:14', '2022-01-26 13:38:14'),
 	('35b6d44244bbbd636481b6be6edf3563553c96163a5a11f3226db00a79de416a83ddde72eda0913b', 4, 2, NULL, '[]', 1, '2021-02-02 21:22:17', '2021-02-02 21:22:17', '2022-02-02 21:22:17'),
 	('36181e18750ae7028893771a2cbcf2f08715cc10d208c215071bd5721b43496beca46cee8448ebd8', 1, 2, NULL, '[]', 0, '2020-06-07 09:26:50', '2020-06-07 09:26:50', '2021-06-07 13:26:50'),
+	('37b0536b6dd130f31a968b7c4f0a315b676bdcdac6dfdfab6b3b65879d1ee2c0b139dff84ff3a95a', 4, 2, NULL, '[]', 0, '2021-03-05 13:30:30', '2021-03-05 13:30:30', '2022-03-05 13:30:30'),
 	('37e93d397fd11114a85b069d82d111cdfa9eedc31e6804208a8263b3c077fad1737f1561bf35da92', 15, 2, NULL, '[]', 0, '2021-01-20 15:45:26', '2021-01-20 15:45:26', '2022-01-20 19:45:26'),
 	('38d0d203739421f2da95327e84a9291bfafdc2e088bf9e77feaf81f8c2b1b36f739cb3dccc65b928', 4, 2, NULL, '[]', 0, '2020-11-27 09:34:48', '2020-11-27 09:34:48', '2021-11-27 13:34:48'),
 	('3a26c02b6cd6038a76ba00967723a9bf0060838f8a1b755f91cc620cb45b2bb100ab3a1d19d2d314', 2, 2, NULL, '[]', 1, '2020-06-11 19:35:55', '2020-06-11 19:35:55', '2021-06-11 23:35:55'),
@@ -2006,6 +1906,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('68be1654552aa9d4f8717cfb33894cbb5373e5b8a7e7d0d9b7fbb6a817aaf0d43b775bd4d82b19d2', 4, 2, NULL, '[]', 1, '2020-11-04 14:03:49', '2020-11-04 14:03:49', '2021-11-04 18:03:49'),
 	('68fbb60c03b56e6bf05b6564b822283f9c57a199b8167c236e09831b2ff57800239a96bc79bab609', 2, 2, NULL, '[]', 1, '2021-02-04 21:25:24', '2021-02-04 21:25:24', '2022-02-04 21:25:24'),
 	('6917112cb11bf7b134e5b2518d304d444c00a778bc7645aa65aee0fa6b1576869c24b4876ab890e8', 5, 2, NULL, '[]', 0, '2021-01-19 12:02:44', '2021-01-19 12:02:44', '2022-01-19 16:02:44'),
+	('69ad51e733b70012bc5aa8ee5b20bbc06dc2323afea97be3d174eae691a265395b81296b9a6dd3da', 11, 2, NULL, '[]', 1, '2021-03-05 13:25:51', '2021-03-05 13:25:51', '2022-03-05 13:25:51'),
 	('6adad47bdde48dfd7a61796c60242593289aee10d28159ecffd1a5143a8163fd18bf8c2b584b05f5', 4, 2, NULL, '[]', 1, '2021-01-25 21:11:41', '2021-01-25 21:11:41', '2022-01-25 21:11:41'),
 	('6c05473d313a64f1f0b4d2d724eb07f76ed66bcd32cffb94b626a17001cfae9ee9a54ec18b8b32b4', 5, 2, NULL, '[]', 0, '2020-12-07 12:21:22', '2020-12-07 12:21:22', '2021-12-07 16:21:22'),
 	('6c29bc2e88b3cba05260f39463cb2a9d2132effee2cb4b4e8ec8c75d6baf25400b031b44b8b7f426', 1, 2, NULL, '[]', 0, '2020-11-17 10:28:37', '2020-11-17 10:28:37', '2021-11-17 14:28:37'),
@@ -2014,17 +1915,20 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('6c6a13e4aba888770527f7cc3228efaa1c4c254cf357bfaa00a3d7892a801951ae830f6b319c7f8f', 8, 2, NULL, '[]', 0, '2020-07-07 15:07:34', '2020-07-07 15:07:34', '2021-07-07 19:07:34'),
 	('6cc3932a8ce96ee4e89538e3985a44a37700bc85b142eaf109499557b4b49f60a2084ccfb5cbb82a', 2, 2, NULL, '[]', 0, '2020-09-25 10:06:01', '2020-09-25 10:06:01', '2021-09-25 14:06:01'),
 	('6d2499d8a417d435f1b4d7d262aa02686d3d9ebb3123b5e8c4c622487531d42e3d0a2df3a339dfe1', 8, 2, NULL, '[]', 1, '2020-12-01 15:42:18', '2020-12-01 15:42:18', '2021-12-01 19:42:18'),
+	('6d947826f545e1b50e8485736554d49038edef341921a04ab301d0fa539f05583d26753d96a9896e', 4, 2, NULL, '[]', 0, '2021-03-08 18:29:51', '2021-03-08 18:29:51', '2022-03-08 18:29:51'),
 	('6db36c3c3281a34ade1598dfa4e848906bf4b615f852e5aaa615dd84b40559e3db174d148ae54f0e', 5, 2, NULL, '[]', 0, '2020-12-10 09:23:47', '2020-12-10 09:23:47', '2021-12-10 13:23:47'),
 	('6e0f30c512bd489b7c5c52e0e22874b9f6719934b32d974365530b996a91d5ca136b1247ee4d3c4a', 5, 2, NULL, '[]', 0, '2020-10-28 10:08:41', '2020-10-28 10:08:41', '2021-10-28 14:08:41'),
 	('6e38b9e5f5f4c72cdaf3ec394cfed3616015f0524db50e278bc4e9db8d9e74079993d5d6173df3fd', 7, 2, NULL, '[]', 1, '2021-02-03 13:51:05', '2021-02-03 13:51:05', '2022-02-03 13:51:05'),
 	('6e6f946a99641998e857d67b45cebc4b66f1f97a474713bb552ed9ba4025b89994f8aeaa347bb51f', 3, 2, NULL, '[]', 1, '2021-02-05 19:33:28', '2021-02-05 19:33:28', '2022-02-05 19:33:28'),
 	('6ece7bbbaf00d39506f6c033f1b1ae6e3d978fb61405fdb68179ba68cbf81394ef23d8b61266e19f', 4, 2, NULL, '[]', 1, '2020-12-02 09:23:17', '2020-12-02 09:23:17', '2021-12-02 13:23:17'),
+	('6f71574221914fe925022789f15afa33d277712d734eef8d516b8cb0a42a901e0bea17da7e0724a2', 4, 2, NULL, '[]', 0, '2021-03-08 18:28:25', '2021-03-08 18:28:25', '2022-03-08 18:28:25'),
 	('702e40d81ebea02f97d7e1b109142c589d95453a9bdbc41369f34bc2ef0fd5b82be0fd47dacb7e88', 1, 2, NULL, '[]', 0, '2020-09-30 11:01:10', '2020-09-30 11:01:10', '2021-09-30 15:01:10'),
 	('703de1951966c2043d84568c4f99517b79a4b5f8ba1630e1e9a5fa79f9da3247769b8a8ff170096b', 2, 2, NULL, '[]', 1, '2020-06-15 16:42:29', '2020-06-15 16:42:29', '2021-06-15 20:42:29'),
 	('70618ae4463c77de2aabf58145961a9f3d27433a55c132e6a820191ac51fb0d55c26dba7f168b1e3', 5, 2, NULL, '[]', 0, '2020-12-03 14:29:20', '2020-12-03 14:29:20', '2021-12-03 18:29:20'),
 	('70afc3620ece1c0b73a7f2936fed4755baac7e2cda96a9e25ce065ad347690a96262fbdab1fa78fb', 4, 2, NULL, '[]', 1, '2020-11-16 17:09:16', '2020-11-16 17:09:16', '2021-11-16 21:09:16'),
 	('72409c38011752d539ab8c35597b26de3f1dac097fa02ef6497e09219c131f4f2a376bb32e123f12', 6, 2, NULL, '[]', 1, '2021-02-01 20:04:46', '2021-02-01 20:04:46', '2022-02-01 20:04:46'),
 	('736800fdb4ebff9c5c22f012663eba0664acbb261eaa33559a4e71c9bf32efda1f902ad7d7f59cad', 2, 2, NULL, '[]', 0, '2020-12-15 13:10:19', '2020-12-15 13:10:19', '2021-12-15 17:10:19'),
+	('736faed4a1931123e71712aa5fcec5e14187320833f1e228ac9abde4a6461524b749367de4de3b0c', 4, 2, NULL, '[]', 1, '2021-03-05 13:27:36', '2021-03-05 13:27:36', '2022-03-05 13:27:36'),
 	('7418a82a22f0d719da744663f929715157ce93a32a1dddc92381fd842b01088d1f2608a6cd25c24f', 10, 2, NULL, '[]', 1, '2020-07-07 15:11:59', '2020-07-07 15:11:59', '2021-07-07 19:11:59'),
 	('75294ae0c55de8203b0266862d3ebce508a517f641ba8c6924a2cf1d24809be104c4712272dc8a01', 3, 2, NULL, '[]', 1, '2020-09-28 09:36:01', '2020-09-28 09:36:01', '2021-09-28 13:36:01'),
 	('75e5a8b8b596209c7366d22d8f6e0cb6730725da9d0fbfd4a26e165dc5a1cfc6fee83202ff2b2256', 1, 2, NULL, '[]', 0, '2020-06-25 16:57:05', '2020-06-25 16:57:05', '2021-06-25 20:57:05'),
@@ -2080,10 +1984,12 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('943d8b8f99c1f7ac3f20d2db56e34598859450eb62970ee0689c38debec8028ec81b97a286ac399d', 4, 2, NULL, '[]', 0, '2020-12-30 09:04:38', '2020-12-30 09:04:38', '2021-12-30 13:04:38'),
 	('9512fc8fd55243ba9aa8a67b3fe3d3701be4475af6268b9ddf186554977894f93b8a222f2a3090bc', 7, 2, NULL, '[]', 1, '2020-11-26 09:47:16', '2020-11-26 09:47:16', '2021-11-26 13:47:16'),
 	('95b5987705ec513f17983acab424cc7aaa85cfc39cd69c25b366d6d07d537ce3616641fe3a4873ad', 2, 2, NULL, '[]', 1, '2020-06-11 11:42:51', '2020-06-11 11:42:51', '2021-06-11 15:42:51'),
+	('9689fb864c5b128d2a069cabfa26a4b48ffe71d1a80cc5c91468d75c7a998dcf96d3edde69be53b4', 4, 2, NULL, '[]', 0, '2021-03-08 18:28:08', '2021-03-08 18:28:08', '2022-03-08 18:28:08'),
 	('96a8eeaaeb5bda5bb0778344c53e77bbfb900f95133cd693eb882d280a0689f4972490ec84f87041', 11, 2, NULL, '[]', 1, '2020-08-03 14:26:47', '2020-08-03 14:26:47', '2021-08-03 18:26:47'),
 	('96ea4da4a7dc4e44c4cb1d59e54a16f44bd47697f57b3e908ca35c47a815f8cfee7e9475a4ab1d98', 4, 2, NULL, '[]', 0, '2021-02-22 13:53:45', '2021-02-22 13:53:45', '2022-02-22 13:53:45'),
 	('9767bea1c80bbdad9d2136f19e0bf97ed26908ebe3e47e89773bc560ad81ef57298ba4cffc33aa21', 2, 2, NULL, '[]', 1, '2020-06-10 16:52:51', '2020-06-10 16:52:51', '2021-06-10 20:52:51'),
 	('978c4930b492b48ad0b498ebaf98ff483c57f22b36341844810499eed715ad3d7d97cd1de379e479', 14, 2, NULL, '[]', 1, '2021-02-02 21:11:48', '2021-02-02 21:11:48', '2022-02-02 21:11:48'),
+	('97e1d76ce5fbce8b1c3ae7410da9a43bc830b7142ad8aa82fc0b26800b35063a3fea0975ff2bf203', 4, 2, NULL, '[]', 0, '2021-03-08 14:23:55', '2021-03-08 14:23:55', '2022-03-08 14:23:55'),
 	('9a2a75adb87a40d6ace1694fe2613d10793730a285c4b04fa6e05e05838388ea217e087c50cec3f5', 2, 2, NULL, '[]', 1, '2020-09-07 13:01:24', '2020-09-07 13:01:24', '2021-09-07 17:01:24'),
 	('9abf51ccf70e348a880cde25242259988cc620b4fb197e1e9c74081901304967557ae426ca4f0bda', 1, 2, NULL, '[]', 0, '2020-05-13 20:46:29', '2020-05-13 20:46:29', '2021-05-14 00:46:29'),
 	('9b90a2c5479e254156b2062c54e7604348479fff0e5e0d00d5a46c2b8ebc89a2fa3077a9aaa70a7c', 2, 2, NULL, '[]', 1, '2020-06-15 15:36:48', '2020-06-15 15:36:48', '2021-06-15 19:36:48'),
@@ -2264,6 +2170,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('fc9c7a697995accea8e1b0b8bac65c6d1c2e7780a7177ef60ec7c2737ccc972f3aee561b53f1d693', 15, 2, NULL, '[]', 0, '2020-12-02 10:42:58', '2020-12-02 10:42:58', '2021-12-02 14:42:58'),
 	('fcab305aa39e102d950f6f62cd0c428849082639014a8be5a9b85c720460e33d87e79ef333f7f2f3', 1, 2, NULL, '[]', 0, '2020-06-25 20:23:43', '2020-06-25 20:23:43', '2021-06-26 00:23:43'),
 	('fd7165d8de9184c2e06a8b9734be78b40c4f9a33446bb3086f061c42de3fc3cd73c25b2648080239', 1, 2, NULL, '[]', 1, '2020-02-14 09:47:00', '2020-02-14 09:47:00', '2021-02-14 13:47:00'),
+	('fdb2ba830303ecaa2f386156b0b0bd265d70c715ccf19223d8fce6d62b577ae79818d60869bc54f6', 6, 2, NULL, '[]', 1, '2021-03-05 13:21:23', '2021-03-05 13:21:23', '2022-03-05 13:21:23'),
 	('fde6b20ead04ffafbd269289e8c76b4498530f3ea5d5ca36fe482a66838a7517117f295657081bf2', 1, 2, NULL, '[]', 1, '2020-08-07 17:09:38', '2020-08-07 17:09:38', '2021-08-07 21:09:38'),
 	('fe25023c035a27a1ff44120e7c71b288b554c4a7d0ec8976c79c64e31835f24250bc378bf64f377b', 1, 2, NULL, '[]', 1, '2020-05-28 11:28:35', '2020-05-28 11:28:35', '2021-05-28 15:28:35'),
 	('ff32af9d47df05bed23cd70dce79f862fae3f47e4d4f5ec1e0c140ca383ddd765f35bf66665f1eee', 5, 2, NULL, '[]', 0, '2020-10-07 12:18:03', '2020-10-07 12:18:03', '2021-10-07 16:18:03'),
@@ -2372,6 +2279,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('0d25e53bb326d92ec2b5fc36372775a78b9f3d7d95eb91049f2483b2e6647b19ba624df33fbb1aac', '2f05bcb61c45dafd8233803f2ee2444c2a4b6d281e9f3e61a3b47b161fdd18fffdb7d289af097fcc', 1, '2022-01-26 15:51:50'),
 	('0dc0799b63aa0d5ebf0f299487f302882671ebf2280963d1100aa7ef3dda582ff78f67616d0099ea', '3a803c974599c3693c18737f685be31dca6988e75662db381d681feb946747fa4fbeb6bfd4f859c9', 1, '2021-06-12 19:23:32'),
 	('0e0a5786f9aefd50269f9c7e96595aa2133e982e4d3b1718920039c2466a4e8e1c8f3861f50ba08b', 'a1df87759da10d1caf9828a8f0dcc8ddea2b2dde510884670c632bac3520086e0f3d5281c4838ec1', 0, '2021-10-27 22:20:50'),
+	('0e6c223d2b01e4e4682ee218976261c6ee0528a402ef68349d8036dc120497a9c42451b069393f59', '9689fb864c5b128d2a069cabfa26a4b48ffe71d1a80cc5c91468d75c7a998dcf96d3edde69be53b4', 0, '2022-03-08 18:28:08'),
 	('0ea5930a73ea9def7d91ca0587a81220f6de7cbe1e27f05dfbe595cfba82ab84b8c74e0e7742437c', 'cb6960b8e9d6816dc283422622fb8387aea554a617075e60a01746b88a151652f572b60cda08e73f', 0, '2021-09-21 14:00:35'),
 	('0ec4cd20f979cf4af2a741c774a6a3f4832712308fa851d8d66db5f58f4d2a45a23125b2590cc6b5', 'fcab305aa39e102d950f6f62cd0c428849082639014a8be5a9b85c720460e33d87e79ef333f7f2f3', 0, '2021-06-26 00:23:45'),
 	('0eecad06d50509cb22cc4fa2d09ee5045def2834f66ea450e35cfa0d58878b88ae9f557836a74f5a', '2e06c0d61868cc7a4c1c4f0cdc75fb34d286ac35f1a9c305839eb37355185f408dc197b08532f362', 1, '2022-01-26 15:50:14'),
@@ -2413,6 +2321,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('21a7c71698f84306a3248f31f2c21df9c6ef8a672d411ca993ab1c40943eb4dcce838b05bc4d2bb3', '83d16d2eef08a485fac57dff1883133859b2d39a4e3141ccaad708077bd73286fbe5b1e80ba26c17', 1, '2022-02-02 18:35:22'),
 	('21cbe837d70e48bab8065368999ff8ff03f8ef65014ecf451454b19c10761aa01f0e26694f7919d5', 'fb406eb14e2d10893efbf465e0440aa6b6d59f4067f948bec24dce0f911bd613b1f11d65cbe1cde7', 0, '2021-12-03 20:03:12'),
 	('2241e6f9b124a6fa3931c3f56c704dc7b7ce7c6c0a7937c64b243915e2ca416fcb2990c204854650', '356a1ddd4eeca3b4d0de1dc24695af96f42dcf5ce5552d6ac56238bfe235433d3badc612367ef402', 1, '2022-01-26 13:38:14'),
+	('235db6f72517145f2640859073714713853d135f5f243e2071bb923ca03d8635d76da6f938102f49', '1d7c13433981e8e6e63fedc63837bcc920d0acd4bc92e8dda428569e79cc4b0829189382fec2052a', 1, '2022-03-05 13:29:15'),
 	('261bfc90137af2617ba82dc56fd43256cdcf3f020af20f6487999815e67f3fd902546bb24cd3d600', '943d8b8f99c1f7ac3f20d2db56e34598859450eb62970ee0689c38debec8028ec81b97a286ac399d', 0, '2021-12-30 13:04:38'),
 	('266597915a7d7505b9936ffe3a11221e8e9c2b9493b0441a303ba1952e52f69e3467f847fa4e0d69', '851f5582c518bd7cb02725b299a3635167ee4398821eed02297571d05bbc6a87f3a7973deb46d74a', 1, '2022-02-01 21:27:18'),
 	('2698bab4a5dfe5f84db43885530df3516de82d025a32b04c129f292f0c6145a0c6f8a1e41c7487b9', '5d3553726fd405a7aa5a0e99572166e05b5d328e98d002873231c4feceed11341321d42bef872eec', 1, '2021-12-03 18:26:01'),
@@ -2488,6 +2397,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('44e50de8842b795ca8f97a505b925002ab371c6046e33bb9004aa5a43ddee091005d763d211e63d6', 'a1f0e61d276e5ff278222a0de0791945927dc14d1c6fc56e5c7c2a107df684234d28fed5e408c118', 0, '2022-02-23 19:50:16'),
 	('45ee5002b246b8eff087b65f2aa7ec13652d0e72f2e981fa54300c5878d719e95cc6bcb6cc56b38a', 'ae2ed8ca7224b4991915d9881027f4b1fe2689e396ff852107b2bbba22134d793bef626029f561c0', 1, '2021-12-02 14:25:29'),
 	('45f21f78f51e48d5bbf2a76b429aa36475e6881a525c7d326717846da69ca097ec3d4b5e4656d064', '12bc7c60fcf774d4685693ffb1ff4d2ac3cff7b2c587b34480d5e80ac240a759978c5ce16f8fbc9d', 1, '2021-06-11 05:02:40'),
+	('46008acae515b9c76cfb1b6d8b08ee09e02840c8640e895c4e9ebb57542d5589d4baab6486d741f0', '736faed4a1931123e71712aa5fcec5e14187320833f1e228ac9abde4a6461524b749367de4de3b0c', 1, '2022-03-05 13:27:36'),
 	('462629c80740f5791e1962dc62f9658015c63c8e6620d0138c75bb6b12d59eba6d55291afa64411f', '1574ddbc9af5e469c32392256e36753bc38f43317f7617c7976dcf0cc2e7e87ae0d540b44fe26cbb', 1, '2021-11-25 14:43:43'),
 	('4627c4056a0f14ea287e01b5dbe27dfde3fb96363c6214ad8a2535063219dedef259e767ac75b6da', '1218aefe63cc2e37186fac8f972a8fb7e4f72cd0297a176f90586e542fa84c5e9726bd718aa1de13', 1, '2022-02-02 18:29:17'),
 	('4663b8f6aae65345a81c413afefa7dab1d6fd0b252cefed2c006207e624ebcaf9683dcc75667c8cd', '4f7acf1269c84b69c8bdaaeb93746a703a6409f88bad99f6371de66db11e3fd7b69fc039a645592a', 1, '2021-12-03 19:45:57'),
@@ -2511,6 +2421,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('5312bf1a81e03b23cf568ab79b683f431d8a451bfca501e71f59364b1dfcee3bc30b29533d087881', '79ac8323156bf778bd1fa5a5aa59302f38171b224b3ec82a9a519584bdddafb811a7d8fa73ed51fc', 1, '2021-06-10 20:22:18'),
 	('531b911817c15b8f82a956c01726bfa4bbbc662341ef02cf25daae5942b4401fc8ad9ac709b2b5b1', '1f8de072d20b2675db74cd95c01cdc51055456f1cbadd62d2c16d1d2bba61848bf8b890e8cbc1f68', 1, '2021-07-02 14:55:12'),
 	('5338755d4648c69cca6aeef6701aa04df9e1487cf1b5fed8c78eb98ecd64e635dd9ca0cb64283b3d', 'd157b54257814cf2068c01e5bc0f1642132f19a25dbb6de2132e0f53aad974c3a817056ac5409cd9', 1, '2021-11-24 18:08:34'),
+	('54271aa8b6dc1924c46d7334c513d1f5ca5e9d555c20005f77e8382bf7351998e58b2dccb2d547c6', 'fdb2ba830303ecaa2f386156b0b0bd265d70c715ccf19223d8fce6d62b577ae79818d60869bc54f6', 1, '2022-03-05 13:21:23'),
 	('550dc5ef04b3fc4a542e4e21f1309cc54ce27798e1b36b783f697645b10ebfb663c40795647cf584', '19cdbeda21146af1470adebfd7bf4820ea01d8b816a14004c7e4427685eeea30cb297ac255d0d2d4', 1, '2021-11-24 16:47:11'),
 	('56eb8e22be79e2b2f00155292ccd8796e76a7d65b8f48753c8c830752fbf981085af70e67d6f1c5e', '5643581867e384e05b22c7d283f5d10531299ae29229140fb9306f1d4dd68bfa712b4e88d88f2605', 1, '2021-11-26 13:45:51'),
 	('57918a66000baa7fda5f98a90090cf71d26d56530fca4360d580d6171b845d1db8307c76c3543bf0', 'b5474f1f2ea4fcdb913e12f5dfca2497d6ebc96947038a8c31a900c324e2adcb4e4a8ff5623c556d', 1, '2022-02-02 21:24:42'),
@@ -2530,6 +2441,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('5ff0f745345596c535f3ece582c10f59a1aecab14592320407f1083afd2e958832517421957ce6bb', '27d360faae57c5796a1f2d47922e403879a295eb2f770858ddc95b39f9aac1063ba56cd0ab3d31b4', 1, '2021-06-17 15:34:32'),
 	('60e1753424d9f063dcd5aac4d0e47c363e3e04a998c016c925a31eabec2488635724a38e880a5723', '034c72d7bed5f44dc0b35f1456dd56afbb3762812e3e4a846cd1ec487bbb806c8eb0ef9e7988b9f3', 1, '2021-06-12 15:50:11'),
 	('6199bb79605a25672d320fe3239f967fbb457bd8dddf79b5b7876928f65d197dcdbe9561afbd4b14', 'c1808f6af01e105845e4f4e0d5d6f28eabe5e6ff6b25a3bfb75153c1a8bc542295c52c51d7b48117', 0, '2021-11-25 14:19:34'),
+	('61d270efee49e62ce033f6821e5bd8cfe58f09a6ac1999c273efef625ee76642441697a2dcbbc567', '37b0536b6dd130f31a968b7c4f0a315b676bdcdac6dfdfab6b3b65879d1ee2c0b139dff84ff3a95a', 0, '2022-03-05 13:30:30'),
 	('61defe9e1261e38d55611340a46329065858c034a1d13cdab1e9e370a5a4a903f6ff894564aad926', 'f4729301b108706613384fc26e2e493bace072ec8f136b031c49ec6a321de8605cb72e8b46aae315', 0, '2022-01-29 14:19:23'),
 	('620082dbe00f02ca4fb269dc506a569fadc839f93cb155d902ce80a82719a7b421f57b90d575cf35', '60c40987f7b123142857ca7e63509f244f2d040e0743bb8d7b4dce06e5211a5e9829531d6567f65d', 1, '2021-07-07 19:10:46'),
 	('62015ff6b7cecffec44e26fb342fa2f1ebd705a096458e42e9197ba3fc6b7c33fb9bf0608975e95d', '6415b7cd1f29c22a6a3e9e8114b33847a1094e6602ccf38f5a9eb93e8f61b79634b76ed5d511b8f0', 1, '2022-01-25 21:17:03'),
@@ -2574,6 +2486,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('73fba2e141c7235ead3d35c42c81d36d9d31ceaf10347b63603cf8eb0559125545aec6a6e2a1df42', '5595c76f3ab31e7bc3779c1230e31606f3cb3aefc56d27b33c9c15a0a0f47b3737fa295105485390', 0, '2021-10-03 16:44:33'),
 	('7443aaec1c9797b12e72c9c1d81220cf461d028752df0c7dfb9e496811d633ee747d8851a0931c44', '3e0832a081f95493e2f6ffcd0f5f00ecb2df538de2201737839bcf43909fd814b45de4b404f54769', 0, '2021-11-18 16:30:05'),
 	('74a6d6b3bc01968b899104fa519624972f45d6a5e9c29f37a86a94ff7ead43eb4cecce80cfb043ae', '2efa7846f97a050f5c1342ef6718562428a87332aa912beb8ffcc78041d3cbb53a1b8686bf735a3a', 1, '2021-05-26 14:59:11'),
+	('75071e021ca4faeee9244519e3001d66b20dc6bec2c741ddf325c188860a429fcd116ce1b4cca164', '97e1d76ce5fbce8b1c3ae7410da9a43bc830b7142ad8aa82fc0b26800b35063a3fea0975ff2bf203', 0, '2022-03-08 14:23:58'),
 	('75350aeecc421011c22bf454d7e4882485058193f287e1fbdc5e01a70b04069c1e803b34e0bfb6b2', '36181e18750ae7028893771a2cbcf2f08715cc10d208c215071bd5721b43496beca46cee8448ebd8', 0, '2021-06-07 13:26:50'),
 	('753f00e9ae46c0f39ede7e7bb1000b941c83193ffb231298716689fc29cae6183fdd7079411cad7d', 'bfa33501a1ca98d68f9a0ef60771957694d2c12173f9fd1b09a48dac7d089467318644e4bd4bfa0b', 1, '2022-02-02 20:58:31'),
 	('75ed0c4e31d80746aa5b23cccc14dc530608a8460060dafbd04eab2a57bdd8eeae2b893470110e93', 'f8481ee5793a282a40eac421e1cbbadf921c2855ca485408dc0427bd6b7775ca4e77aa583abec445', 1, '2021-05-19 15:21:11'),
@@ -2635,6 +2548,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('9506b212983ee040426b07c28e8842a8fc426ce6a392098fc7c2bd6e71a3c1d4d186540c0801adbd', '57b1f01869068380f45cbb7ae93edbd0d96c73fb37794206f3b94930c2785726b621005e4ab7203f', 1, '2022-02-02 21:17:15'),
 	('952a35647e685bae3f9397ac67e59049ca11d36ac651e6f21773cbdac3b388f12b6b88d0db648ee1', '6c05473d313a64f1f0b4d2d724eb07f76ed66bcd32cffb94b626a17001cfae9ee9a54ec18b8b32b4', 0, '2021-12-07 16:21:22'),
 	('9546ce7f952656d9c92485572a230e83104e3629015ed365d4492e42ee84ae72ad03f34bf126fe81', '872414060db9620200f852eb7ab2d3ad5d07fa3702fd8d8d3a31a197c9c2f953a8ed7f7ff85ab63b', 1, '2021-12-17 16:34:46'),
+	('95b4381c8d2251f5d30f743458ef000867bf83b8890e7007ed6ddffa6d50d0a9b7203e5961e56267', '6f71574221914fe925022789f15afa33d277712d734eef8d516b8cb0a42a901e0bea17da7e0724a2', 0, '2022-03-08 18:28:26'),
 	('95bd7d61b8460933b439c4ce6b7d46783cf2821357002fc374ced661106ad67d76355d8f90bd1ba2', '5c92574a3295879c864957d42ce056fd1fc57d89b01708062381c9163703053657d1662d0ff3e5a4', 1, '2021-09-16 04:09:13'),
 	('97362548aaf341cbee91253b66c646b548bb77447fd72db47816f350e7c53324c0764f008c1cbdcb', '50cdcd66007720a29c14b36c26cd2a2b58fb021f81d3ed15f52651a18075ef0eb87d907e0089dc18', 1, '2021-12-07 14:02:41'),
 	('978ae22c04482f2367840479b9828453862d51dbfc34ed013a85ecee2a089d0064aff0de3768803f', '5881c5c2d53e46582c45d60d1b4925c362db27a0508c14aa193aa8629f2ea56ee6194ae8ec2d08ac', 1, '2022-02-02 21:02:41'),
@@ -2658,6 +2572,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('a53773c31d7fa3fc81b5646e743bc2bc7425d537d6451d3960003bacc621372b9e85abeeae8d2424', 'a218acb381ff5a4fabd69cb5309e1eed0fe222d59530a078349852ecf136a6ef2a9773255608e94a', 1, '2021-10-28 19:31:49'),
 	('a6b4ec26c4a98d7e36ad370855b4549b626d2fbd744854a5b43885f02a6dc0d61f9aa39e4cd60113', 'ea12ae8cecc12287897d98ddfb6b2fd644e72ecb723069f7730836d7c2a399f57b4a183bfe82c8a4', 0, '2021-12-01 13:34:01'),
 	('a7bb23d4cb1695eae3d644086b2f775ed5a9bf02366cc8c9d509e068474d4f1bf929b34dc2425ead', 'f64f99ab2861d68c431a150a985038c2e2d275332e31ddcd74fa71087b5970a31c0816ee4cb17248', 0, '2021-12-09 13:54:36'),
+	('a7de674daa2232c3cdb5d50508fedd4efc99b5d4a61f6fa4a81594e8613066a71de449046a4f79ce', '69ad51e733b70012bc5aa8ee5b20bbc06dc2323afea97be3d174eae691a265395b81296b9a6dd3da', 1, '2022-03-05 13:25:51'),
 	('a81465d716d768bfd0ad0538dbea4eadca10a4d6bcf1258ee15d2c495a92f7907e72a0898094811d', 'c3c60bf6f1fdded8cabe1124243c0ce13ee64ecc2528685e78db947464593237ba7bf26f6135f5d9', 1, '2022-02-01 21:30:01'),
 	('a82086b669087ae9da41457f736a0554b2bfa636616f38805b08d545fd82f8561bbf9900c0a4a35a', '9b90a2c5479e254156b2062c54e7604348479fff0e5e0d00d5a46c2b8ebc89a2fa3077a9aaa70a7c', 1, '2021-06-15 19:36:48'),
 	('a873683b589c8582eb662bda8caa2b70b6bc6fafc7e6a61df7ca18aaae0f9acf87e2d0027b984179', '6e0f30c512bd489b7c5c52e0e22874b9f6719934b32d974365530b996a91d5ca136b1247ee4d3c4a', 0, '2021-10-28 14:08:41'),
@@ -2721,6 +2636,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('ccd804b51c6ad381a8a8189dba916291e3c97a5f65fdb6d12e0f6f84a485625514e40e7c49983df6', 'ff603eb4b684e49cbcd3faddb68b1a4fac6ac4b18d85338a5997d4bef1ff0f8402871fe8c9eb7605', 1, '2021-06-14 23:20:37'),
 	('cd2b04412308b949d3f5f434a47c832d93e3cc3e54363fa6e023552f740c1ffa3c219414f7e26e45', 'b168ed7e80001497512da3026fa0afb7c4480445a9b55e748f28e830e4e89b560b12125e770a8fe1', 1, '2022-02-02 18:35:58'),
 	('cd7bad23789d021da4f561877db45c5a40d120fff748a7f5e543cbbb6f3d9dcbcc126fb93f3f6270', 'ab179912f241e358a9c7863ea6f73bd729d7782a1dd659ad052054e43729f122e844dd5f85a6464b', 1, '2021-10-15 15:31:16'),
+	('ce715179605c0023f0fb064e333c317b4a5f5b637d805eb408d9c814e9f249f72382c6d21a95eebe', '6d947826f545e1b50e8485736554d49038edef341921a04ab301d0fa539f05583d26753d96a9896e', 0, '2022-03-08 18:29:51'),
 	('d0020b1cd7c1227deecdd8a78872ce7b0820345a5c4c1169bce6a65ba748bd109c45cc2463e642e3', '4af214e87c1acb491d59d48aa12d217825a99e5382113cff60a6e747e6b0313b1a7fcb72f144f76c', 0, '2021-09-21 14:03:40'),
 	('d05686d618f42fd932b643568a4af19393fd854f209d724866b1af5c4a023a5495d7bb90ab9ae47d', '547724d7c87ac93c359b9eb8b3fbc17c5ea8cba709be71e12189cff73d3d1e46288515f69551bddc', 1, '2022-02-02 18:18:47'),
 	('d05adb5477548fb01d34913d32951d793ed5099f5a76a5d9d256f36ab12df8fd865a6d2547b8374a', '284fd11ec2e9851d3c6ce320a889708d3fdd48cc500427738245220abf08107465d82ea147fc7799', 1, '2022-02-05 16:05:41'),
@@ -2786,7 +2702,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('f2ee45a1a109febc55f31ad5e550ffd75bb24ff9b1344db7b2c8eaeb388f29de03d566c6f3255bf1', 'fe25023c035a27a1ff44120e7c71b288b554c4a7d0ec8976c79c64e31835f24250bc378bf64f377b', 1, '2021-05-28 15:28:36'),
 	('f3f2e875344fddd885bcf527527453777a2ddd3d7ea98bd719d87053cf9f711b0915726b89b9ac54', 'bf2fa9a1a96ef23a669c392404cb2e7a54798bcb795bb0751fc5d0bb1c9e17c6c166aa601c0ba4db', 1, '2022-02-05 19:34:05'),
 	('f40dadbca3e41c4d820d9c26dfaa25e0843c4e015b2a67a9bdd67d30fb5a454887f14dfc9bf82a91', '4bd292617a49da71fa962f1f327d49c9a27374155e44168aa371faba6dfd3ca7ac0c625b6001c899', 0, '2021-12-02 16:19:12'),
-	('f480de0ed7869f514b440cfb5fa12bfb71f3bb413895d4d85dbee2598f4a487fc5f5e2324a03ec35', '21682b01fa85b8e0c3f0559d0751dde36608af0e0cb612c1a806fe4bdc7f8576ab4563d4566f903e', 0, '2022-02-25 18:29:21'),
+	('f480de0ed7869f514b440cfb5fa12bfb71f3bb413895d4d85dbee2598f4a487fc5f5e2324a03ec35', '21682b01fa85b8e0c3f0559d0751dde36608af0e0cb612c1a806fe4bdc7f8576ab4563d4566f903e', 1, '2022-02-25 18:29:21'),
 	('f4e89cb00e786b6ea1b15c85e5a0993a67712fa49ae3535d7f0bbea9a206c98e8bb9eee83c28a5d6', 'a9c29c9abc8610c14c8b1a208559f029693d01629f72ac1663ff26d41205425d588dba61c7f3c2d4', 1, '2022-02-05 15:42:13'),
 	('f586ac806e170c72bd29ac8a9ced559573839c83f5aa0285c492b369109c3edc257a2e9f123ab105', 'e6e65140303d7134c0c252600739be987128d03f9adf5e4550f91607320ec2efeeb8e06e59bc5983', 1, '2022-02-02 21:06:36'),
 	('f5ce9ef304211ee5c3e6d26da10f85f31b15d65b966ef6bc43706b69efb29842b2286752d94a5df9', '621e8100f1a0cfbce0e4541440da83c20c31910ebfe0d918191b00b85ce4d91ce4049f5a1787f59d', 1, '2021-06-12 14:22:35'),
@@ -2901,7 +2817,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla imagen.payments: ~17 rows (aproximadamente)
 /*!40000 ALTER TABLE `payments` DISABLE KEYS */;
@@ -2922,7 +2838,8 @@ INSERT INTO `payments` (`id`, `date`, `type`, `path`, `amount`, `paymentable_id`
 	(16, '2021-02-01', 'Tarjeta', '16122156596018756baed20.jpeg', 560.00, 26, 'App\\Invoice', '2021-02-01 21:40:59', '2021-02-01 21:40:59', NULL),
 	(17, '2021-02-01', 'Tarjeta', '1612215688601875882e115.jpeg', 24000.00, 26, 'App\\Invoice', '2021-02-01 21:41:28', '2021-02-01 21:41:28', NULL),
 	(18, '2021-02-02', 'Efectivo', '16122732156019563f6af2d.jpeg', 200.00, 22, 'App\\Invoice', '2021-02-02 13:40:15', '2021-02-02 13:40:15', NULL),
-	(19, '2021-02-02', 'Tarjeta', '16122734876019574f522e4.jpeg', 720.00, 21, 'App\\Invoice', '2021-02-02 13:44:47', '2021-02-02 13:44:47', NULL);
+	(19, '2021-02-02', 'Tarjeta', '16122734876019574f522e4.jpeg', 720.00, 21, 'App\\Invoice', '2021-02-02 13:44:47', '2021-02-02 13:44:47', NULL),
+	(20, '2021-03-05', 'Cheque', '1614950727604231475744b.jpeg', 33640.00, 25, 'App\\Invoice', '2021-03-05 13:25:27', '2021-03-05 13:25:27', NULL);
 /*!40000 ALTER TABLE `payments` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.products
@@ -3043,7 +2960,7 @@ CREATE TABLE IF NOT EXISTS `product_quotation` (
   PRIMARY KEY (`id`),
   KEY `product_quotation_product_id_foreign` (`product_id`),
   KEY `product_quotation_quotation_id_foreign` (`quotation_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=626 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=645 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla imagen.product_quotation: ~328 rows (aproximadamente)
 /*!40000 ALTER TABLE `product_quotation` DISABLE KEYS */;
@@ -3368,16 +3285,22 @@ INSERT INTO `product_quotation` (`id`, `quotation_id`, `product_id`, `uuid`, `qu
 	(579, 153, 1, '39ae17d9-63c7-4182-aba8-3834d6b91d9d', 1, '10.00 x 4.00', 'nota descripcion del item', 'Acrílico de 5mm, perfil de aluminio champagne, bisagras, tornillos, ramplus, doble contacto, silicona, tek bond.', '720 dpi', 'Cortado de acrílico e instalado en pared como fotomontaje con bisagras para poder mover el panel y un triángulo de soporte, en ambos cuartos de muestras.', 1, 1, 1, 200.00, 8000.00, 0, 'normal_price', 'normal_price', 0, 0, NULL),
 	(582, 154, 1, '8e566c3c-3968-4d6c-afea-efdfb23db8e9', 1, '10.00 x 4.00', 'nota descripcion del item 2', '3-Acrílico de 5mm, perfil de aluminio champagne, bisagras, tornillos, ramplus, doble contacto, silicona, tek bond.', '720 dpi', '4-Cortado de acrílico e instalado en pared como fotomontaje con bisagras para poder mover el panel y un triángulo de soporte, en ambos cuartos de muestras.', 1, 1, 1, 55.00, 2200.00, 0, 'normal_price', 'normal_price', 0, 0, NULL),
 	(585, 155, 1, '47c3e35e-04d8-4d6e-9937-8269915b1e2d', 1, '12.00 x 5.00', 'test de descripcion', 'Acrílico de 5mm, perfil de aluminio champagne, bisagras, tornillos, ramplus, doble contacto, silicona, tek bond.', '720 dpi', 'Cortado de acrílico e instalado en pared como fotomontaje con bisagras para poder mover el panel y un triángulo de soporte, en ambos cuartos de muestras.', 1, 1, 1, 55.00, 3300.00, 0, 'normal_price', 'normal_price', 0, 0, NULL),
-	(601, 156, 1, 'fc821d0d-aa1c-4884-b1b7-c57fe8199e8a', 1, '10.00 x 4.00', 'test de descripcion', 'Acrílico de 5mm, perfil de aluminio champagne, bisagras, tornillos, ramplus, doble contacto, silicona, tek bond.', NULL, 'Cortado de acrílico e instalado en pared como fotomontaje con bisagras para poder mover el panel y un triángulo de soporte, en ambos cuartos de muestras.', 1, 0, 1, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
+	(601, 156, 1, 'fc821d0d-aa1c-4884-b1b7-c57fe8199e8a', 1, '10.00 x 4.00', '', 'Acrílico de 5mm, perfil de aluminio champagne, bisagras, tornillos, ramplus, doble contacto, silicona, tek bond.', NULL, 'Cortado de acrílico e instalado en pared como fotomontaje con bisagras para poder mover el panel y un triángulo de soporte, en ambos cuartos de muestras.', 1, 0, 1, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
 	(603, 157, 1, '7ad9d98a-7a5c-4101-82ad-67efc62227f3', 1, '10.00 x 4.00', NULL, 'Acrílico de 5mm, perfil de aluminio champagne, bisagras, tornillos, ramplus, doble contacto, silicona, tek bond.', NULL, 'Cortado de acrílico e instalado en pared como fotomontaje con bisagras para poder mover el panel y un triángulo de soporte, en ambos cuartos de muestras.', 1, 0, 1, 55.00, 2200.00, 0, 'normal_price', 'normal_price', 0, 0, NULL),
 	(604, 158, 64, '964b180d-0d1e-4bec-b33e-afdaa84e8b7b', 1, '0.00 x 0.00', 'entregado en 2 dias', 'adhesivo, pegamento con tornillos', '720 dpi', 'con varillas y con color', 1, 1, 1, 95.00, 0.00, 0, 'normal_price', 'normal_price', 0, 0, NULL),
-	(605, 159, 1, '902d5cb9-4903-46de-a8e3-71d651351d91', 1, '0.00 x 0.00', 'no quiero nada', NULL, NULL, NULL, 0, 0, 0, 55.00, 0.00, 0, 'normal_price', 'normal_price', 0, 0, NULL),
 	(606, 160, 2, '3945659a-830a-4978-9d4f-fbfdc5601270', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 40.76, 1630.40, 1, 'price_without_tax', 'price_without_tax', 0, 0, NULL),
 	(609, 161, 1, '3850c388-dc60-4da1-9e09-96c96c579b71', 2, '10.00 x 4.00', 'holas', NULL, NULL, NULL, 0, 0, 0, 55.00, 4400.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
 	(610, 162, 1, 'df6f87f2-a66c-4067-8fb6-4e4bc444c6ba', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
 	(611, 162, 7, '93c0074f-9e58-49a0-a81f-b6c68c0bf331', 1, '5.00 x 6.00', NULL, NULL, NULL, NULL, 0, 0, 0, 95.00, 2850.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
 	(623, 164, 2, '066a6bc7-7f34-4e91-85f7-06b6c0c42001', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 58.00, 2320.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
-	(625, 163, 7, 'c5b36196-8531-45b1-91ec-2671ac12b34b', 1, '10.00 x 5.00', NULL, NULL, NULL, NULL, 0, 0, 0, 95.00, 4750.00, 1, 'normal_price', 'normal_price', 0, 0, NULL);
+	(625, 163, 7, 'c5b36196-8531-45b1-91ec-2671ac12b34b', 1, '10.00 x 5.00', NULL, NULL, NULL, NULL, 0, 0, 0, 95.00, 4750.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
+	(626, 165, 8, '688e3778-a2ef-4197-8693-66fb8be7e4d1', 1, '4.00 x 1.50', NULL, NULL, NULL, NULL, 0, 0, 0, 75.00, 450.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
+	(627, 166, 1, '1a85a5df-9929-408f-b84d-0fb1a0603a40', 1, '10.00 x 4.00', 'test de descripcion', 'Acrílico de 5mm, perfil de aluminio champagne, bisagras, tornillos, ramplus, doble contacto, silicona, tek bond.', NULL, 'Cortado de acrílico e instalado en pared como fotomontaje con bisagras para poder mover el panel y un triángulo de soporte, en ambos cuartos de muestras.', 1, 1, 1, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
+	(628, 159, 1, '902d5cb9-4903-46de-a8e3-71d651351d91', 1, '10.00 x 4.00', 'no quiero nada', NULL, NULL, NULL, 0, 0, 0, 55.00, 2200.00, 0, 'normal_price', 'normal_price', 0, 0, NULL),
+	(641, 167, 31, '7ea4ab63-6e1f-429b-8be8-1a16f4ee2409', 1, '0.00 x 0.00', 'hghjhjhj', 'xcfvxvx', 'sfsfsfs', NULL, 1, 1, 0, 400.00, 400.00, 0, 'price_service', 'price_service', 1, 1, NULL),
+	(642, 167, 31, '6e92f64b-ec03-4110-83f7-2ebe1a16405b', 1, '10.00 x 5.00', 'ffgfgfg', 'sfsfsfs', NULL, NULL, 1, 0, 0, 100.00, 100.00, 0, 'price_service', 'price_service', 1, 1, NULL),
+	(643, 167, 31, 'c50dc5d0-8d70-4039-a3c3-b29b2acda456', 1, '4.00 x 3.00', 'sadasd', NULL, NULL, NULL, 0, 0, 0, 5.00, 5.00, 0, 'price_service', 'price_service', 1, 1, NULL),
+	(644, 167, 31, 'feef4a56-460b-40b8-b04b-c7ef8eaa84bb', 1, '0.00 x 0.00', 'ddddd', 'a', 'b', 'c', 1, 1, 1, 0.00, 0.00, 0, 'price_service', 'price_service', 1, 1, NULL);
 /*!40000 ALTER TABLE `product_quotation` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.profiles
@@ -3432,7 +3355,7 @@ CREATE TABLE IF NOT EXISTS `quotations` (
   KEY `date` (`date`),
   KEY `quotations_office_id_foreign` (`office_id`),
   FULLTEXT KEY `cite` (`cite`)
-) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla imagen.quotations: ~152 rows (aproximadamente)
 /*!40000 ALTER TABLE `quotations` DISABLE KEYS */;
@@ -3545,9 +3468,9 @@ INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment
 	(116, 'SCZ-102-20', 'LUCIA RECACOCHEA', '76086570', 'SANTA CRUZ', '2020-12-18', 850.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 12, 2, 1, NULL, '2020-12-18 14:23:11', '2020-12-18 12:29:51'),
 	(117, 'SCZ-103-20', 'LUCIA RECACOCHEA', '76086570', 'SANTA CRUZ', '2020-12-18', 142.50, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 12, 2, 1, NULL, '2020-12-18 14:25:16', '2020-12-18 12:33:54'),
 	(118, 'SCZ-104-20', 'LUCIA RECACOCHEA', '76086570', 'SANTA CRUZ', '2020-12-18', 1050.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 12, 2, 1, NULL, '2020-12-18 14:29:14', '2020-12-18 12:36:44'),
-	(119, 'SCZ-105-20', 'Lisbeth Veisaga', 'Lisbeth Veisaga', 'Santa Cruz', '2020-12-21', 1091.80, 0.00, NULL, NULL, 'Transferencia', NULL, NULL, 0, 1, 3, 22, 2, 1, NULL, '2020-12-21 15:53:48', '2021-01-21 14:33:15'),
+	(119, 'SCZ-105-20', 'Lisbeth Veisaga', 'Lisbeth Veisaga', 'Santa Cruz', '2020-12-21', 1091.80, 0.00, NULL, NULL, 'Transferencia', NULL, NULL, 0, 0, 3, 22, 2, 1, NULL, '2020-12-21 15:53:48', '2021-03-02 11:23:02'),
 	(120, 'SCZ-106-20', 'RODRIGO', '77305773', 'SANTA CRUZ', '2020-12-21', 1508.00, 0.00, NULL, NULL, '50% a solicitud del trabajo y 50 % contra entrega', '5 días', NULL, 0, 1, 1, 76, 2, 1, NULL, '2020-12-21 16:54:13', '2020-12-21 16:54:13'),
-	(121, 'SCZ-107-20', 'ANDREA', '........', 'SANTA CRUZ', '2020-12-21', 200.00, 0.00, NULL, NULL, 'A contra entrega', NULL, NULL, 0, 1, 3, 77, 2, 1, NULL, '2020-12-21 17:16:24', '2020-12-29 14:30:42'),
+	(121, 'SCZ-107-20', 'ANDREA', '........', 'SANTA CRUZ', '2020-12-21', 200.00, 0.00, NULL, NULL, 'A contra entrega', NULL, NULL, 0, 0, 3, 77, 2, 1, NULL, '2020-12-21 17:16:24', '2021-03-02 11:29:45'),
 	(122, 'SCZ-108-20', 'TOYO JAPAN', '77033889', 'Santa Cruz', '2020-12-22', 4141.20, 0.00, NULL, '2020-12-29', 'A contra entrega', NULL, 'El separador sera en forma de U.', 0, 1, 1, 78, 2, 1, NULL, '2020-12-22 12:12:16', '2020-12-22 12:14:20'),
 	(123, 'SCZ-109-20', 'Santiago', '75285114', 'Santa Cruz', '2020-12-23', 18000.00, 0.00, NULL, NULL, NULL, NULL, 'Plazo de entrega 5 dias habiles despues de la aprobación del arte.', 0, 1, 1, 73, 2, 1, NULL, '2020-12-23 10:47:07', '2020-12-23 10:47:07'),
 	(124, 'SCZ-110-20', 'Manuel', '70111791', 'Santa Cruz', '2020-12-30', 979.00, 79.00, NULL, '2021-01-04', 'Tranferencia', NULL, 'Campaña UNICEN', 0, 1, 2, 21, 2, 1, NULL, '2020-12-30 09:17:37', '2020-12-30 13:20:08'),
@@ -3559,9 +3482,9 @@ INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment
 	(130, 'SCZ-116-21', 'Julio  cesar', '7.........', 'Santa Cruz', '2021-01-05', 5427.00, 0.00, NULL, '2021-01-08', 'Efectivo', '15 días', NULL, 0, 0, 3, 83, 1, 1, NULL, '2021-01-05 17:18:41', '2021-02-09 17:37:30'),
 	(131, 'SCZ-117-21', 'FRANK IRWIN ZAPATA GARCIA', '10141982', 'Santa Cruz', '2021-01-06', 200.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 84, 2, 1, NULL, '2021-01-06 09:55:25', '2021-01-06 06:19:51'),
 	(132, 'SCZ-118-21', 'JULIO CESAR RIVERO', '7708590.', 'SANTA CRUZ', '2021-01-06', 11520.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 83, 2, 1, NULL, '2021-01-06 10:13:04', '2021-02-09 17:31:16'),
-	(133, 'SCZ-119-21', 'Julio', '7708590.', '4to anillo canal isuto', '2021-01-06', 9620.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 83, 2, 1, NULL, '2021-01-06 16:20:43', '2021-01-21 14:27:26'),
+	(133, 'SCZ-119-21', 'Julio', '7708590.', '4to anillo canal isuto', '2021-01-06', 9620.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 83, 2, 1, NULL, '2021-01-06 16:20:43', '2021-03-02 11:20:16'),
 	(134, 'SCZ-120-21', 'Unifranz', '78003828', 'Santa Cruz', '2021-01-06', 1109.54, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 1, 1, 66, 2, 1, NULL, '2021-01-06 16:38:10', '2021-01-06 16:38:10'),
-	(135, 'SCZ-121-21', 'Gabriel Soruco', '6920002.', 'Santa Cruz de la Sierra', '2021-01-06', 140.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 57, 2, 1, NULL, '2021-01-06 16:44:06', '2021-01-21 14:25:39'),
+	(135, 'SCZ-121-21', 'Gabriel Soruco', '6920002.', 'Santa Cruz de la Sierra', '2021-01-06', 140.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 57, 2, 1, NULL, '2021-01-06 16:44:06', '2021-03-02 11:22:25'),
 	(136, 'SCZ-122-21', 'Elias', '65920702', 'Santa cruz', '2021-01-08', 337.79, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 1, 1, 85, 2, 1, NULL, '2021-01-08 12:01:59', '2021-01-08 12:01:59'),
 	(137, 'SCZ-123-21', 'Centric Bolivia', '71365559', 'Santa Cruz', '2021-01-08', 33640.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 70, 2, 1, NULL, '2021-01-08 12:33:30', '2021-01-08 09:34:58'),
 	(138, 'SCZ-124-21', 'Centric Bolivia', '71365559', 'Ciudad de La Paz', '2021-01-08', 20880.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 70, 2, 1, NULL, '2021-01-08 12:36:02', '2021-01-08 09:12:56'),
@@ -3582,15 +3505,18 @@ INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment
 	(153, 'SCZ-138-21', 'sdasdasdasd', 'dfsdfdsf', 'sdfsdfsdf', '2021-01-29', 8000.00, 0.00, NULL, '2021-01-29', NULL, NULL, NULL, 0, 1, 1, 15, 4, 1, NULL, '2021-01-29 16:02:26', '2021-01-29 16:02:26'),
 	(154, 'SCZ-139-21', 'jkjkjkjl', 'KJIJOJKK', 'kjikjoijiji', '2021-01-29', 2200.00, 0.00, NULL, '2021-01-29', NULL, NULL, NULL, 0, 1, 1, 51, 4, 1, NULL, '2021-01-29 16:06:05', '2021-01-29 16:06:05'),
 	(155, 'SCZ-140-21', 'sadasdsda', 'fgfdgfdgdf', 'dfgdfgdf', '2021-01-29', 3300.00, 0.00, NULL, '2021-01-29', NULL, NULL, NULL, 0, 1, 1, 69, 4, 1, NULL, '2021-01-29 20:17:21', '2021-01-29 20:17:21'),
-	(156, 'SCZ-141-21', 'nano.fcb777@gmail.com', '68774551', 'ssdsdsds', '2021-01-29', 2200.00, 0.00, NULL, '2021-01-29', NULL, NULL, NULL, 0, 1, 2, 61, 4, 1, NULL, '2021-01-29 20:30:13', '2021-01-29 21:36:07'),
+	(156, 'SCZ-141-21', 'nano.fcb777@gmail.com', '68774551', 'ssdsdsds', '2021-01-29', 2200.00, 0.00, NULL, '2021-01-29', NULL, NULL, NULL, 0, 1, 3, 61, 4, 1, NULL, '2021-01-29 20:30:13', '2021-03-04 21:31:45'),
 	(157, 'SCZ-142-21', 'descripción  test', '68774551', 'adadadad', '2021-02-01', 2200.00, 0.00, NULL, '2021-02-01', 'CONTADO', '10 dias habiles', NULL, 0, 1, 1, 69, 4, 1, NULL, '2021-02-01 14:04:53', '2021-02-01 14:04:53'),
 	(158, 'SCZ-143-21', 'sadsadasd', 'asdasdasd', 'asdasda', '2021-02-02', 0.00, 0.00, NULL, '2021-02-02', NULL, NULL, NULL, 0, 1, 1, 19, 4, 1, NULL, '2021-02-02 15:07:48', '2021-02-02 15:07:48'),
-	(159, 'SCZ-144-21', 'sdasdasd', 'asdasdasda', 'asdasda', '2021-02-02', 0.00, 0.00, NULL, '2021-02-02', NULL, NULL, NULL, 0, 1, 1, 13, 4, 1, NULL, '2021-02-02 15:28:09', '2021-02-02 15:28:09'),
+	(159, 'SCZ-144-21', 'sdasdasd', 'asdasdasda', 'asdasda', '2021-02-02', 2200.00, 0.00, NULL, '2021-02-02', NULL, NULL, NULL, 0, 1, 1, 13, 4, 1, NULL, '2021-02-02 15:28:09', '2021-03-11 17:27:03'),
 	(160, 'SCZ-145-21', 'sdfdsfsdf', 'sdfsdfdsfsd', 'fsdfsdfs', '2021-02-04', 1630.40, 30.40, NULL, '2021-02-04', NULL, NULL, NULL, 0, 0, 3, 13, 4, 1, NULL, '2021-02-04 15:33:32', '2021-02-25 10:31:44'),
 	(161, 'SCZ-146-21', 'lesch.zion@gmail.com', 'asdsdasa', 'asdasd', '2021-02-05', 4400.00, 0.00, NULL, '2021-02-05', NULL, NULL, NULL, 0, 0, 3, 13, 4, 1, NULL, '2021-02-05 13:52:35', '2021-02-25 10:31:23'),
 	(162, 'SCZ-147-21', 'fdfgdfgdf', '68774551', 'dfgdfgdfgd', '2021-02-11', 5050.00, 0.00, NULL, '2021-02-11', NULL, NULL, NULL, 0, 2, 3, 64, 4, 1, NULL, '2021-02-11 18:11:26', '2021-02-25 16:20:32'),
 	(163, 'SCZ-148-21', 'kkkkjkj', 'fhffjfjyfyjf', 'jgjgyjgyjgy', '2021-02-24', 4750.00, 0.00, NULL, '2021-02-24', NULL, NULL, NULL, 0, 2, 3, 15, 4, 1, NULL, '2021-02-24 15:49:10', '2021-02-25 17:09:34'),
-	(164, 'SCZ-149-21', 'Pablo', '77073147', 'Oficinas', '2021-02-25', 2320.00, 1120.00, NULL, '2021-02-25', NULL, NULL, NULL, 0, 2, 3, 65, 4, 1, NULL, '2021-02-25 14:59:42', '2021-02-25 15:54:50');
+	(164, 'SCZ-149-21', 'Pablo', '77073147', 'Oficinas', '2021-02-25', 2320.00, 1120.00, NULL, '2021-02-25', NULL, NULL, NULL, 0, 2, 3, 65, 4, 1, NULL, '2021-02-25 14:59:42', '2021-02-25 15:54:50'),
+	(165, 'SCZ-150-21', 'Jorge', '77078147', 'Oficinas', '2021-02-26', 450.00, 0.00, NULL, '2021-02-26', NULL, NULL, NULL, 0, 1, 3, 84, 4, 1, NULL, '2021-02-26 13:37:42', '2021-03-04 20:50:55'),
+	(166, 'SCZ-151-21', 'MARIO', '77078147', 'OFICINA', '2021-03-03', 2200.00, 0.00, NULL, '2021-03-03', NULL, NULL, NULL, 0, 1, 3, 69, 4, 1, NULL, '2021-03-03 13:35:35', '2021-03-03 13:37:05'),
+	(167, 'SCZ-152-21', 'fghdfhfghfgh', 'fghfghfghfgh', 'fghfghfghfgh', '2021-03-11', 505.00, 0.00, NULL, '2021-03-11', NULL, NULL, NULL, 0, 1, 1, 8, 4, 1, NULL, '2021-03-11 20:04:09', '2021-03-11 20:18:31');
 /*!40000 ALTER TABLE `quotations` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.states
@@ -3628,12 +3554,18 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   KEY `tasks_work_order_id_foreign` (`work_order_id`),
   CONSTRAINT `tasks_employee_id_foreign` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`),
   CONSTRAINT `tasks_work_order_id_foreign` FOREIGN KEY (`work_order_id`) REFERENCES `work_orders` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.tasks: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.tasks: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
 INSERT INTO `tasks` (`id`, `description`, `priority`, `completed`, `date_init`, `date_end`, `work_order_id`, `employee_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, 'Imprimir Lona', 'Alta', 0, '2021-02-22 11:24:59', NULL, 102, 8, '2021-02-20 13:53:53', '2021-02-20 13:53:54', NULL);
+	(1, 'test de tarea', 'Baja', 0, '2021-03-04 11:10:00', NULL, 107, 3, '2021-03-04 15:10:56', '2021-03-04 15:20:59', '2021-03-04 15:20:59'),
+	(2, 'test tarea 2', 'Media', 1, '2021-03-04 11:20:00', '2021-03-04 15:05:49', 107, 2, '2021-03-04 15:20:30', '2021-03-04 16:22:16', NULL),
+	(3, 'test tarea 3', 'Alta', 1, '2021-03-04 11:21:00', '2021-03-04 15:06:20', 107, 5, '2021-03-04 15:21:57', '2021-03-04 16:22:16', NULL),
+	(4, 'fdbdbdfb', 'Media', 0, '2021-03-04 15:17:00', NULL, 107, 9, '2021-03-04 15:17:45', '2021-03-04 15:18:16', '2021-03-04 15:18:16'),
+	(5, 'fgdfgd', 'Baja', 1, '2021-03-04 16:22:00', '2021-03-04 16:23:03', 107, 2, '2021-03-04 16:22:15', '2021-03-04 16:23:03', NULL),
+	(6, 'bgbgbgbgb', 'Baja', 1, '2021-03-04 16:51:00', '2021-03-04 16:53:50', 106, 2, '2021-03-04 16:51:40', '2021-03-04 16:53:50', NULL),
+	(7, 'hjhjghjghjg', 'Baja', 1, '2021-03-21 16:52:00', '2021-03-04 17:31:18', 106, 5, '2021-03-04 16:52:53', '2021-03-04 17:31:18', NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.users
@@ -3901,7 +3833,7 @@ CREATE TABLE IF NOT EXISTS `work_orders` (
   KEY `work_orders_city_id_foreign` (`city_id`),
   KEY `work_orders_quotation_id_foreign` (`quotation_id`),
   FULLTEXT KEY `number` (`number`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla imagen.work_orders: ~100 rows (aproximadamente)
 /*!40000 ALTER TABLE `work_orders` DISABLE KEYS */;
@@ -4008,7 +3940,9 @@ INSERT INTO `work_orders` (`id`, `number`, `opening_date`, `estimated_date`, `cl
 	(103, '103', '2021-02-17', '2021-02-18', '2021-02-17', 'adadadad', NULL, NULL, NULL, 160, NULL, NULL, '2021-02-17 13:54:26', '2021-02-17 13:54:29'),
 	(104, '104', '2021-02-25', '2021-02-25', '2021-02-25', 'SFSFSDFS', NULL, NULL, NULL, 164, NULL, NULL, '2021-02-25 15:00:43', '2021-02-25 15:00:45'),
 	(105, '105', '2021-02-25', '2021-02-25', '2021-02-25', 'sfsfsfsfs', NULL, NULL, NULL, 163, NULL, NULL, '2021-02-25 21:08:29', '2021-02-25 21:08:38'),
-	(106, '106', '2021-02-25', '2021-02-25', NULL, 'Tecnico panelizar', NULL, NULL, NULL, 156, NULL, NULL, '2021-02-25 21:30:14', '2021-02-25 21:30:14');
+	(106, '106', '2021-02-25', '2021-02-25', '2021-03-04', 'Tecnico panelizar', NULL, NULL, NULL, 156, NULL, NULL, '2021-02-25 21:30:14', '2021-03-04 21:31:45'),
+	(107, '107', '2021-02-26', '2021-02-26', '2021-03-04', 'impresion', NULL, NULL, NULL, 165, NULL, NULL, '2021-02-26 13:58:52', '2021-03-04 20:50:55'),
+	(108, '108', '2021-03-03', '2021-03-03', '2021-03-03', 'impresion', NULL, NULL, NULL, 166, NULL, NULL, '2021-03-03 13:36:53', '2021-03-03 13:37:05');
 /*!40000 ALTER TABLE `work_orders` ENABLE KEYS */;
 
 -- Volcando estructura para disparador imagen.after_invoice_insert

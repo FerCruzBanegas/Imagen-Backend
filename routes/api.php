@@ -486,6 +486,7 @@ Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
 	//invoices
 	Route::get('invoices', 'InvoiceController@index')->name('invoices.index');
     Route::post('invoices', 'InvoiceController@store')->name('invoices.create');
+	Route::put('invoices/{invoice}', 'InvoiceController@update');
 	Route::put('invoices/canceled/{invoice}', 'InvoiceController@cancelInvoice')->name('invoices.cancel');
 	Route::get('invoices/download/{invoice}', 'InvoiceController@invoicePdf');
 	Route::post('invoices/list-pdf', 'InvoiceController@listPdf');

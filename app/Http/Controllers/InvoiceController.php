@@ -6,6 +6,7 @@ use App\Invoice;
 use App\License;
 use Illuminate\Http\Request;
 use App\Http\Requests\InvoiceRequest;
+use App\Http\Requests\InvoiceUpdateRequest;
 use App\Services\InvoiceService;
 use App\Filters\InvoiceSearch\InvoiceSearch;
 use App\Http\Resources\Invoice\InvoiceCollection;
@@ -82,6 +83,23 @@ class InvoiceController extends ApiController
             return $this->respondInternalError();
         }
         return $this->respondCreated($invoice);
+    }
+
+    public function update(Invoice $invoice, InvoiceUpdateRequest $request)
+    {
+        $invoice->update([
+            'title' => $request->title,
+            'footer' => $request->footer,
+            'details' => $request->details,
+        ]);
+        
+        $products = array();
+        foreach ($request->products as $key => $value) {
+            $products[$value['id']] = ['description' => $value['description']];
+        }
+        $invoice->products()->sync($products);
+
+        return $this->respondUpdated();
     }
 
     public function invoicePdf(Invoice $invoice, Request $request)

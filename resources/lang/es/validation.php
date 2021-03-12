@@ -188,5 +188,7 @@ return [
         'finish'                => 'acabado',
         'forename'              => 'nombres',
         'surname'               => 'apellidos',
+        'title'                 => 'título',
+        'footer'                => 'pie de página'                        
     ],
 ];

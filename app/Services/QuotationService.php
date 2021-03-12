@@ -82,9 +82,9 @@ class QuotationService
                 'dimension' => $product['dimension'],
                 'description' => $product['description'],
                 //cambio aqui
-                'material' => $product['material'],
-                'quality' => $product['quality'],
-                'finish' => $product['finish'],
+                'material' => isset($product['material']) ? $product['material'] : null,
+                'quality' => isset($product['quality']) ? $product['quality'] : null,
+                'finish' => isset($product['finish']) ? $product['finish'] : null,
                 'materialCheck' => $product['materialCheck'],
                 'qualityCheck' => $product['qualityCheck'],
                 'finishCheck' => $product['finishCheck'],
