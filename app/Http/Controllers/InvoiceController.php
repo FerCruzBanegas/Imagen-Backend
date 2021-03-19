@@ -57,7 +57,7 @@ class InvoiceController extends ApiController
                 'total' => $request->invoice['total'],
                 'nit_name' => $request->invoice['nit_name'],
                 'nit' => $request->invoice['nit'],
-                'title' => $request->invoice['title'],
+                'title' => rtrim($request->invoice['title'], ':'),
                 'footer' => $request->invoice['footer'],
                 // 'oc' => $request->invoice['oc'],
                 // 'hea' => $request->invoice['hea'],
@@ -87,18 +87,25 @@ class InvoiceController extends ApiController
 
     public function update(Invoice $invoice, InvoiceUpdateRequest $request)
     {
-        $invoice->update([
-            'title' => $request->title,
-            'footer' => $request->footer,
-            'details' => $request->details,
-        ]);
-        
-        $products = array();
-        foreach ($request->products as $key => $value) {
-            $products[$value['id']] = ['description' => $value['description']];
-        }
-        $invoice->products()->sync($products);
+        DB::beginTransaction();
+        try {
+            $invoice->update([
+                'title' => rtrim($request->title, ':'),
+                'footer' => $request->footer,
+                'details' => $request->details,
+            ]);
+            
+            $products = array();
+            foreach ($request->products as $key => $value) {
+                $products[$value['id']] = ['description' => $value['description']];
+            }
+            $invoice->products()->sync($products);
 
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->respondInternalError();
+        }
         return $this->respondUpdated();
     }
 

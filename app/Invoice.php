@@ -39,7 +39,7 @@ class Invoice extends Model
         if (in_array('invoices.all', $cache) || in_array('*', $cache)) {
             return $query;
         } else if (in_array('invoices.single', $cache)) {
-            if ($user->profile->id === 7) {
+            if ($user->profile->description === 'Ventas') {
                 return $query->where('user_id', $user->id);
             } else {
                 return $query->whereHas('license', function ($query) use ($user) {

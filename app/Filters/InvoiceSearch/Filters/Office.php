@@ -11,9 +11,12 @@ class Office implements Filter
 {
     public static function apply(Builder $builder, Array $data)
     {
-        $license = License::where('office_id', $data['value'])->first();
-        $builder = $builder->where('license_id', $license->id);
-        
+        // $license = License::where('office_id', $data['value'])->first();
+        // $builder = $builder->where('license_id', $license->id);
+        $builder = $builder->whereHas('license', function ($query) use ($data) {
+            return $query->where('office_id', $data['value']);
+        }); 
+
         $typeFilter = new TypesFilter();
         return $typeFilter->run($builder, $data);
     }

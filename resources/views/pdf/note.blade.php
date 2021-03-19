@@ -63,7 +63,7 @@
       box-sizing: border-box;
       clear: both;
       margin: 2mm 0mm;
-      height: 200mm;
+      height: 195mm;
       width: 100%;
     }
   
@@ -188,6 +188,7 @@
       <div style="border: 2px solid #9e0207; border-radius: 7px; color: black;">
         <div style="margin: 12px;"><b>Son:</b> {{ $data['literal_amount'] }}</div>
       </div>
+      <div style="color: black; font-size: 12px;"><b>Nota:</b> Este documento no es válido para crédito fiscal.</div>
     </div>
     <div class="wrap">
         <div class="left">AUTORIZADO POR</div>

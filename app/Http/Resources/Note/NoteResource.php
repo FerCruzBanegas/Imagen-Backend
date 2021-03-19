@@ -16,6 +16,8 @@ class NoteResource extends JsonResource
             'subtotal' => $this->products()->sum('subtotal'),
             'total' => $this->total,
             'discount' => number_format($this->discount, 2, '.', ','),
+            'created' => $this->created_at,
+            'updated' => $this->updated_at,
             'customer' => ['name' => $this->customer->business_name],
             'customer_data' => [
                 'business_name' => $this->customer->business_name,
@@ -25,6 +27,7 @@ class NoteResource extends JsonResource
             'quotation_id' => $this->quotation->id,
             'voucher' => [
                 'office' => [
+                    'id' => $this->voucher->office->id,
                     'name' => $this->voucher->office->city->name,
                     'address' => explode(',', $this->voucher->office->detail)
                 ],

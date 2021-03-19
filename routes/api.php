@@ -385,17 +385,19 @@ Route::get('test', function() {
     //$number = floatval(str_replace(',', '.', str_replace(',', '', $string_number)));
     // At this point, $number is a "natural" float.
     //return response()->json($number);
-	$data = \App\WorkOrder::where('id', 107)->first();
+	// $data = \App\WorkOrder::where('id', 107)->first();
 
-	$filtered = collect($data->tasks)->filter(function ($value, $key) {
-		return $value->completed === 1;
-	});
-	if($filtered->count()) {
-		return response()->json('si');
-	} else {
-		return response()->json('no');
-	}
+	// $filtered = collect($data->tasks)->filter(function ($value, $key) {
+	// 	return $value->completed === 1;
+	// });
+	// if($filtered->count()) {
+	// 	return response()->json('si');
+	// } else {
+	// 	return response()->json('no');
+	// }
 	
+	$string = ':asdfsfs:df |';
+	return rtrim($string, ':');
 });
 
 Route::get('invoice', 'TestController@index');
@@ -608,5 +610,3 @@ Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
     Route::post('reports/pdf_download', 'ReportController@pdfDownload')->name('reports.index');
     Route::post('reports/excel_download', 'ReportController@excelDownload')->name('reports.index');
 });
-
-
