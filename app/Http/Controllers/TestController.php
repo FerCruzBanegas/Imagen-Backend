@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\CustomerService;
 use PDF;
 
 class TestController extends Controller
@@ -20,8 +21,10 @@ class TestController extends Controller
     public $d = null;
     public $inv = null;
     public $p = null;
+    protected $service;
 
-    public function __construct() {
+    public function __construct(CustomerService $service) {
+      $this->service = $service;
       $this->d = json_decode('[[0,1,2,3,4,5,6,7,8,9],[1,2,3,4,0,6,7,8,9,5],[2,3,4,0,1,7,8,9,5,6],[3,4,0,1,2,8,9,5,6,7],[4,0,1,2,3,9,5,6,7,8],[5,9,8,7,6,0,4,3,2,1],[6,5,9,8,7,1,0,4,3,2],[7,6,5,9,8,2,1,0,4,3],[8,7,6,5,9,3,2,1,0,4],[9,8,7,6,5,4,3,2,1,0]]');
       $this->inv = json_decode('[0,4,3,2,1,5,6,7,8,9]');
       $this->p = json_decode('[[0,1,2,3,4,5,6,7,8,9],[1,5,7,6,2,8,3,0,9,4],[5,8,0,3,7,9,6,1,4,2],[8,9,1,6,0,4,3,5,2,7],[9,4,5,3,1,2,6,8,7,0],[4,2,8,6,5,7,3,9,0,1],[2,7,9,3,8,0,6,4,1,5],[7,0,4,6,9,1,3,2,5,8]]');
@@ -187,13 +190,19 @@ class TestController extends Controller
 
     public function index()
     {
-        return view('pdf.test');
+        $customer = \App\Customer::find(21);
+        $data = $this->service->getAccounts($customer);
+
+        return view('pdf.test', compact('data'));
     }
 
 
     public function download()
     {
-    	$pdf = PDF::loadView('pdf.test')
+      $customer = \App\Customer::find(21);
+      $data = $this->service->getAccounts($customer);
+      
+    	$pdf = PDF::loadView('pdf.test', compact('data'))
 	       ->setOption('margin-top', 1)
 	       ->setOption('margin-bottom', 1)
 	       ->setOption('margin-left', 1)

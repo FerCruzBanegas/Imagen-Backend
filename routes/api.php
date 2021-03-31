@@ -390,14 +390,17 @@ Route::get('test', function() {
 	// $filtered = collect($data->tasks)->filter(function ($value, $key) {
 	// 	return $value->completed === 1;
 	// });
-	// if($filtered->count()) {
-	// 	return response()->json('si');
-	// } else {
-	// 	return response()->json('no');
-	// }
+	// $data = \App\Customer::with('invoices', 'notes')->whereIn('id', [21])->get();
+	$customer = \App\Customer::find(21);
+
+	return $customer;
+	// return [
+	// 	'price' => number_format((float)2000.56, 2, '.', ','),
+	// 	'subtotal' => 2000.56,
+	// ];
 	
-	$string = ':asdfsfs:df |';
-	return rtrim($string, ':');
+	// $string = ':asdfsfs:df|';
+	// return rtrim($string, ':');
 });
 
 Route::get('invoice', 'TestController@index');
@@ -488,7 +491,7 @@ Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
 	//invoices
 	Route::get('invoices', 'InvoiceController@index')->name('invoices.index');
     Route::post('invoices', 'InvoiceController@store')->name('invoices.create');
-	Route::put('invoices/{invoice}', 'InvoiceController@update');
+	Route::put('invoices/{invoice}', 'InvoiceController@update')->name('invoices.update');
 	Route::put('invoices/canceled/{invoice}', 'InvoiceController@cancelInvoice')->name('invoices.cancel');
 	Route::get('invoices/download/{invoice}', 'InvoiceController@invoicePdf');
 	Route::post('invoices/list-pdf', 'InvoiceController@listPdf');
@@ -497,6 +500,8 @@ Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
 	//notes
 	Route::get('notes', 'NoteController@index')->name('notes.index');
     Route::post('notes', 'NoteController@store')->name('notes.create');
+	Route::put('notes/{note}', 'NoteController@update')->name('invoices.notes');
+	Route::get('notes/products/{note}', 'NoteController@getProductsNote');
 	Route::get('notes/download/{note}', 'NoteController@notePdf');
 	Route::post('notes/list-pdf', 'NoteController@listPdf');
 	Route::post('notes/list-excel', 'NoteController@listExcel');
@@ -603,6 +608,8 @@ Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
 
     //Reportes
     Route::post('reports/total_quotations', 'ReportController@totalQuotation')->name('reports.index');
+	Route::post('reports/invoice_report', 'ReportController@invoiceReport')->name('reports.index');
+	Route::post('reports/get_accounts', 'ReportController@getAccounts')->name('reports.index');
 	Route::post('reports/quotation_general', 'ReportController@listQuotationGeneral')->name('reports.index');
 	Route::post('reports/quotation_pending', 'ReportController@listQuotationPending')->name('reports.index');
 	Route::post('reports/quotation_approved', 'ReportController@listQuotationApproved')->name('reports.index');

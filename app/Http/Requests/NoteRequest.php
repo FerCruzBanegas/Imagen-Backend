@@ -16,6 +16,7 @@ class NoteRequest extends FormRequest
         $rules = [
             'note.date' => 'required|date_format:Y-m-d',
             'note.nit' => 'nullable|min:5|max:16',
+            'note.summary' => 'nullable|min:3|max:500',
             'note.customer_id.id' => 'required|integer',
             'note.user_id' => 'required|integer',
             'note.quotation_id' => 'required|integer',
@@ -34,6 +35,7 @@ class NoteRequest extends FormRequest
             'note.date' => 'fecha',
             'note.total' => 'total',
             'note.nit' => 'nit/ci',
+            'note.summary' => 'resumen',
             'note.customer_id.id' => 'cliente',
             'note.user_id' => 'usuario',
             'note.quotation_id' => 'cotización',

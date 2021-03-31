@@ -2,31 +2,25 @@
 
 namespace App\Services;
 
-// use App\Product;
 use Illuminate\Http\Request;
 use App\Exports\PdfExport;
 use App\Exports\Excel\ReportsExport;
-// use App\Transformers\ProductTransformer;
 
 class ReportService
 {
-    // protected $transformer;
-
-    // public function __construct(ProductTransformer $transformer)
-    // {
-    //     $this->transformer = $transformer;
-    // }
+    public function __construct()
+    {
+        setlocale(LC_ALL, "es_ES");
+        date_default_timezone_set('America/Caracas');
+    }
 
     public function manyPdfDownload(Request $request) 
     {
-        // if (empty($request->product)) {
-        //     $products = $this->transformer->collection(Product::desc()->get());
-        // } else {
-        //     $products = $this->transformer->collection(Product::in($request->product)->get());
-        // }
-
         $data = [
             'title' => $request->title,
+            'office' => auth()->user()->office->description,
+            'date' => $request->date,
+            'now' => date("d/m/Y"),
             'items' => $request->data,
             'columns' => array_keys($request->data[0])
         ];
@@ -37,12 +31,6 @@ class ReportService
 
     public function manyExcelDownload(Request $request) 
     {
-        // if (empty($request->product)) {
-        //     $products = $this->transformer->collection(Product::desc()->get());
-        // } else {
-        //     $products = $this->transformer->collection(Product::in($request->product)->get());
-        // }
-
         return (new ReportsExport($request->data))->download('reporte.xlsx');
     }
 }

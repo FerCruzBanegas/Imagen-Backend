@@ -59,9 +59,8 @@ class InvoiceController extends ApiController
                 'nit' => $request->invoice['nit'],
                 'title' => rtrim($request->invoice['title'], ':'),
                 'footer' => $request->invoice['footer'],
-                // 'oc' => $request->invoice['oc'],
-                // 'hea' => $request->invoice['hea'],
                 'details' => $request->invoice['details'],
+                'summary' => $request->invoice['summary'],
                 'license_id' => $license->id,
                 'customer_id' => $request->invoice['customer_id']['id'],
                 'user_id' => $request->invoice['user_id'],
@@ -90,9 +89,10 @@ class InvoiceController extends ApiController
         DB::beginTransaction();
         try {
             $invoice->update([
-                'title' => rtrim($request->title, ':'),
-                'footer' => $request->footer,
-                'details' => $request->details,
+                'title' => rtrim($request->invoice['title'], ':'),
+                'footer' => $request->invoice['footer'],
+                'details' => $request->invoice['details'],
+                'summary' => $request->invoice['summary'],
             ]);
             
             $products = array();

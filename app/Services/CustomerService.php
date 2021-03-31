@@ -17,6 +17,13 @@ class CustomerService
         $this->transformer = $transformer;
     }
 
+    public function getAccounts(Customer $customer) 
+    {
+        $customer = $this->transformer->customItem('getAccounts', $customer);
+
+        return $customer;
+    }
+
     public function manyPdfDownload(Request $request) 
     {
         if (empty($request->customer)) {

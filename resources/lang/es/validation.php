@@ -189,6 +189,7 @@ return [
         'forename'              => 'nombres',
         'surname'               => 'apellidos',
         'title'                 => 'título',
-        'footer'                => 'pie de página'                        
+        'footer'                => 'pie de página',
+        'summary'               => 'resumen'         
     ],
 ];

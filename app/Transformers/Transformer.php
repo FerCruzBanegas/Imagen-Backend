@@ -22,10 +22,24 @@ abstract class Transformer
         ];
     }
 
+    public function collection3(Collection $data, $method)
+    {
+        return [
+            str_plural($this->resourceName) => $data->map([$this, $method])
+        ];
+    }
+
     public function item($data)
     {
         return [
             $this->resourceName => $this->transform($data)
+        ];
+    }
+
+    public function customItem($method, $data)
+    {
+        return [
+            $this->resourceName => $this->{$method}($data)
         ];
     }
 

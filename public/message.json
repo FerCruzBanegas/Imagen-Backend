@@ -14,5 +14,6 @@
   "MSG013":"Esta Factura ya se encuentra anulada!.",
   "MSG014":"No existe una dosificación vigente para generar la factura.",
   "MSG015":"No puede registrar tareas, por que la orden de trabajo ya está cerrada.",
-  "MSG016":"No puede cerrar la orden de trabajo, por que aún tiene tareas pendientes."
+  "MSG016":"No puede cerrar la orden de trabajo, por que aún tiene tareas pendientes.",
+  "MSG017":"No puede modificar la nota, por que la cuenta ya se cerró."
 }

@@ -16,6 +16,7 @@ class NoteResource extends JsonResource
             'subtotal' => $this->products()->sum('subtotal'),
             'total' => $this->total,
             'discount' => number_format($this->discount, 2, '.', ','),
+            'summary' => $this->summary,
             'created' => $this->created_at,
             'updated' => $this->updated_at,
             'customer' => ['name' => $this->customer->business_name],
@@ -35,6 +36,7 @@ class NoteResource extends JsonResource
             'products' => collect($this->products)->transform(function($product) {
                 return [
                     'id' => $product->id,
+                    'name' => $product->name,
                     'quantity' => $product->pivot->quantity,
                     'description' => $product->pivot->description,
                     'price' => number_format($product->pivot->price, 2, '.', ','),

@@ -6,8 +6,10 @@ use App\Note;
 use App\Voucher;
 use Illuminate\Http\Request;
 use App\Http\Requests\NoteRequest;
+use App\Http\Requests\NoteUpdateRequest;
 use App\Services\NoteService;
 use App\Filters\NoteSearch\NoteSearch;
+use App\Http\Resources\Note\NoteProductResource;
 use App\Http\Resources\Note\NoteCollection;
 use Illuminate\Support\Facades\DB;
 
@@ -38,7 +40,8 @@ class NoteController extends ApiController
 
     public function store(NoteRequest $request)
     {
-        
+        DB::beginTransaction();
+        try {
             $date = \DateTime::createFromFormat('Y-m-d', $request->note['date']);
             $voucher = Voucher::number($request->note['office_id']);
 
@@ -48,6 +51,7 @@ class NoteController extends ApiController
                 'total' => $request->note['total'],
                 'discount' => floatval(str_replace(',', '.', str_replace(',', '', $request->note['discount']))),
                 'nit' => $request->note['nit'],
+                'summary' => $request->note['summary'],
                 'voucher_id' => $voucher->id,
                 'customer_id' => $request->note['customer_id']['id'],
                 'user_id' => $request->note['user_id'],
@@ -63,7 +67,53 @@ class NoteController extends ApiController
                 ]);
             }
 
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->respondInternalError();
+        }
+
         return $this->respondCreated($note);
+    }
+
+    public function update(Note $note, NoteUpdateRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            if($note->cancelled) {
+                return $this->respond(message('MSG017'), 406);
+            }
+
+            $note->update([
+                'total' => $request->note['total'],
+                'discount' => $request->note['discount'],
+                'summary' => $request->note['summary'],
+            ]);
+
+            if (!$this->service->checkDataChange($note, $request)) {
+                $note->products()->detach();
+                foreach ($request->products as $key => $value) {
+                    $note->products()->attach($value['id'], [
+                        'quantity' => $value['quantity'], 
+                        'description' => $value['description'],
+                        'price' => $value['price'], 
+                        'subtotal' => $value['subtotal'],
+                    ]);
+                }
+                $note->touch();
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->respondInternalError();
+        }
+
+        return $this->respondUpdated();
+    }
+
+    public function getProductsNote(Note $note)
+    {
+        return new NoteProductResource($note);
     }
 
     public function notePdf(Note $note, Request $request)

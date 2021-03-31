@@ -4,22 +4,17 @@
   <meta charset="utf-8">
   <title>Factura</title>
   <style>
-    .invoice-box {
+    .container {
       max-width: 100%;
       margin: auto;
-      padding: 30px;
-      /*border: 1px solid #eee;
-      box-shadow: 0 0 10px rgba(0, 0, 0, .15);*/
-      font-size: 16px;
-      line-height: 24px;
-      font-family: 'Ubuntu', sans-serif;
-      color: #555;
+      font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
     }
 
-    #light-table {
+    .light-table {
       width: 100%;  
       padding-top: 0;
       padding-bottom: 0;
+      margin-bottom: 5px;
       text-align: left;
     }
 
@@ -32,25 +27,13 @@
     .leftdiv p {
       display: block;
       width: 75%;
-      margin: 0 auto !important;
+      /* margin: 0 auto !important; */
     }
 
-    #leftdivcontainer {
+    .leftdivcontainer {
       vertical-align: middle;
       width: 100%;
       text-align: center;
-    }
-
-    #light-table-paragraph {
-      font-family: 'Droid Serif';
-      font-size: 20px;
-      color: #2e2e2e;
-      text-align: center;
-      line-height: 40px;
-    }
-
-    h3 {
-      padding: 0 40px;
     }
 
     .clearfix:after {
@@ -63,154 +46,227 @@
       display: table;
     }
 
-    .test span {
-      display: block;
-      white-space: pre;
-      font-size:   10pt;
-      line-height: 12pt;
-    }
-
-    .test2 span {
-      display: block;
-      font-size:   10pt;
-      line-height: 23pt;
-    }
-
-    #invoice-table {
-      border: 2px solid #9e0207;
-      border-radius: 7px;
-      border-spacing: 0;
-      box-sizing: border-box;
-      clear: both;
-      margin: 2mm 0mm;
-      height: 200mm;
+    table {
+      border-collapse: collapse;
       width: 100%;
-    }
-  
-    #invoice-table th, td { border-left: 2px solid #9e0207; }
-    #invoice-table th:first-child, td:first-child { border-left: none; }
-    #invoice-table th { border-bottom: 2px solid #9e0207; }
-    #invoice-table td { vertical-align: top; font-size: 8pt; }
-    th { text-align: center; font-weight: normal; }
-    .amount { text-align: center; }
-    .invoice_line { height: 6mm; }
-    .invoice_line td, .invoice_line th { padding: 1mm; }
-
-    .watermark {
-      background: url("{{ asset('/img/watermark.png') }}");
-      background-size: 600px;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed; 
+      font-family: 'Ubuntu', sans-serif;
     }
 
-    .anulado {
-      background: url("{{ asset('/img/anulado.png') }}");
-      background-size: 600px;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed; 
-    }
-
-    .wrap {
-      padding: 3%;
-      text-align: center;
-      width: auto;
-    }
-
-    .left, .right {
-      display: inline-block;
-      margin: 40px;
-      margin-bottom: 0;
-      border-top: 1px solid #000; 
+    table th,
+    table td {
+      border: 1px solid #807979;
+      padding: 0.625em;
       text-align: center;
       font-weight: bold;
-      width: 300px;
+    }
+
+    table tbody tr {
+      border: 1px solid #ddd;
+      padding: 0.35em;
+      font-size: 0.70em;
+    }
+
+    table thead th {
+      padding-top: 6px;
+      padding-bottom: 6px;
+      background-color: #9e0207;
+      color: white;
+      text-transform: uppercase;
+      font-size: 0.85em;
     }
   </style>
 </head>
 <body>
-  <div class="invoice-box watermark">
-    <div id="light-table">
-      <div id="leftdivcontainer" class="clearfix">
+  <div class="container">
+    <div class="light-table">
+      <div class="leftdivcontainer clearfix">
         <div class="leftdiv">
-          <img src="{{url('/img/logo.png')}}" style="width:280px; height: 70px;">
-        </div>
-        <div class="leftdiv" style="margin-top: 0;">
-          <p class="test" style="color: #656565;">
-            <span style="font-size: 18px; font-weight: bold;">SUCURSAL 1</span>
-            <span>Calle Nº 27</span>
-            <span>Zona / Barrio Cordecruz</span>
-            <span>Telf.: 3494677 - 76722731</span>
-            <span>Santa Cruz - Bolivia</span>
-          </p>
-        </div>
-        <div class="leftdiv" style="border: 2px solid #9e0207; border-radius: 7px;">
-          <div style="text-align: left; margin-left: 15px; margin-bottom: 5px; margin-top: 5px;">
-            <div style="color: #474747; font-weight: bold;">
-              NIT: <span style="float: right; margin-right: 15px;">164692025</span>
-            </div>
-            <div style="color: #474747; font-weight: bold;">
-              Nº: <span style="float: right; margin-right: 15px;">000001</span>
-            </div>
+          <div style="border: 2px solid #9e0207; border-radius: 7px; text-align: left; width: 65%; padding: 10px;">
+            <span style="color: #000; font-weight: bold; font-size: 13px; letter-spacing: 1px;">PUBLICIDAD VIAL IMAGEN</span>
+            <span style="color: #000; font-weight: bold; font-size: 13px; letter-spacing: 3px;">PVI Santa Cruz</span>
           </div>
         </div>
+        <div class="leftdiv" style="margin-top: 0;">
+          <div style="color: #000; font-size: 19px; font-weight: bold; text-decoration: underline;">ESTADO DE CUENTAS</div>
+          <div style="font-weight: bold;">CLIENTE: AGENCIAS GENERALES S.A.</div>
+          <div style="font-weight: bold;">(Expresado en Bolivianos)</div>
+          <div style="font-weight: bold;">Desde: 01/01/2021 al 31/01/2021</div>
+        </div>
+        <div class="leftdiv">
+          <div style="text-align: right;"><img src="{{url('/img/favicon.png')}}" style="width:40px; height: 40px;"></div>
+          <div style="text-align: right;"><span style="font-weight: bold;">Fecha: </span>30/03/2021</div>
+        </div>
       </div>
     </div>
-    <div style="width: 500px; margin: 50px auto; margin-bottom: 0; text-align: center;">
-      <span style="font-size: 45px; font-weight: bold;">NOTA DE REMISION</span>
-    </div>
-    <div id="light-table" style="margin-top: 20px; color: #000000;">
-      <div style="border: 2px solid #9e0207; border-radius: 7px;">
-        <div style="float: right; margin: 15px;"><b>NIT/CI: 8914345</b></div>
-        <div style="margin: 15px;">Santa Cruz de la Sierra, 01 diciembre de 2020</div>
-        <div style="margin: 15px;">Señor(es): Fernando Banegas</div>
-      </div>
-    </div>
-    <div id="light-table" style="margin-top: 5px;">
-      <table id="invoice-table">
-        <tr class="invoice_line" style="background-color: #FFDBDC;">
-          <th style="color: #9e0207; padding:10px; width: 100px; font-weight: bold; font-size: 20px;">CANTIDAD</th>
-          <th style="color: #9e0207; letter-spacing: 0.5em; padding:10px; width: 340px; font-weight: bold; font-size: 20px;">DETALLE</th>
-          <th style="color: #9e0207; padding:10px; width: 100px; font-weight: bold; font-size: 20px;">P. UNIT.</th>
-          <th style="color: #9e0207; padding:10px; width: 120px; font-weight: bold; font-size: 20px;">SUB TOTAL</th>
+    <table>
+      <thead>
+        <tr>
+          <th width="50px">Fecha</th>
+          <th width="40px">Compr</th>
+          <th width="50px">Num</th>
+          <th width="350px">Detalle</th>
+          <th width="100px">Debe</th>
+          <th width="80px">Haber</th>
+          <th width="80px">Saldo</th>
         </tr>
-          <tr class="invoice_line" style="text-align: center;">
-            <td style="color: #000000; font-size: 15px;">
-              1
-            </td>
-            <td style="color: #000000; text-align: justify; font-size: 15px;">
-              Alquiler de valla publicitaria
-            </td>
-            <td style="color: #000000; font-size: 15px;">
-              1,000.00
-            </td>
-            <td style="color: #000000; font-size: 15px;">
-              1,000.00
-            </td>
+      </thead>
+      <tbody>
+        @php
+          $totalPayments = 0;
+        @endphp
+        @foreach($data['customer']['invoices'] as $item)  
+          <tr style="background-color: #f7d9d9;">
+            <td>{{ date('d/m/Y', strtotime($item['date'])) }}</td>
+            <td>{{ $item['type'] }}</td>
+            <td>{{ $item['number'] }}</td>
+            <td>{{ $item['summary'] }}</td>
+            <td>{{ number_format($item['total'], 2, '.', ',') }}</td>
+            <td></td>
+            <td>{{ number_format($item['total'], 2, '.', ',') }}</td>
           </tr>
-          <tr>
-          <td>&nbsp;</td>
-          <td style="color: #000000; text-align: justify; font-size: 15px;">&nbsp;
+          @foreach($item['payments'] as $payment)  
+            <tr style="background-color: #f9f3f3;">
+              <td>{{ date('d/m/Y', strtotime($payment['date'])) }}</td>
+              <td>{{ $payment['type'] }}</td>
+              <td>01</td>
+              <td>asas</td>
+              <td></td>
+              <td>{{ number_format($payment['amount'], 2, '.', ',')  }}</td>
+              <td></td>
+            </tr>
+            @php
+              $totalPayments += $payment['amount'];
+            @endphp 
+          @endforeach
+          <tr style="background-color: #dddddd;">
+            <td colspan="4" style="text-align: right;">
+              TOTAL
+            </td>
+            <td></td>
+            <td>{{ number_format($item['payments']->sum('amount'), 2, '.', ',') }}</td>
+            <td></td>
+          </tr>
+        @endforeach
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>{{ number_format($data['customer']['invoices']->sum('total'), 2, '.', ',') }}</td>
+          <td>{{ number_format($totalPayments, 2, '.', ',') }}</td>
+          <td>{{ number_format($data['customer']['invoices']->sum('total') - $totalPayments, 2, '.', ',') }}</td>
+        </tr>
+        <!-- <tr style="background-color: #fff1d1;">
+          <td>13/02/2021</td>
+          <td>
+            Factura
           </td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td>
+            12
+          </td>
+          <td>
+            Alq. Publi Av. Cristo Redentor Cara A-B del 01/02/2020 al 01/03/2021
+          </td>
+          <td>
+            8,120.00
+          </td>
+          <td></td>
+          <td>8,120.00</td>
         </tr>
-        <tr class="invoice_line">
-          <td colspan="3" style="text-align: right; border-top: 2px solid #9e0207; color: #474747; font-size: 20px; font-weight: bold; padding:16px;">TOTAL Bs.</td>
-          <td style="text-align: center; border-top: 2px solid #9e0207; font-size: 16px; color: #000000; font-weight: bold; padding:16px; background: #FFDBDC;">1,000.00</td>
+        <tr style="background-color: #efefef;">
+          <td>15/02/2021</td>
+          <td>
+            Cheque
+          </td>
+          <td>
+            001
+          </td>
+          <td>
+            Pagado en deposito
+          </td>
+          <td></td>
+          <td>8,000.00</td>
+          <td></td>
         </tr>
-      </table>
-    </div>
-    <div id="light-table">
-      <div style="border: 2px solid #9e0207; border-radius: 7px; color: black;">
-        <div style="margin: 12px;"><b>Son:</b> Un Mil 00/100 Bolivianos</div>
-      </div>
-    </div>
-    <div class="wrap">
-        <div class="left">AUTORIZADO POR</div>
-        <div class="right">CLIENTE</div>
-    </div>
+        <tr style="background-color: #efefef;">
+          <td>15/02/2021</td>
+          <td>
+            Cheque
+          </td>
+          <td>
+            001
+          </td>
+          <td>
+            Pagado en deposito
+          </td>
+          <td></td>
+          <td>120.00</td>
+          <td></td>
+        </tr>
+        <tr style="background-color: #c5d7ff;">
+          <td colspan="4" style="text-align: right;">
+            TOTAL
+          </td>
+          <td></td>
+          <td>8,120.00</td>
+          <td>0.00</td>
+        </tr>
+        <tr style="background-color: #fff1d1;">
+          <td>13/02/2021</td>
+          <td>
+            Factura
+          </td>
+          <td>
+            12
+          </td>
+          <td>
+            Alq. Publi Av. Cristo Redentor Cara A-B del 01/02/2020 al 01/03/2021
+          </td>
+          <td>
+            8,120.00
+          </td>
+          <td></td>
+          <td>8,120.00</td>
+        </tr>
+        <tr style="background-color: #efefef;">
+          <td>15/02/2021</td>
+          <td>
+            Cheque
+          </td>
+          <td>
+            001
+          </td>
+          <td>
+            Pagado en deposito
+          </td>
+          <td></td>
+          <td>8,000.00</td>
+          <td></td>
+        </tr>
+        <tr style="background-color: #efefef;">
+          <td>15/02/2021</td>
+          <td>
+            Cheque
+          </td>
+          <td>
+            001
+          </td>
+          <td>
+          </td>
+          <td></td>
+          <td>120.00</td>
+          <td></td>
+        </tr>
+        <tr style="background-color: #c5d7ff;">
+          <td colspan="4" style="text-align: right;">
+            TOTAL
+          </td>
+          <td></td>
+          <td>8,120.00</td>
+          <td>0.00</td>
+        </tr> -->
+      </tbody>
+    </table>
   </div>
 </body>
 </html>

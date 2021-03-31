@@ -29,6 +29,7 @@ class InvoiceResource extends JsonResource
             // 'oc' => $this->oc,
             // 'hea' => $this->hea,
             'details' => is_null($this->details) ? [] : array_map(function($iter) { return array('description' => $iter); }, explode('|', $this->details)),
+            'summary' => $this->summary,
             'state' => ['title' => $this->state_id === 1 ? 'VÁLIDO' : 'ANULADO'],
             'state_data' => ['title' => $this->state_id === 1 ? 'VÁLIDO' : 'ANULADO'],
             'qr' => $qrCode,

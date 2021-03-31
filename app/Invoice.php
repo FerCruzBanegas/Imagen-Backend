@@ -19,7 +19,7 @@ class Invoice extends Model
     protected $hidden = ['deleted_at'];
 
     protected $fillable = [
-        'date', 'number', 'control_code', 'total', 'nit_name', 'nit', 'title', 'footer', 'oc', 'hea', 'details', 'cancelled', 'state_id', 'license_id', 'customer_id', 'user_id', 'quotation_id', 'closing_date'
+        'date', 'number', 'control_code', 'total', 'nit_name', 'nit', 'title', 'footer', 'oc', 'hea', 'details', 'summary', 'cancelled', 'state_id', 'license_id', 'customer_id', 'user_id', 'quotation_id', 'closing_date'
     ];
 
     public function scopeDesc($query)
