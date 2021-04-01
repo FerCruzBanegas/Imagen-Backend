@@ -79,15 +79,35 @@
         height: 420px;
       }
 
-      .column {
+      .wrap {
+        height: auto;
         float: left;
-        width: 50%;
+        margin-left: 40px;
+        margin-right: 15px;
       }
 
-      .row:after {
-        content: "";
-        display: table;
-        clear: both;
+      .column {
+        width: 400px;
+        background-color: orange;
+        display: block;
+        vertical-align: text-top;
+        margin-bottom: 15px;
+      }
+      
+      .column:nth-child(odd) {
+        height: 400px;  
+      }
+
+      .column:nth-child(even) {
+        height: 400px;
+      }
+
+      .column img {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        max-width: 400px;
+        max-height: 400px;
       }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
@@ -190,12 +210,14 @@
         @if (is_null($design['support_path']['url'])) 
           <img src="{{ $design['path']['url'] }}" class="thumbnail">
         @else 
-          <div class="row">
+          <div class="wrap">
             <div class="column">
-              <img src="{{ $design['path']['url'] }}" class="thumbnail">
+              <img src="{{ $design['path']['url'] }}">
             </div>
+          </div>
+          <div class="wrap">
             <div class="column">
-              <img src="{{ $design['support_path']['url'] }}" class="thumbnail">
+            <img src="{{ $design['support_path']['url'] }}">
             </div>
           </div>
         @endif 
