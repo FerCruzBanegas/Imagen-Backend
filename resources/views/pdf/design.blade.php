@@ -74,9 +74,8 @@
       .thumbnail {
         margin-left: auto;
         margin-right: auto;
-        display: block;
-        width:350px; 
-        height: 420px;
+        width: 400px; 
+        height: 400px;
       }
 
       .wrap {
@@ -88,7 +87,7 @@
 
       .column {
         width: 400px;
-        background-color: orange;
+        /* background-color: orange; */
         display: block;
         vertical-align: text-top;
         margin-bottom: 15px;
@@ -208,7 +207,11 @@
         </table>
         <br>
         @if (is_null($design['support_path']['url'])) 
-          <img src="{{ $design['path']['url'] }}" class="thumbnail">
+          <div class="thumbnail">
+            <div class="column">
+              <img src="{{ $design['path']['url'] }}">
+            </div>
+          </div>
         @else 
           <div class="wrap">
             <div class="column">

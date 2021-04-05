@@ -88,7 +88,10 @@ class InvoiceController extends ApiController
     {
         DB::beginTransaction();
         try {
+            $date = \DateTime::createFromFormat('Y-m-d', $request->invoice['date']);
+
             $invoice->update([
+                'date' => $date->format('Y-m-d H:i:s'),
                 'title' => rtrim($request->invoice['title'], ':'),
                 'footer' => $request->invoice['footer'],
                 'details' => $request->invoice['details'],

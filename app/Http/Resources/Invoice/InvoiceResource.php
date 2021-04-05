@@ -63,6 +63,8 @@ class InvoiceResource extends JsonResource
                 ];
             }),
             'user' => $this->user->id,
+            'created' => $this->created_at,
+            'updated' => $this->updated_at,
         ];
     }
 }
