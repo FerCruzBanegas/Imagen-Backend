@@ -40,7 +40,7 @@ class DesignController extends ApiController
             if ($saved) {
                 $design = $this->design->create([
                     'filename' => $request->design['filename'], 
-                    'machine' => $request->design['machine'], 
+                    // 'machine' => $request->design['machine'], 
                     'quality' => $request->design['quality'], 
                     'material' => $request->design['material'], 
                     'cutting_dimension' => $request->design['cutting_dimension'], 
@@ -56,6 +56,8 @@ class DesignController extends ApiController
                     'set_image_support' => $request->design['set_image_support'], 
                     'product_quotation_id' => $request->design['product_quotation_id'], 
                 ]);
+
+                $design->machines()->attach($request->design['machines']);
             }
             DB::commit();
         } catch (\Exception $e) {
@@ -74,7 +76,7 @@ class DesignController extends ApiController
             $design = $this->design->find($id);
             $design->update([
                 'filename' => $request->design['filename'], 
-                'machine' => $request->design['machine'], 
+                // 'machine' => $request->design['machine'], 
                 'quality' => $request->design['quality'], 
                 'material' => $request->design['material'], 
                 'cutting_dimension' => $request->design['cutting_dimension'], 
@@ -84,8 +86,10 @@ class DesignController extends ApiController
                 'quote_approved_date' => $request->design['quote_approved_date'], 
                 'reference' => $request->design['reference'], 
                 'note' => $request->design['note'], 
-                'set_image_support' => $request->design['set_image_support'], 
+                'set_image_support' => $request->design['set_image_support'],
             ]);
+
+            $design->machines()->sync($request->design['machines']);
 
             if (!$this->service->checkExistsFile($request->design['path']['name'])) {
                 if ($this->service->deleteFile($design->path)) {

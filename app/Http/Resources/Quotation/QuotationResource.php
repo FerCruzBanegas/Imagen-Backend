@@ -8,6 +8,7 @@ use App\Http\Resources\Office\OfficeResource;
 use App\Http\Resources\WorkOrder\WorkOrderResource;
 use App\Http\Resources\Invoice\InvoiceCollection;
 use App\Http\Resources\Note\NoteResource;
+use App\Http\Resources\Design\DesignResource;
 
 class QuotationResource extends JsonResource
 {
@@ -65,7 +66,7 @@ class QuotationResource extends JsonResource
                     'design' => [
                         'id' => $product->pivot->design['id'],
                         'filename' => $product->pivot->design['filename'],
-                        'machine' => $product->pivot->design['machine'],
+                        // 'machine' => $product->pivot->design['machine'],
                         'quality' => is_null($product->pivot->design['quality']) ? $product->pivot->quality : $product->pivot->design['quality'],
                         'material' => is_null($product->pivot->design['material']) ? $product->pivot->material : $product->pivot->design['material'],
                         'cutting_dimension' => $product->pivot->design['cutting_dimension'],
@@ -86,6 +87,9 @@ class QuotationResource extends JsonResource
                         'set_image_support' => $product->pivot->design['set_image_support'] === 1 ? true : false,
                         'note' => $product->pivot->design['note'],
                         'product_quotation_id' => $product->pivot->id,
+                        'machines' => $product->pivot->design->machines->map(function ($item) {
+                            return $item->id;
+                        }),
                         'quotation' => $this->id,
                         'created' => $product->pivot->design['created_at'],
                         'updated' => $product->pivot->design['updated_at'],

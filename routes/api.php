@@ -454,6 +454,7 @@ Route::get('cities/listing', 'CityController@listing');
 Route::get('offices/listing', 'OfficeController@listing');
 Route::get('employees/listing', 'EmployeeController@listing');
 Route::get('customers/listing', 'CustomerController@listing');
+Route::get('machines/listing', 'MachineController@listing');
 Route::get('categories/listing', 'CategoryController@listing');
 Route::get('profiles/listing', 'ProfileController@listing');
 Route::get('users/listing', 'UserController@listing');
@@ -472,6 +473,13 @@ Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
 	Route::post('accounts/cancelled/list-pdf', 'AccountController@listCancelledPdf');
 	Route::post('accounts/cancelled/list-excel', 'AccountController@listCancelledExcel');
     Route::post('accounts/close', 'AccountController@closeAccount')->name('accounts.close');
+
+	//machines
+	Route::get('machines', 'MachineController@index');
+	Route::get('machines/search', 'MachineController@search');
+	Route::post('machines', 'MachineController@store')->name('designs.create');
+	Route::get('machines/{machine}/edit', 'MachineController@show');
+	Route::put('machines/{machine}', 'MachineController@update')->name('designs.update');
 
 	//tasks
 	Route::post('tasks', 'TaskController@store');

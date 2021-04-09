@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `code_cities` (
 -- Volcando datos para la tabla imagen.code_cities: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `code_cities` DISABLE KEYS */;
 INSERT INTO `code_cities` (`id`, `number_quotation`, `city_id`) VALUES
-	(1, 156, 2),
+	(1, 157, 2),
 	(2, 10, 1);
 /*!40000 ALTER TABLE `code_cities` ENABLE KEYS */;
 
@@ -803,7 +803,7 @@ INSERT INTO `customers` (`id`, `business_name`, `address`, `nit`, `phone`, `emai
 CREATE TABLE IF NOT EXISTS `designs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `filename` varchar(128) NOT NULL,
-  `machine` varchar(64) NOT NULL,
+  `machine` varchar(64) DEFAULT NULL,
   `quality` varchar(128) DEFAULT NULL,
   `material` varchar(512) DEFAULT NULL,
   `cutting_dimension` varchar(64) DEFAULT NULL,
@@ -824,9 +824,9 @@ CREATE TABLE IF NOT EXISTS `designs` (
   PRIMARY KEY (`id`),
   KEY `designs_product_quotation_id_foreign` (`product_quotation_id`),
   CONSTRAINT `designs_product_quotation_id_foreign` FOREIGN KEY (`product_quotation_id`) REFERENCES `product_quotation` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=240 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.designs: ~210 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.designs: ~219 rows (aproximadamente)
 /*!40000 ALTER TABLE `designs` DISABLE KEYS */;
 INSERT INTO `designs` (`id`, `filename`, `machine`, `quality`, `material`, `cutting_dimension`, `print_dimension`, `finished`, `test_print`, `quote_approved_date`, `design_approved_date`, `reference`, `path`, `support_path`, `set_image_support`, `note`, `product_quotation_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(12, 'Banner Cumpleaños - 1,5x2m', 'Galaxy', '1440', 'Lona 13 Onzas', NULL, '1,5x2m', 'Tipo Banner con Tubin', NULL, '2020-09-11', '2020-09-18', NULL, '16004408175f64c9f10be9d.png', NULL, 0, NULL, 30, NULL, '2020-09-18 10:53:37', '2020-09-18 10:53:37'),
@@ -1044,9 +1044,33 @@ INSERT INTO `designs` (`id`, `filename`, `machine`, `quality`, `material`, `cutt
 	(235, 'adasdasd', 'asdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, '2021-02-26', '2021-02-26', NULL, '16143466796038f9b7404ae.jpeg', NULL, 0, NULL, 626, NULL, '2021-02-26 13:38:00', '2021-02-26 13:38:00'),
 	(236, 'impresión', 'laser', '720 dpi', 'Acrílico de 5mm, perfil de aluminio champagne, bisagras, tornillos, ramplus, doble contacto, silicona, tek bond.', NULL, NULL, 'Cortado de acrílico e instalado en pared como fotomontaje con bisagras para poder mover el panel y un triángulo de soporte, en ambos cuartos de muestras.', NULL, '2021-03-03', '2021-03-03', NULL, '1614778586603f90da8e827.png', NULL, 0, NULL, 627, NULL, '2021-03-03 13:36:28', '2021-03-03 13:36:28'),
 	(237, 'impresion', 'TE-1200', '720 dpi', 'Acrílico de 5mm, perfil de aluminio champagne, bisagras, tornillos, ramplus, doble contacto, silicona, tek bond.', NULL, NULL, 'Cortado de acrílico e instalado en pared como fotomontaje con bisagras para poder mover el panel y un triángulo de soporte, en ambos cuartos de muestras.', NULL, '2021-03-17', '2021-03-17', NULL, '161599022760520dd37e2fc.jpeg', NULL, 0, NULL, 646, NULL, '2021-03-17 14:10:28', '2021-03-17 14:10:28'),
-	(238, 'tests', 'JHF', NULL, NULL, NULL, NULL, NULL, NULL, '2021-03-17', '2021-03-17', NULL, '161599057360520f2dbd5bd.jpeg', NULL, 0, NULL, 647, NULL, '2021-03-17 14:16:13', '2021-03-17 14:16:13'),
-	(239, 'tests', 'jhf', NULL, NULL, NULL, NULL, NULL, NULL, '2021-03-17', '2021-03-17', NULL, '1615993312605219e07ab2a.jpeg', NULL, 0, NULL, 648, NULL, '2021-03-17 15:01:52', '2021-03-17 15:01:52');
+	(238, 'tests', 'JHF', NULL, NULL, NULL, NULL, NULL, NULL, '2021-03-17', '2021-03-17', NULL, '1617635111606b2727ef071.jpeg', '1617636970606b2e6a317af.jpeg', 1, NULL, 647, NULL, '2021-03-17 14:16:13', '2021-04-09 16:16:20'),
+	(239, 'tests', 'jhf', NULL, NULL, NULL, NULL, NULL, NULL, '2021-03-17', '2021-03-17', NULL, '1615993312605219e07ab2a.jpeg', NULL, 0, NULL, 648, NULL, '2021-03-17 15:01:52', '2021-03-17 15:01:52'),
+	(240, 'dfgdfg', 'dfgdfgd', NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-01', '2021-04-01', NULL, '16172900136065e31d0251f.jpeg', '16172900126065e31c14ec5.jpeg', 1, NULL, 650, NULL, '2021-04-01 15:13:33', '2021-04-01 15:13:33'),
+	(241, 'xfgdfgdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-06', '2021-04-06', NULL, '1617741305606cc5f910727.jpeg', '1617830780606e237c3a613.jpeg', 1, NULL, 653, NULL, '2021-04-06 20:35:05', '2021-04-07 21:26:20');
 /*!40000 ALTER TABLE `designs` ENABLE KEYS */;
+
+-- Volcando estructura para tabla imagen.design_machine
+CREATE TABLE IF NOT EXISTS `design_machine` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `design_id` int(10) unsigned NOT NULL,
+  `machine_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `design_id_foreign` (`design_id`),
+  KEY `machine_id_foreign` (`machine_id`),
+  CONSTRAINT `design_id_foreign` FOREIGN KEY (`design_id`) REFERENCES `designs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `machine_id_foreign` FOREIGN KEY (`machine_id`) REFERENCES `machines` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+-- Volcando datos para la tabla imagen.design_machine: ~5 rows (aproximadamente)
+/*!40000 ALTER TABLE `design_machine` DISABLE KEYS */;
+INSERT INTO `design_machine` (`id`, `design_id`, `machine_id`) VALUES
+	(1, 241, 1),
+	(4, 241, 4),
+	(6, 238, 2),
+	(8, 238, 27),
+	(9, 238, 28);
+/*!40000 ALTER TABLE `design_machine` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.employees
 CREATE TABLE IF NOT EXISTS `employees` (
@@ -1414,7 +1438,7 @@ CREATE TABLE IF NOT EXISTS `invoices` (
   CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.invoices: ~15 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.invoices: ~46 rows (aproximadamente)
 /*!40000 ALTER TABLE `invoices` DISABLE KEYS */;
 INSERT INTO `invoices` (`id`, `date`, `number`, `control_code`, `total`, `nit_name`, `nit`, `title`, `footer`, `oc`, `hea`, `details`, `summary`, `cancelled`, `state_id`, `license_id`, `customer_id`, `user_id`, `quotation_id`, `type`, `closing_date`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, '2020-12-10 11:18:28', '1', '4F-4D-11-04', 8120.00, NULL, '1023281020', 'Alquiler Publicitario, ubicado en la ciudad de', 'Correspondiente de 18/11/20 al 17/12/20', NULL, NULL, NULL, NULL, 0, 1, 2, 69, 2, 98, 'FACTURA', NULL, NULL, '2020-12-10 07:18:28', '2020-12-10 07:18:28'),
@@ -1461,8 +1485,8 @@ INSERT INTO `invoices` (`id`, `date`, `number`, `control_code`, `total`, `nit_na
 	(42, '2021-03-18 10:21:37', '5', 'FC-9D-53-1D-5C', 2200.00, NULL, '1011931025', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 23, 11, 170, 'FACTURA', NULL, NULL, '2021-03-18 10:21:37', '2021-03-18 10:21:37'),
 	(43, '2021-03-18 11:21:34', '6', '66-87-76-9E', 979.00, NULL, '310306022', 'para la ciudad: en santa cruz', NULL, NULL, NULL, NULL, 'impresion de 4 lonas con diferentes medidas', 0, 1, 3, 21, 11, 90, 'FACTURA', NULL, NULL, '2021-03-18 11:21:34', '2021-03-24 16:15:09'),
 	(44, '2021-03-18 11:49:44', '2', '7D-8A-40-88', 6200.00, NULL, '1016253021', 'En la ciudad de Santa Cruz', NULL, NULL, NULL, NULL, NULL, 0, 1, 4, 21, 4, 88, 'FACTURA', NULL, NULL, '2021-03-18 11:49:44', '2021-03-18 11:49:44'),
-	(45, '2021-03-24 16:29:43', '7', '90-AA-72-99-13', 318.00, NULL, '5956471', 'aaaaa', 'bbbbb', NULL, NULL, 'asdfadfsfsd|dfsdfsdfsdf', 'jejeje', 0, 1, 3, 13, 4, 8, 'FACTURA', NULL, NULL, '2021-03-24 16:29:43', '2021-03-25 11:11:39'),
-	(46, '2021-03-25 14:31:07', '8', '54-A5-CA-F2', 260.00, NULL, '85402453', '', NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 10, 4, 3, 'FACTURA', NULL, NULL, '2021-03-25 14:31:07', '2021-03-25 14:31:48');
+	(45, '2021-04-01 15:28:31', '7', '90-AA-72-99-13', 318.00, NULL, '5956471', 'aaaaa', 'bbbbb', NULL, NULL, 'asdfadfsfsd|dfsdfsdfsdf', 'jejeje', 0, 1, 3, 13, 4, 8, 'FACTURA', NULL, NULL, '2021-03-24 16:29:43', '2021-04-05 15:28:31'),
+	(46, '2021-04-05 15:19:32', '8', '54-A5-CA-F2', 260.00, NULL, '85402453', '', NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 10, 4, 3, 'FACTURA', NULL, NULL, '2021-03-25 14:31:07', '2021-04-05 15:19:32');
 /*!40000 ALTER TABLE `invoices` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.invoice_product
@@ -1477,11 +1501,11 @@ CREATE TABLE IF NOT EXISTS `invoice_product` (
   PRIMARY KEY (`id`),
   KEY `invoice_products_invoice_id_foreign` (`invoice_id`),
   KEY `invoice_products_product_id_foreign` (`product_id`),
-  CONSTRAINT `invoice_products_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `invoice_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `invoice_product_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `invoice_product_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.invoice_product: ~86 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.invoice_product: ~103 rows (aproximadamente)
 /*!40000 ALTER TABLE `invoice_product` DISABLE KEYS */;
 INSERT INTO `invoice_product` (`id`, `invoice_id`, `product_id`, `quantity`, `description`, `price`, `subtotal`) VALUES
 	(1, 1, 31, 1, 'Santa Cruz: Av. Cristo Redentor, entre 5to y 6to anillo cara "A" y "B".', 8120.00, 8120.00),
@@ -1617,6 +1641,32 @@ INSERT INTO `licenses` (`id`, `nit`, `authorization`, `key`, `starting_number`, 
 	(3, 164692025, 457401600000321, '(B{$$pp9i@-[%W48e]B4t2DFCZ+fKMM4J%sLK#I\\2CyEk\\Z=8=WXHGbVtTttXGQW', 9, '2021-08-28 23:59:59', 'Publicidad', 'Ley N° 453: El proveedor debe exhibir certificaciones de habilitación o documentos que acrediten las capacidades u ofertas de servicios especializados.', 1, 1, NULL, '2021-03-01 16:41:07', '2021-03-01 16:41:07'),
 	(4, 164692025, 359401600000460, 'FR5g)BD=%ee%e(uAeMKeMU9\\L[7QMUB@)GLRz=8L(Iz)Z@f[4QS$JursIYBSswh6', 3, '2021-08-28 23:59:59', 'Publicidad', 'Ley N° 453: El proveedor debe exhibir certificaciones de habilitación o documentos que acrediten las capacidades u ofertas de servicios especializados.', 1, 2, NULL, '2021-03-02 11:06:31', '2021-03-02 11:06:33');
 /*!40000 ALTER TABLE `licenses` ENABLE KEYS */;
+
+-- Volcando estructura para tabla imagen.machines
+CREATE TABLE IF NOT EXISTS `machines` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `description` varchar(64) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `description` (`description`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+
+-- Volcando datos para la tabla imagen.machines: ~10 rows (aproximadamente)
+/*!40000 ALTER TABLE `machines` DISABLE KEYS */;
+INSERT INTO `machines` (`id`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 'Galaxy', '2021-04-06 11:35:37', '2021-04-06 11:35:38', NULL),
+	(2, 'Galaxy y Plotter de Corte', '2021-04-06 11:35:52', '2021-04-06 11:35:52', NULL),
+	(3, 'JHF', '2021-04-06 11:35:59', '2021-04-06 11:36:00', NULL),
+	(4, 'Router CNC', '2021-04-06 11:36:11', '2021-04-06 11:36:12', NULL),
+	(23, 'Test 1', '2021-04-08 21:10:39', '2021-04-08 21:10:39', NULL),
+	(24, 'Test 2', '2021-04-08 21:11:00', '2021-04-08 21:11:00', NULL),
+	(25, 'Test 3', '2021-04-08 21:12:45', '2021-04-08 21:12:45', NULL),
+	(26, 'Test 4', '2021-04-08 21:12:59', '2021-04-08 21:12:59', NULL),
+	(27, 'Test 5', '2021-04-09 16:15:08', '2021-04-09 16:15:25', NULL),
+	(28, 'Test 6', '2021-04-09 16:16:12', '2021-04-09 16:16:12', NULL);
+/*!40000 ALTER TABLE `machines` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.materials
 CREATE TABLE IF NOT EXISTS `materials` (
@@ -1781,7 +1831,7 @@ CREATE TABLE IF NOT EXISTS `notes` (
   CONSTRAINT `notes_voucher_id_foreign` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.notes: ~11 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.notes: ~14 rows (aproximadamente)
 /*!40000 ALTER TABLE `notes` DISABLE KEYS */;
 INSERT INTO `notes` (`id`, `number`, `date`, `total`, `discount`, `nit`, `cancelled`, `summary`, `voucher_id`, `customer_id`, `user_id`, `quotation_id`, `type`, `closing_date`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, '1', '2021-01-05 12:23:03', 75.00, 0.00, '348410028', 1, NULL, 1, 65, 2, 87, 'N.REMISION', '2021-01-05', '2021-01-05 08:23:03', '2021-01-05 12:43:34', NULL),
@@ -1816,7 +1866,7 @@ CREATE TABLE IF NOT EXISTS `note_product` (
   CONSTRAINT `note_product_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.note_product: ~20 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.note_product: ~29 rows (aproximadamente)
 /*!40000 ALTER TABLE `note_product` DISABLE KEYS */;
 INSERT INTO `note_product` (`id`, `note_id`, `product_id`, `quantity`, `description`, `price`, `subtotal`) VALUES
 	(1, 1, 13, 2, 'Caracteristica:  señaletica  foam de 3 mm revestido en adhesivo impreso  full color', 30.00, 60.00),
@@ -3028,7 +3078,9 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `type` enum('Tarjeta','Efectivo','Cheque','Credito','Transferencia','Deposito') NOT NULL,
-  `path` varchar(128) NOT NULL,
+  `op` varchar(32) DEFAULT NULL,
+  `number` varchar(32) DEFAULT NULL,
+  `path` varchar(128) DEFAULT NULL,
   `amount` decimal(14,2) unsigned NOT NULL,
   `paymentable_id` int(10) unsigned NOT NULL,
   `paymentable_type` varchar(50) NOT NULL,
@@ -3036,41 +3088,44 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.payments: ~26 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.payments: ~33 rows (aproximadamente)
 /*!40000 ALTER TABLE `payments` DISABLE KEYS */;
-INSERT INTO `payments` (`id`, `date`, `type`, `path`, `amount`, `paymentable_id`, `paymentable_type`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(3, '2020-12-22', 'Transferencia', '16098707415ff4ad95cf109.jpeg', 109.98, 19, 'App\\Invoice', '2021-01-05 14:19:01', '2021-01-05 14:19:01', NULL),
-	(4, '2020-12-04', 'Transferencia', '16098777435ff4c8ef094dc.jpeg', 160.00, 5, 'App\\Note', '2021-01-05 16:15:43', '2021-01-05 16:15:43', NULL),
-	(5, '2020-12-17', 'Transferencia', '16098785895ff4cc3d4b6ee.jpeg', 20880.00, 4, 'App\\Invoice', '2021-01-05 16:29:49', '2021-01-05 16:29:49', NULL),
-	(6, '2020-12-17', 'Transferencia', '16098786485ff4cc788adb3.jpeg', 33640.00, 3, 'App\\Invoice', '2021-01-05 16:30:48', '2021-01-05 16:30:48', NULL),
-	(7, '2020-12-17', 'Transferencia', '16098787355ff4cccf71ae0.jpeg', 13920.00, 2, 'App\\Invoice', '2021-01-05 16:32:15', '2021-01-05 16:32:15', NULL),
-	(8, '2020-11-06', 'Transferencia', '16098788965ff4cd7031a99.jpeg', 3698.20, 4, 'App\\Note', '2021-01-05 16:34:56', '2021-01-05 16:34:56', NULL),
-	(9, '2020-11-05', 'Transferencia', '16098791485ff4ce6c52ba7.jpeg', 250.00, 3, 'App\\Note', '2021-01-05 16:39:08', '2021-01-05 16:39:08', NULL),
-	(10, '2020-11-27', 'Transferencia', '16098792555ff4ced7c9ff4.jpeg', 255.00, 2, 'App\\Note', '2021-01-05 16:40:55', '2021-01-05 16:40:55', NULL),
-	(11, '2020-12-08', 'Transferencia', '16098793885ff4cf5ccb8a4.jpeg', 75.00, 1, 'App\\Note', '2021-01-05 16:43:08', '2021-01-05 16:43:08', NULL),
-	(12, '2020-12-06', 'Transferencia', '16099457715ff5d2ab9448c.jpeg', 285.00, 6, 'App\\Note', '2021-01-06 11:09:31', '2021-01-06 11:09:54', '2021-01-06 11:09:54'),
-	(13, '2020-12-06', 'Transferencia', '16099458575ff5d301ce64f.jpeg', 3.85, 6, 'App\\Note', '2021-01-06 11:10:57', '2021-01-06 11:11:12', '2021-01-06 11:11:12'),
-	(14, '2020-12-06', 'Transferencia', '16099459415ff5d3550cf31.jpeg', 385.00, 6, 'App\\Note', '2021-01-06 11:12:21', '2021-01-06 11:12:21', NULL),
-	(15, '2021-02-01', 'Tarjeta', '16122153366018742888000.jpeg', 8120.00, 27, 'App\\Invoice', '2021-02-01 21:35:37', '2021-02-01 21:35:37', NULL),
-	(16, '2021-02-01', 'Tarjeta', '16122156596018756baed20.jpeg', 560.00, 26, 'App\\Invoice', '2021-02-01 21:40:59', '2021-02-01 21:40:59', NULL),
-	(17, '2021-02-01', 'Tarjeta', '1612215688601875882e115.jpeg', 24000.00, 26, 'App\\Invoice', '2021-02-01 21:41:28', '2021-02-01 21:41:28', NULL),
-	(18, '2021-02-02', 'Efectivo', '16122732156019563f6af2d.jpeg', 200.00, 22, 'App\\Invoice', '2021-02-02 13:40:15', '2021-02-02 13:40:15', NULL),
-	(19, '2021-02-02', 'Tarjeta', '16122734876019574f522e4.jpeg', 720.00, 21, 'App\\Invoice', '2021-02-02 13:44:47', '2021-02-02 13:44:47', NULL),
-	(20, '2021-03-05', 'Cheque', '1614950727604231475744b.jpeg', 33640.00, 25, 'App\\Invoice', '2021-03-05 13:25:27', '2021-03-05 13:25:27', NULL),
-	(21, '2021-03-17', 'Tarjeta', '1616015833605271d92f4ea.jpeg', 450.00, 41, 'App\\Invoice', '2021-03-17 21:17:13', '2021-03-17 21:17:13', NULL),
-	(22, '2021-03-17', 'Efectivo', '161601795560527a23ce6a5.jpeg', 140.00, 38, 'App\\Invoice', '2021-03-17 21:52:35', '2021-03-17 21:52:35', NULL),
-	(23, '2021-03-18', 'Efectivo', '16160827516053773ff06bd.jpeg', 200.00, 44, 'App\\Invoice', '2021-03-18 15:52:33', '2021-03-18 15:52:33', NULL),
-	(24, '2021-03-18', 'Efectivo', '1616083126605378b63be19.jpeg', 150.00, 44, 'App\\Invoice', '2021-03-18 15:58:46', '2021-03-18 15:58:46', NULL),
-	(25, '2021-03-18', 'Efectivo', '161608429060537d42def19.jpeg', 850.00, 44, 'App\\Invoice', '2021-03-18 16:18:11', '2021-03-18 16:18:11', NULL),
-	(26, '2021-03-18', 'Cheque', '161608433060537d6a18a33.jpeg', 3000.00, 44, 'App\\Invoice', '2021-03-18 16:18:50', '2021-03-18 16:18:50', NULL),
-	(27, '2021-03-18', 'Transferencia', '161608436160537d895100a.jpeg', 1000.00, 44, 'App\\Invoice', '2021-03-18 16:19:21', '2021-03-18 16:19:21', NULL),
-	(28, '2021-03-18', 'Deposito', '161608437960537d9b365cd.jpeg', 500.00, 44, 'App\\Invoice', '2021-03-18 16:19:39', '2021-03-18 16:19:39', NULL),
-	(29, '2021-03-25', 'Tarjeta', '1616687956605cb3543f1bc.jpeg', 6.72, 14, 'App\\Note', '2021-03-25 15:59:17', '2021-03-25 15:59:17', NULL),
-	(30, '2021-03-25', 'Efectivo', '1616687973605cb36523198.jpeg', 100.00, 14, 'App\\Note', '2021-03-25 15:59:33', '2021-03-25 15:59:33', NULL),
-	(31, '2021-03-25', 'Cheque', '1616688584605cb5c829ab3.jpeg', 18.00, 45, 'App\\Invoice', '2021-03-25 16:09:44', '2021-03-25 16:09:44', NULL),
-	(32, '2021-03-29', 'Tarjeta', '1617047717606230a5ae340.jpeg', 79.00, 43, 'App\\Invoice', '2021-03-29 19:55:18', '2021-03-29 19:55:18', NULL);
+INSERT INTO `payments` (`id`, `date`, `type`, `op`, `number`, `path`, `amount`, `paymentable_id`, `paymentable_type`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(3, '2020-12-22', 'Transferencia', NULL, NULL, '16098707415ff4ad95cf109.jpeg', 109.98, 19, 'App\\Invoice', '2021-01-05 14:19:01', '2021-01-05 14:19:01', NULL),
+	(4, '2020-12-04', 'Transferencia', NULL, NULL, '16098777435ff4c8ef094dc.jpeg', 160.00, 5, 'App\\Note', '2021-01-05 16:15:43', '2021-01-05 16:15:43', NULL),
+	(5, '2020-12-17', 'Transferencia', NULL, NULL, '16098785895ff4cc3d4b6ee.jpeg', 20880.00, 4, 'App\\Invoice', '2021-01-05 16:29:49', '2021-01-05 16:29:49', NULL),
+	(6, '2020-12-17', 'Transferencia', NULL, NULL, '16098786485ff4cc788adb3.jpeg', 33640.00, 3, 'App\\Invoice', '2021-01-05 16:30:48', '2021-01-05 16:30:48', NULL),
+	(7, '2020-12-17', 'Transferencia', NULL, NULL, '16098787355ff4cccf71ae0.jpeg', 13920.00, 2, 'App\\Invoice', '2021-01-05 16:32:15', '2021-01-05 16:32:15', NULL),
+	(8, '2020-11-06', 'Transferencia', NULL, NULL, '16098788965ff4cd7031a99.jpeg', 3698.20, 4, 'App\\Note', '2021-01-05 16:34:56', '2021-01-05 16:34:56', NULL),
+	(9, '2020-11-05', 'Transferencia', NULL, NULL, '16098791485ff4ce6c52ba7.jpeg', 250.00, 3, 'App\\Note', '2021-01-05 16:39:08', '2021-01-05 16:39:08', NULL),
+	(10, '2020-11-27', 'Transferencia', NULL, NULL, '16098792555ff4ced7c9ff4.jpeg', 255.00, 2, 'App\\Note', '2021-01-05 16:40:55', '2021-01-05 16:40:55', NULL),
+	(11, '2020-12-08', 'Transferencia', NULL, NULL, '16098793885ff4cf5ccb8a4.jpeg', 75.00, 1, 'App\\Note', '2021-01-05 16:43:08', '2021-01-05 16:43:08', NULL),
+	(12, '2020-12-06', 'Transferencia', NULL, NULL, '16099457715ff5d2ab9448c.jpeg', 285.00, 6, 'App\\Note', '2021-01-06 11:09:31', '2021-01-06 11:09:54', '2021-01-06 11:09:54'),
+	(13, '2020-12-06', 'Transferencia', NULL, NULL, '16099458575ff5d301ce64f.jpeg', 3.85, 6, 'App\\Note', '2021-01-06 11:10:57', '2021-01-06 11:11:12', '2021-01-06 11:11:12'),
+	(14, '2020-12-06', 'Transferencia', NULL, NULL, '16099459415ff5d3550cf31.jpeg', 385.00, 6, 'App\\Note', '2021-01-06 11:12:21', '2021-01-06 11:12:21', NULL),
+	(15, '2021-02-01', 'Tarjeta', NULL, NULL, '16122153366018742888000.jpeg', 8120.00, 27, 'App\\Invoice', '2021-02-01 21:35:37', '2021-02-01 21:35:37', NULL),
+	(16, '2021-02-01', 'Tarjeta', NULL, NULL, '16122156596018756baed20.jpeg', 560.00, 26, 'App\\Invoice', '2021-02-01 21:40:59', '2021-02-01 21:40:59', NULL),
+	(17, '2021-02-01', 'Tarjeta', NULL, NULL, '1612215688601875882e115.jpeg', 24000.00, 26, 'App\\Invoice', '2021-02-01 21:41:28', '2021-02-01 21:41:28', NULL),
+	(18, '2021-02-02', 'Efectivo', NULL, NULL, '16122732156019563f6af2d.jpeg', 200.00, 22, 'App\\Invoice', '2021-02-02 13:40:15', '2021-02-02 13:40:15', NULL),
+	(19, '2021-02-02', 'Tarjeta', NULL, NULL, '16122734876019574f522e4.jpeg', 720.00, 21, 'App\\Invoice', '2021-02-02 13:44:47', '2021-02-02 13:44:47', NULL),
+	(20, '2021-03-05', 'Cheque', NULL, NULL, '1614950727604231475744b.jpeg', 33640.00, 25, 'App\\Invoice', '2021-03-05 13:25:27', '2021-03-05 13:25:27', NULL),
+	(21, '2021-03-17', 'Tarjeta', NULL, NULL, '1616015833605271d92f4ea.jpeg', 450.00, 41, 'App\\Invoice', '2021-03-17 21:17:13', '2021-03-17 21:17:13', NULL),
+	(22, '2021-03-17', 'Efectivo', NULL, NULL, '161601795560527a23ce6a5.jpeg', 140.00, 38, 'App\\Invoice', '2021-03-17 21:52:35', '2021-03-17 21:52:35', NULL),
+	(23, '2021-03-18', 'Efectivo', NULL, NULL, '16160827516053773ff06bd.jpeg', 200.00, 44, 'App\\Invoice', '2021-03-18 15:52:33', '2021-03-18 15:52:33', NULL),
+	(24, '2021-03-18', 'Efectivo', NULL, NULL, '1616083126605378b63be19.jpeg', 150.00, 44, 'App\\Invoice', '2021-03-18 15:58:46', '2021-03-18 15:58:46', NULL),
+	(25, '2021-03-18', 'Efectivo', NULL, NULL, '161608429060537d42def19.jpeg', 850.00, 44, 'App\\Invoice', '2021-03-18 16:18:11', '2021-03-18 16:18:11', NULL),
+	(26, '2021-03-18', 'Cheque', NULL, NULL, '161608433060537d6a18a33.jpeg', 3000.00, 44, 'App\\Invoice', '2021-03-18 16:18:50', '2021-03-18 16:18:50', NULL),
+	(27, '2021-03-18', 'Transferencia', NULL, NULL, '161608436160537d895100a.jpeg', 1000.00, 44, 'App\\Invoice', '2021-03-18 16:19:21', '2021-03-18 16:19:21', NULL),
+	(28, '2021-03-18', 'Deposito', NULL, NULL, '161608437960537d9b365cd.jpeg', 500.00, 44, 'App\\Invoice', '2021-03-18 16:19:39', '2021-03-18 16:19:39', NULL),
+	(29, '2021-03-25', 'Tarjeta', NULL, NULL, '1616687956605cb3543f1bc.jpeg', 6.72, 14, 'App\\Note', '2021-03-25 15:59:17', '2021-03-25 15:59:17', NULL),
+	(30, '2021-03-25', 'Efectivo', NULL, NULL, '1616687973605cb36523198.jpeg', 100.00, 14, 'App\\Note', '2021-03-25 15:59:33', '2021-03-25 15:59:33', NULL),
+	(31, '2021-03-25', 'Cheque', NULL, NULL, '1616688584605cb5c829ab3.jpeg', 18.00, 45, 'App\\Invoice', '2021-03-25 16:09:44', '2021-03-25 16:09:44', NULL),
+	(32, '2021-03-29', 'Tarjeta', NULL, NULL, '1617047717606230a5ae340.jpeg', 79.00, 43, 'App\\Invoice', '2021-03-29 19:55:18', '2021-03-29 19:55:18', NULL),
+	(33, '2021-04-01', 'Efectivo', NULL, NULL, NULL, 100.00, 46, 'App\\Invoice', '2021-04-01 18:42:10', '2021-04-09 19:53:10', NULL),
+	(34, '2021-04-09', 'Efectivo', NULL, NULL, '16179959866070a8d2e9da0.jpeg', 50.00, 46, 'App\\Invoice', '2021-04-09 18:45:42', '2021-04-09 19:19:47', NULL),
+	(35, '2021-04-09', 'Efectivo', NULL, NULL, '16179960216070a8f51b0ef.jpeg', 250.00, 42, 'App\\Invoice', '2021-04-09 19:20:21', '2021-04-09 19:20:21', NULL);
 /*!40000 ALTER TABLE `payments` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.products
@@ -3192,9 +3247,9 @@ CREATE TABLE IF NOT EXISTS `product_quotation` (
   PRIMARY KEY (`id`),
   KEY `product_quotation_product_id_foreign` (`product_id`),
   KEY `product_quotation_quotation_id_foreign` (`quotation_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=651 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=654 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla imagen.product_quotation: ~328 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.product_quotation: ~329 rows (aproximadamente)
 /*!40000 ALTER TABLE `product_quotation` DISABLE KEYS */;
 INSERT INTO `product_quotation` (`id`, `quotation_id`, `product_id`, `uuid`, `quantity`, `dimension`, `description`, `material`, `quality`, `finish`, `materialCheck`, `qualityCheck`, `finishCheck`, `price`, `subtotal`, `state`, `price_type`, `type`, `unit`, `cooldown`, `deleted_at`) VALUES
 	(30, 1, 1, 'bf371df0-2042-4de2-b511-eaa847430938', 1, '1.50 x 2.00', NULL, NULL, NULL, NULL, 0, 0, 0, 60.00, 180.00, 1, 'price_with_tax', 'price_with_tax', 0, 0, NULL),
@@ -3537,7 +3592,8 @@ INSERT INTO `product_quotation` (`id`, `quotation_id`, `product_id`, `uuid`, `qu
 	(647, 169, 1, 'e9279949-1606-4763-b757-db97abb7439a', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
 	(648, 170, 1, 'da0dbb3f-9e25-4404-a61e-c480f1cebd32', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
 	(649, 171, 31, 'd3ee9b77-87e2-4c6c-9404-0b36b01f51bf', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 1500.00, 1500.00, 0, 'price_service', 'price_service', 1, 1, NULL),
-	(650, 172, 2, '44ab1c89-757d-49d2-aec2-c40979d175e1', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 55.00, 2200.00, 0, 'normal_price', 'normal_price', 0, 0, NULL);
+	(650, 172, 2, '44ab1c89-757d-49d2-aec2-c40979d175e1', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
+	(653, 173, 31, 'f5215239-cc16-4526-b8ed-de17e8bd58fa', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 2500.00, 2500.00, 1, 'price_service', 'price_service', 1, 1, NULL);
 /*!40000 ALTER TABLE `product_quotation` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.profiles
@@ -3592,9 +3648,9 @@ CREATE TABLE IF NOT EXISTS `quotations` (
   KEY `date` (`date`),
   KEY `quotations_office_id_foreign` (`office_id`),
   FULLTEXT KEY `cite` (`cite`)
-) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla imagen.quotations: ~152 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.quotations: ~153 rows (aproximadamente)
 /*!40000 ALTER TABLE `quotations` DISABLE KEYS */;
 INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment`, `date`, `amount`, `discount`, `iva`, `term`, `payment`, `validity`, `note`, `cancelled`, `condition`, `state_id`, `customer_id`, `user_id`, `office_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 'SCZ-1-20', 'Maria Guzman', '75076273', 'Barrio Guaracachi', '2020-09-11', 180.00, 0.00, NULL, '2020-09-12', 'A contra entrega', '10 dias', 'Banner acabado con tubin', 0, 1, 3, 8, 2, 1, NULL, '2020-09-11 08:55:45', '2020-09-21 10:06:22'),
@@ -3755,10 +3811,11 @@ INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment
 	(166, 'SCZ-151-21', 'MARIO', '77078147', 'OFICINA', '2021-03-03', 2200.00, 0.00, NULL, '2021-03-03', NULL, NULL, NULL, 0, 2, 3, 69, 4, 1, NULL, '2021-03-03 13:35:35', '2021-03-17 17:05:45'),
 	(167, 'SCZ-152-21', 'fghdfhfghfgh', 'fghfghfghfgh', 'fghfghfghfgh', '2021-03-11', 505.00, 0.00, NULL, '2021-03-11', NULL, NULL, NULL, 0, 1, 1, 8, 4, 1, NULL, '2021-03-11 20:04:09', '2021-03-11 20:18:31'),
 	(168, 'SCZ-153-21', 'Fernando Banegas', '77078147', 'oficinas', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 2, 61, 4, 1, NULL, '2021-03-17 14:09:29', '2021-03-17 14:10:31'),
-	(169, 'SCZ-154-21', 'Manuel Banegas', '68774551', 'Oficinas', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 2, 30, 4, 1, NULL, '2021-03-17 14:15:47', '2021-03-17 14:16:16'),
+	(169, 'SCZ-154-21', 'Manuel Banegas', '68774551', 'Oficinas', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 3, 30, 4, 1, NULL, '2021-03-17 14:15:47', '2021-04-09 17:54:45'),
 	(170, 'SCZ-155-21', 'Toto Banegas', '77078147', 'oficinas', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 0, 3, 23, 4, 1, NULL, '2021-03-17 15:01:16', '2021-03-18 10:21:37'),
 	(171, 'SCZ-156-21', 'Jose Padilla', '69854123', 'Oficinas', '2021-03-17', 1500.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 1, 15, 2, 1, NULL, '2021-03-17 21:02:49', '2021-03-17 21:02:49'),
-	(172, 'LPZ-10-21', 'sdasdasda', 'asdasdasdasd', 'asdasdasda', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 1, 61, 6, 2, NULL, '2021-03-17 21:51:48', '2021-03-17 21:51:48');
+	(172, 'LPZ-10-21', 'sdasdasda', 'asdasdasdasd', 'asdasdasda', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 1, 61, 6, 2, NULL, '2021-03-17 21:51:48', '2021-03-17 21:51:48'),
+	(173, 'SCZ-157-21', 'Pedro Vargas', '77078147', 'Oficina', '2021-04-05', 2500.00, 0.00, NULL, '2021-04-05', NULL, NULL, NULL, 0, 1, 1, 69, 4, 1, NULL, '2021-04-05 20:31:28', '2021-04-06 14:55:45');
 /*!40000 ALTER TABLE `quotations` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.states
@@ -3796,9 +3853,9 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   KEY `tasks_work_order_id_foreign` (`work_order_id`),
   CONSTRAINT `tasks_employee_id_foreign` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`),
   CONSTRAINT `tasks_work_order_id_foreign` FOREIGN KEY (`work_order_id`) REFERENCES `work_orders` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.tasks: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.tasks: ~10 rows (aproximadamente)
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
 INSERT INTO `tasks` (`id`, `description`, `priority`, `completed`, `date_init`, `date_end`, `work_order_id`, `employee_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 'test de tarea', 'Baja', 0, '2021-03-04 11:10:00', NULL, 107, 3, '2021-03-04 15:10:56', '2021-03-04 15:20:59', '2021-03-04 15:20:59'),
@@ -3811,7 +3868,8 @@ INSERT INTO `tasks` (`id`, `description`, `priority`, `completed`, `date_init`, 
 	(8, 'imprimir lonas', 'Media', 0, '2021-03-17 10:13:00', NULL, 109, 5, '2021-03-17 10:13:57', '2021-03-17 10:13:57', NULL),
 	(9, 'imprimir1', 'Alta', 1, '2021-03-17 15:00:00', '2021-03-17 11:17:38', 111, 3, '2021-03-17 11:02:44', '2021-03-17 11:17:38', NULL),
 	(10, 'serigrafiar lonas2', 'Media', 1, '2021-03-17 13:03:00', '2021-03-17 11:17:38', 111, 2, '2021-03-17 11:03:20', '2021-03-17 11:17:38', NULL),
-	(11, 'cortar lonas', 'Alta', 1, '2021-03-17 11:07:00', '2021-03-17 11:17:53', 111, 5, '2021-03-17 11:07:31', '2021-03-17 11:17:53', NULL);
+	(11, 'cortar lonas', 'Alta', 1, '2021-03-17 11:07:00', '2021-03-17 11:17:53', 111, 5, '2021-03-17 11:07:31', '2021-03-17 11:17:53', NULL),
+	(12, 'sfsdfsf', 'Baja', 1, '2021-04-09 13:53:00', '2021-04-09 13:54:34', 110, 1, '2021-04-09 13:53:17', '2021-04-09 13:54:34', NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.users
@@ -4190,7 +4248,7 @@ INSERT INTO `work_orders` (`id`, `number`, `opening_date`, `estimated_date`, `cl
 	(107, '107', '2021-02-26', '2021-02-26', '2021-03-04', 'impresion', NULL, NULL, NULL, 165, NULL, NULL, '2021-02-26 13:58:52', '2021-03-04 20:50:55'),
 	(108, '108', '2021-03-03', '2021-03-03', '2021-03-03', 'impresion', NULL, NULL, NULL, 166, NULL, NULL, '2021-03-03 13:36:53', '2021-03-03 13:37:05'),
 	(109, '109', '2021-03-18', '2021-03-18', NULL, 'Impresión', NULL, NULL, NULL, 168, NULL, NULL, '2021-03-17 14:10:50', '2021-03-17 14:10:50'),
-	(110, '110', '2021-03-17', '2021-03-18', NULL, 'Impresión', NULL, NULL, NULL, 169, NULL, NULL, '2021-03-17 14:16:38', '2021-03-17 14:16:38'),
+	(110, '110', '2021-03-17', '2021-03-18', '2021-04-09', 'Impresión', NULL, NULL, NULL, 169, NULL, NULL, '2021-03-17 14:16:38', '2021-04-09 17:54:44'),
 	(111, '111', '2021-03-18', '2021-03-18', '2021-03-17', 'impresión', NULL, NULL, NULL, 170, NULL, NULL, '2021-03-17 15:02:09', '2021-03-17 15:18:00');
 /*!40000 ALTER TABLE `work_orders` ENABLE KEYS */;
 

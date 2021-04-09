@@ -137,7 +137,10 @@
           <tr>
             <td colspan="2">
               <span class="text-big text-color">Maquina(s): </span>
-              <span class="text-big text-bold text-color">{{ $design['machine'] }}</span>  
+              @foreach($design['machines'] as $index => $machine)
+                @php($total = $index + 1) 
+                <span class="text-big text-bold text-color">{{ $machine['description'] }}{{ $total < count($design['machines']) ? ',' : '' }}</span>
+              @endforeach
             </td>
           </tr>
           <tr>
@@ -206,21 +209,21 @@
           </tr>
         </table>
         <br>
-        @if (is_null($design['support_path']['url'])) 
+        @if (is_null($design['support_path'])) 
           <div class="thumbnail">
             <div class="column">
-              <img src="{{ $design['path']['url'] }}">
+              <img src="{{ $design['path'] }}">
             </div>
           </div>
         @else 
           <div class="wrap">
             <div class="column">
-              <img src="{{ $design['path']['url'] }}">
+              <img src="{{ $design['path'] }}">
             </div>
           </div>
           <div class="wrap">
             <div class="column">
-            <img src="{{ $design['support_path']['url'] }}">
+            <img src="{{ $design['support_path'] }}">
             </div>
           </div>
         @endif 

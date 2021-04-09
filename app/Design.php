@@ -40,4 +40,9 @@ class Design extends Model
     {
         return $this->belongsTo(ProductQuotation::class, 'product_quotation_id');
     }
+
+    public function machines()
+    {
+        return $this->belongsToMany(Machine::class);
+    }
 }

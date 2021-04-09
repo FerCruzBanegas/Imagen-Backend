@@ -15,7 +15,7 @@ class DesignRequest extends FormRequest
     {
         $rules = [
             'design.filename' => 'required|min:5|max:64',
-            'design.machine' => 'required|max:64',
+            // 'design.machine' => 'required|max:64',
             'design.quality' => 'nullable|max:128',
             'design.material' => 'nullable|max:512',
             'design.cutting_dimension' => 'nullable|max:32',
@@ -28,6 +28,8 @@ class DesignRequest extends FormRequest
             'design.path.url' => 'required',
             'design.note' => 'nullable|min:5|max:512',
             'design.product_quotation_id' => 'required|integer',
+            'design.machines' => 'required|array',
+            'design.machines.*' => 'integer',
         ];
 
         if($this->design['set_image_support']) {
@@ -41,7 +43,7 @@ class DesignRequest extends FormRequest
     {
         return [
             'design.filename' => 'archivo',
-            'design.machine' => 'máquina',
+            'design.machines' => 'máquina',
             'design.quality' => 'calidad',
             'design.cutting_dimension' => 'dimensión corte',
             'design.print_dimension' => 'dimensión impresión',
