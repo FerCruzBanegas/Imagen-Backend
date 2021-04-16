@@ -92,6 +92,7 @@ class InvoiceController extends ApiController
 
             $invoice->update([
                 'date' => $date->format('Y-m-d H:i:s'),
+                'nit_name' => $request->invoice['nit_name'],
                 'title' => rtrim($request->invoice['title'], ':'),
                 'footer' => $request->invoice['footer'],
                 'details' => $request->invoice['details'],

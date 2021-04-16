@@ -22,6 +22,8 @@ class PaymentRequest extends FormRequest
         $rules = [
             'date' => 'required|date_format:Y-m-d',
             'type' => ['required', Rule::in($this->payments)],
+            'op' => 'nullable|max:32',
+            'number' => 'nullable|max:32',
             'path.url' => 'required',
             'amount' => 'required|max:15|regex:/^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$/',
         ];
@@ -34,6 +36,7 @@ class PaymentRequest extends FormRequest
         return [
             'date' => 'fecha',
             'type' => 'tipo de pago',
+            'number' => 'número',
             'path.url' => 'imagen',
             'amount' => 'monto',
         ];

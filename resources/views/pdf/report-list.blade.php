@@ -118,6 +118,9 @@
           </div>
           <div class="leftdiv" style="margin-top: 0;">
             <div style="color: #000; font-size: 19px; font-weight: bold; text-decoration: underline;">{{ mb_strtoupper($title, 'UTF-8') }}</div>
+            @isset($customer)
+              <div style="font-weight: bold;">CLIENTE: {{ $customer }}</div>
+            @endisset
             <div style="font-weight: bold;">(Expresado en Bolivianos)</div>
             <div style="font-weight: bold;">Desde: {{ date("d/m/Y", strtotime($date['initial_date'])) }} al {{ date("d/m/Y", strtotime($date['final_date'])) }}</div>
           </div>

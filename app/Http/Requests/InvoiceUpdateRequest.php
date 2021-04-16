@@ -14,9 +14,12 @@ class InvoiceUpdateRequest extends FormRequest
     public function rules()
     {
         $rules = [
+            'invoice.date' => 'required|date_format:Y-m-d',
+            'invoice.nit_name' => 'nullable|min:3|max:120',
             'invoice.title' => 'nullable|max:120',
             'invoice.footer' => 'nullable|max:120',
             'invoice.summary' => 'nullable|min:3|max:500',
+            'invoice.details' => 'nullable|max:256',
             'products.*.description' => 'required|min:3|max:500',
         ];
 
@@ -27,6 +30,7 @@ class InvoiceUpdateRequest extends FormRequest
     {
         return [
             'invoice.summary' => 'resumen',
+            'invoice.nit_name' => 'nombre factura',
         ];
     }
 

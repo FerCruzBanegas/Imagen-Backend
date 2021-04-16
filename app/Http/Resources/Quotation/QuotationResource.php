@@ -87,7 +87,7 @@ class QuotationResource extends JsonResource
                         'set_image_support' => $product->pivot->design['set_image_support'] === 1 ? true : false,
                         'note' => $product->pivot->design['note'],
                         'product_quotation_id' => $product->pivot->id,
-                        'machines' => $product->pivot->design->machines->map(function ($item) {
+                        'machines' => is_null($product->pivot->design) ? NULL : $product->pivot->design->machines->map(function ($item) {
                             return $item->id;
                         }),
                         'quotation' => $this->id,

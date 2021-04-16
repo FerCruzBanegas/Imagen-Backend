@@ -480,6 +480,7 @@ Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
 	Route::post('machines', 'MachineController@store')->name('designs.create');
 	Route::get('machines/{machine}/edit', 'MachineController@show');
 	Route::put('machines/{machine}', 'MachineController@update')->name('designs.update');
+	Route::delete('machines', 'MachineController@destroy')->name('designs.update');
 
 	//tasks
 	Route::post('tasks', 'TaskController@store');

@@ -46,6 +46,8 @@ class PaymentController extends ApiController
                 $payment = $model->payments()->create([
                     'date' => $request->date, 
                     'type' => $request->type, 
+                    'op' => $request->op,
+                    'number' => $request-> number,
                     'path' => $image_name, 
                     'amount' => $request->amount, 
                 ]);
@@ -65,6 +67,8 @@ class PaymentController extends ApiController
             $payment->update([
                 'date' => $request->date, 
                 'type' => $request->type, 
+                'op' => $request->op,
+                'number' => $request-> number,
                 'amount' => $request->amount, 
             ]);
 

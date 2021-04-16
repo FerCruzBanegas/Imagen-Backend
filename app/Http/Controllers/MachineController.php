@@ -49,22 +49,22 @@ class MachineController extends ApiController
         return $this->respondUpdated();
     }
 
-    // public function destroy(Request $request)
-    // {
-    //     try {
-    //         $data = [];
-    //         $materials = $this->material->find($request->materials);
-    //         foreach ($materials as $material) {
-    //             $model = $material->secureDelete();
-    //             if ($model) {
-    //                 $data[] = $material;
-    //             }
-    //         }
-    //     } catch (Exception $e) {
-    //         return $this->respondInternalError();
-    //     }
-    //     return $this->respondDeleted($data);
-    // }
+    public function destroy(Request $request)
+    {
+        try {
+            $data = [];
+            $machines = $this->machine->find($request->machines);
+            foreach ($machines as $machine) {
+                $model = $machine->secureDelete();
+                if ($model) {
+                    $data[] = $machine;
+                }
+            }
+        } catch (Exception $e) {
+            return $this->respondInternalError();
+        }
+        return $this->respondDeleted($data);
+    }
 
     public function listing()
     {

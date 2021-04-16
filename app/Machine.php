@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\SecureDelete;
 
 class Machine extends Model
 {
-    use SoftDeletes;
+    use SecureDelete, SoftDeletes;
     
     protected $dates = ['deleted_at'];
 
@@ -15,6 +16,10 @@ class Machine extends Model
 
     protected $fillable = [
         'description',
+    ];
+
+    protected $relationships = [
+        'designs'
     ];
 
     public static function listMachines()

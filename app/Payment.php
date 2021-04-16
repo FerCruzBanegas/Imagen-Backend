@@ -14,7 +14,7 @@ class Payment extends Model
     // protected $hidden = ['deleted_at'];
 
     protected $fillable = [
-        'date', 'type', 'path', 'amount',
+        'date', 'type', 'op', 'number', 'path', 'amount',
     ];
 
     public function paymentable()

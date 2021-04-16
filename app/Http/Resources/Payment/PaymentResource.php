@@ -8,10 +8,15 @@ class PaymentResource extends JsonResource
 {
     public function toArray($request)
     {
+        $bool = (!is_null($this->op) && !is_null($this->number)) ? ' - ' : ' ';
         return [
             'id' => $this->id,
             'date' => $this->date,
             'type' => $this->type,
+            'code' => $this->op .$bool. $this->number,
+            'op' => $this->op,
+            'number' => $this->number,
+            'summary' => 'Pagado en '. $this->type . ' F-' . $this->paymentable->number,
             'path' => [
                 'name' => $this->path,
                 'url' => $this->path ? $this->getBase64Payment($this->path) : NULL,

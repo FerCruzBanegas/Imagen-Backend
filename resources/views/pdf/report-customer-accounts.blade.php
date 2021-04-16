@@ -83,18 +83,18 @@
         <div class="leftdiv">
           <div style="border: 2px solid #9e0207; border-radius: 7px; text-align: left; width: 65%; padding: 10px;">
             <span style="color: #000; font-weight: bold; font-size: 13px; letter-spacing: 1px;">PUBLICIDAD VIAL IMAGEN</span>
-            <span style="color: #000; font-weight: bold; font-size: 13px; letter-spacing: 3px;">PVI Santa Cruz</span>
+            <span style="color: #000; font-weight: bold; font-size: 13px; letter-spacing: 3px;">{{ $office }}</span>
           </div>
         </div>
         <div class="leftdiv" style="margin-top: 0;">
           <div style="color: #000; font-size: 19px; font-weight: bold; text-decoration: underline;">ESTADO DE CUENTAS</div>
-          <div style="font-weight: bold;">CLIENTE: AGENCIAS GENERALES S.A.</div>
+          <div style="font-weight: bold;">CLIENTE: {{ $customer }}</div>
           <div style="font-weight: bold;">(Expresado en Bolivianos)</div>
-          <div style="font-weight: bold;">Desde: 01/01/2021 al 31/01/2021</div>
+          <div style="font-weight: bold;">Desde: {{ date("d/m/Y", strtotime($date['initial_date'])) }} al {{ date("d/m/Y", strtotime($date['final_date'])) }}</div>
         </div>
         <div class="leftdiv">
           <div style="text-align: right;"><img src="{{url('/img/favicon.png')}}" style="width:40px; height: 40px;"></div>
-          <div style="text-align: right;"><span style="font-weight: bold;">Fecha: </span>{{ date("d/m/Y") }}</div>
+          <div style="text-align: right;"><span style="font-weight: bold;">Fecha: </span>{{ $now }}</div>
         </div>
       </div>
     </div>
@@ -114,7 +114,7 @@
         @php
           $totalPayments = 0;
         @endphp
-        @foreach($data['customer']['invoices'] as $item)  
+        @foreach($items as $item)  
           <tr style="background-color: #f7d9d9;">
             <td>{{ date('d/m/Y', strtotime($item['date'])) }}</td>
             <td>{{ $item['type'] }}</td>
@@ -128,8 +128,8 @@
             <tr style="background-color: #f9f3f3;">
               <td>{{ date('d/m/Y', strtotime($payment['date'])) }}</td>
               <td>{{ $payment['type'] }}</td>
-              <td>01</td>
-              <td>asas</td>
+              <td>{{ $payment['code'] }}</td>
+              <td>{{ $payment['summary'] }}</td>
               <td></td>
               <td>{{ number_format($payment['amount'], 2, '.', ',')  }}</td>
               <td></td>
@@ -143,7 +143,7 @@
               TOTAL
             </td>
             <td></td>
-            <td>{{ number_format($item['payments']->sum('amount'), 2, '.', ',') }}</td>
+            <td>{{ number_format(collect($item['payments'])->sum('amount'), 2, '.', ',') }}</td>
             <td></td>
           </tr>
         @endforeach
@@ -152,9 +152,9 @@
           <td></td>
           <td></td>
           <td></td>
-          <td>{{ number_format($data['customer']['invoices']->sum('total'), 2, '.', ',') }}</td>
+          <td>{{ number_format(collect($items)->sum('total'), 2, '.', ',') }}</td>
           <td>{{ number_format($totalPayments, 2, '.', ',') }}</td>
-          <td>{{ number_format($data['customer']['invoices']->sum('total') - $totalPayments, 2, '.', ',') }}</td>
+          <td>{{ number_format(collect($items)->sum('total') - $totalPayments, 2, '.', ',') }}</td>
         </tr>
       </tbody>
     </table>

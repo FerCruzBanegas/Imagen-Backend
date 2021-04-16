@@ -8,6 +8,9 @@ use App\Exports\Excel\ReportsExport;
 
 class ReportService
 {
+    private $views = [1 => 'pdf.report-list', 2 => 'pdf.report-customer-accounts'];
+    
+
     public function __construct()
     {
         setlocale(LC_ALL, "es_ES");
@@ -16,17 +19,16 @@ class ReportService
 
     public function manyPdfDownload(Request $request) 
     {
-        $data = [
-            'title' => $request->title,
-            'office' => auth()->user()->office->description,
-            'date' => $request->date,
-            'now' => date("d/m/Y"),
-            'items' => $request->data,
-            'columns' => array_keys($request->data[0])
-        ];
+        $data = [];
 
-        $export = new PdfExport('pdf.report-list', $data);
-        return $export->options()->letter()->landscape()->download();
+        foreach ($request->data as $key => $value) {
+            $data[$key] = $value;
+        }
+
+        $data['now'] = date("d/m/Y");
+
+        $export = new PdfExport($this->views[$request->data['type']], $data);
+        return $export->{$export->types[$request->data['type']]}();
     }
 
     public function manyExcelDownload(Request $request) 
