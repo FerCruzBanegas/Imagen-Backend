@@ -393,7 +393,30 @@ Route::get('test', function() {
 	// $data = \App\Customer::with('invoices', 'notes')->whereIn('id', [21])->get();
 	$customer = \App\Customer::find(21);
 
-	return $customer;
+	// return json_decode('[[0,1,2,3,4,5,6,7,8,9],[1,2,3,4,0,6,7,8,9,5],[2,3,4,0,1,7,8,9,5,6],[3,4,0,1,2,8,9,5,6,7],[4,0,1,2,3,9,5,6,7,8],[5,9,8,7,6,0,4,3,2,1],[6,5,9,8,7,1,0,4,3,2],[7,6,5,9,8,2,1,0,4,3],[8,7,6,5,9,3,2,1,0,4],[9,8,7,6,5,4,3,2,1,0]]');
+	
+	
+
+	function CalcVerhoeff($number, $iterations = 1) 
+    {
+		$d = [[0,1,2,3,4,5,6,7,8,9],[1,2,3,4,0,6,7,8,9,5],[2,3,4,0,1,7,8,9,5,6],[3,4,0,1,2,8,9,5,6,7],[4,0,1,2,3,9,5,6,7,8],[5,9,8,7,6,0,4,3,2,1],[6,5,9,8,7,1,0,4,3,2],[7,6,5,9,8,2,1,0,4,3],[8,7,6,5,9,3,2,1,0,4],[9,8,7,6,5,4,3,2,1,0]];
+        $inv = [0,4,3,2,1,5,6,7,8,9];
+        $p = [[0,1,2,3,4,5,6,7,8,9],[1,5,7,6,2,8,3,0,9,4],[5,8,0,3,7,9,6,1,4,2],[8,9,1,6,0,4,3,5,2,7],[9,4,5,3,1,2,6,8,7,0],[4,2,8,6,5,7,3,9,0,1],[2,7,9,3,8,0,6,4,1,5],[7,0,4,6,9,1,3,2,5,8]];
+
+        $result = 0;
+        $number = str_split(strrev($number), 1);
+        foreach ($number as $key => $value) {
+            $result = $d[$result][$p[($key + 1) % 8][$value]];
+        }
+        $result = strrev(implode('', $number)) . $inv[$result];
+        if ($iterations > 1) {
+            return CalcVerhoeff($result, --$iterations);
+        }
+        return $result;
+    }
+
+	// return CalcVerhoeff(bcadd(bcadd(bcadd(80, "148406028"), "2021/04/19"), 5000), 5);
+	// return round(str_replace(",", ".", 5000),0);
 	// return [
 	// 	'price' => number_format((float)2000.56, 2, '.', ','),
 	// 	'subtotal' => 2000.56,

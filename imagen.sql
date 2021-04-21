@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `code_cities` (
 -- Volcando datos para la tabla imagen.code_cities: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `code_cities` DISABLE KEYS */;
 INSERT INTO `code_cities` (`id`, `number_quotation`, `city_id`) VALUES
-	(1, 157, 2),
+	(1, 159, 2),
 	(2, 10, 1);
 /*!40000 ALTER TABLE `code_cities` ENABLE KEYS */;
 
@@ -824,9 +824,9 @@ CREATE TABLE IF NOT EXISTS `designs` (
   PRIMARY KEY (`id`),
   KEY `designs_product_quotation_id_foreign` (`product_quotation_id`),
   CONSTRAINT `designs_product_quotation_id_foreign` FOREIGN KEY (`product_quotation_id`) REFERENCES `product_quotation` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=245 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.designs: ~219 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.designs: ~221 rows (aproximadamente)
 /*!40000 ALTER TABLE `designs` DISABLE KEYS */;
 INSERT INTO `designs` (`id`, `filename`, `machine`, `quality`, `material`, `cutting_dimension`, `print_dimension`, `finished`, `test_print`, `quote_approved_date`, `design_approved_date`, `reference`, `path`, `support_path`, `set_image_support`, `note`, `product_quotation_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(12, 'Banner Cumpleaños - 1,5x2m', 'Galaxy', '1440', 'Lona 13 Onzas', NULL, '1,5x2m', 'Tipo Banner con Tubin', NULL, '2020-09-11', '2020-09-18', NULL, '16004408175f64c9f10be9d.png', NULL, 0, NULL, 30, NULL, '2020-09-18 10:53:37', '2020-09-18 10:53:37'),
@@ -1047,7 +1047,9 @@ INSERT INTO `designs` (`id`, `filename`, `machine`, `quality`, `material`, `cutt
 	(238, 'tests', 'JHF', NULL, NULL, NULL, NULL, NULL, NULL, '2021-03-17', '2021-03-17', NULL, '1617635111606b2727ef071.jpeg', '1617636970606b2e6a317af.jpeg', 1, NULL, 647, NULL, '2021-03-17 14:16:13', '2021-04-09 16:16:20'),
 	(239, 'tests', 'jhf', NULL, NULL, NULL, NULL, NULL, NULL, '2021-03-17', '2021-03-17', NULL, '1615993312605219e07ab2a.jpeg', NULL, 0, NULL, 648, NULL, '2021-03-17 15:01:52', '2021-03-17 15:01:52'),
 	(240, 'dfgdfg', 'dfgdfgd', NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-01', '2021-04-01', NULL, '16172900136065e31d0251f.jpeg', '16172900126065e31c14ec5.jpeg', 1, NULL, 650, NULL, '2021-04-01 15:13:33', '2021-04-01 15:13:33'),
-	(241, 'xfgdfgdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-06', '2021-04-06', NULL, '1617741305606cc5f910727.jpeg', '1617830780606e237c3a613.jpeg', 1, NULL, 653, NULL, '2021-04-06 20:35:05', '2021-04-07 21:26:20');
+	(241, 'xfgdfgdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-06', '2021-04-06', NULL, '1617741305606cc5f910727.jpeg', '1617830780606e237c3a613.jpeg', 1, NULL, 653, NULL, '2021-04-06 20:35:05', '2021-04-07 21:26:20'),
+	(243, 'seresfdfsdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-15', '2021-04-14', NULL, '16184298536077479dae74a.jpeg', NULL, 0, NULL, 655, NULL, '2021-04-14 19:50:53', '2021-04-14 19:50:53'),
+	(244, 'asdadasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-15', '2021-04-14', NULL, '161843177560774f1fdf6e7.jpeg', NULL, 0, NULL, 656, NULL, '2021-04-14 20:22:55', '2021-04-14 20:22:55');
 /*!40000 ALTER TABLE `designs` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.design_machine
@@ -1056,20 +1058,22 @@ CREATE TABLE IF NOT EXISTS `design_machine` (
   `design_id` int(10) unsigned NOT NULL,
   `machine_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `design_id_foreign` (`design_id`),
-  KEY `machine_id_foreign` (`machine_id`),
-  CONSTRAINT `design_id_foreign` FOREIGN KEY (`design_id`) REFERENCES `designs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `machine_id_foreign` FOREIGN KEY (`machine_id`) REFERENCES `machines` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+  KEY `design_machine_design_id_foreign` (`design_id`),
+  KEY `design_machine_machine_id_foreign` (`machine_id`),
+  CONSTRAINT `design_machine_design_id_foreign` FOREIGN KEY (`design_id`) REFERENCES `designs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `design_machine_machine_id_foreign` FOREIGN KEY (`machine_id`) REFERENCES `machines` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.design_machine: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.design_machine: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `design_machine` DISABLE KEYS */;
 INSERT INTO `design_machine` (`id`, `design_id`, `machine_id`) VALUES
 	(1, 241, 1),
 	(4, 241, 4),
 	(6, 238, 2),
 	(8, 238, 27),
-	(9, 238, 28);
+	(9, 238, 28),
+	(12, 243, 2),
+	(13, 244, 4);
 /*!40000 ALTER TABLE `design_machine` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.employees
@@ -1116,9 +1120,9 @@ CREATE TABLE IF NOT EXISTS `employee_work_order` (
   KEY `work_order_id_foreign` (`work_order_id`),
   CONSTRAINT `employee_id_foreign` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `work_order_id_foreign` FOREIGN KEY (`work_order_id`) REFERENCES `work_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.employee_work_order: ~103 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.employee_work_order: ~107 rows (aproximadamente)
 /*!40000 ALTER TABLE `employee_work_order` DISABLE KEYS */;
 INSERT INTO `employee_work_order` (`id`, `work_order_id`, `employee_id`) VALUES
 	(1, 1, 1),
@@ -1231,7 +1235,13 @@ INSERT INTO `employee_work_order` (`id`, `work_order_id`, `employee_id`) VALUES
 	(112, 108, 8),
 	(113, 109, 8),
 	(114, 110, 8),
-	(115, 111, 6);
+	(115, 111, 6),
+	(116, 112, 8),
+	(117, 112, 6),
+	(118, 113, 8),
+	(119, 113, 6),
+	(120, 114, 8),
+	(121, 114, 5);
 /*!40000 ALTER TABLE `employee_work_order` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.entries
@@ -1436,9 +1446,9 @@ CREATE TABLE IF NOT EXISTS `invoices` (
   CONSTRAINT `license_id_foreign` FOREIGN KEY (`license_id`) REFERENCES `licenses` (`id`),
   CONSTRAINT `quotation_id_foreign` FOREIGN KEY (`quotation_id`) REFERENCES `quotations` (`id`),
   CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.invoices: ~46 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.invoices: ~48 rows (aproximadamente)
 /*!40000 ALTER TABLE `invoices` DISABLE KEYS */;
 INSERT INTO `invoices` (`id`, `date`, `number`, `control_code`, `total`, `nit_name`, `nit`, `title`, `footer`, `oc`, `hea`, `details`, `summary`, `cancelled`, `state_id`, `license_id`, `customer_id`, `user_id`, `quotation_id`, `type`, `closing_date`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, '2020-12-10 11:18:28', '1', '4F-4D-11-04', 8120.00, NULL, '1023281020', 'Alquiler Publicitario, ubicado en la ciudad de', 'Correspondiente de 18/11/20 al 17/12/20', NULL, NULL, NULL, NULL, 0, 1, 2, 69, 2, 98, 'FACTURA', NULL, NULL, '2020-12-10 07:18:28', '2020-12-10 07:18:28'),
@@ -1479,14 +1489,20 @@ INSERT INTO `invoices` (`id`, `date`, `number`, `control_code`, `total`, `nit_na
 	(36, '2021-02-25 10:34:59', '36', 'E0-AA-32-4B-9D', 50.00, NULL, '111111', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 1, 87, 4, 145, 'FACTURA', NULL, NULL, '2021-02-25 10:34:59', '2021-02-25 10:34:59'),
 	(37, '2021-03-02 11:20:16', '1', 'DE-34-B5-E7-7A', 9620.00, NULL, '7708590', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 83, 4, 133, 'FACTURA', NULL, NULL, '2021-03-02 11:20:16', '2021-03-02 11:20:16'),
 	(38, '2021-03-02 11:22:25', '1', '3C-50-43-C2', 140.00, NULL, '77078147', NULL, NULL, NULL, NULL, 'Producto: Coca-Cola|Campaña: 2RP SUCRE|Nº orden embol: 82002061|Periodo de pauta: Febrero 2021', NULL, 1, 1, 4, 57, 4, 135, 'FACTURA', '2021-03-18', NULL, '2021-03-02 11:22:25', '2021-03-18 10:24:35'),
-	(39, '2021-03-02 11:23:02', '2', 'EA-E8-0A-7C-0E', 1091.80, NULL, '56248712', NULL, 'Marca: Fanta', NULL, NULL, 'Campaña: Colorful People|Nº orden Embol: 82002061|Periodo de pauta: Febrero 2021', NULL, 0, 1, 3, 22, 4, 119, 'FACTURA', NULL, NULL, '2021-03-02 11:23:02', '2021-03-02 11:23:02'),
+	(39, '2021-03-02 11:23:02', '2', 'EA-E8-0A-7C-0E', 1091.80, NULL, '56248712', NULL, 'Marca: Fanta', NULL, NULL, 'Campaña: Colorful People|Nº orden Embol: 82002061|Periodo de pauta: Febrero 2021', 'Por la impresion de 3 vallas de 10x4 e instalacion', 0, 1, 3, 22, 4, 119, 'FACTURA', NULL, NULL, '2021-03-02 11:23:02', '2021-03-02 11:23:02'),
 	(40, '2021-03-02 11:29:45', '3', 'D4-CB-7C-9E-E4', 200.00, NULL, '564563454', 'Impresión de adhesivo', 'Marca: Coca-Cola', NULL, NULL, 'Campaña: 2RP SUCRE', NULL, 0, 1, 3, 77, 4, 121, 'FACTURA', NULL, NULL, '2021-03-02 11:29:45', '2021-03-15 09:29:51'),
 	(41, '2021-03-17 17:05:14', '4', '2A-D6-66-8A-33', 450.00, NULL, '397209021', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 3, 84, 2, 165, 'FACTURA', '2021-03-18', NULL, '2021-03-17 17:05:14', '2021-03-18 10:24:10'),
 	(42, '2021-03-18 10:21:37', '5', 'FC-9D-53-1D-5C', 2200.00, NULL, '1011931025', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 23, 11, 170, 'FACTURA', NULL, NULL, '2021-03-18 10:21:37', '2021-03-18 10:21:37'),
 	(43, '2021-03-18 11:21:34', '6', '66-87-76-9E', 979.00, NULL, '310306022', 'para la ciudad: en santa cruz', NULL, NULL, NULL, NULL, 'impresion de 4 lonas con diferentes medidas', 0, 1, 3, 21, 11, 90, 'FACTURA', NULL, NULL, '2021-03-18 11:21:34', '2021-03-24 16:15:09'),
-	(44, '2021-03-18 11:49:44', '2', '7D-8A-40-88', 6200.00, NULL, '1016253021', 'En la ciudad de Santa Cruz', NULL, NULL, NULL, NULL, NULL, 0, 1, 4, 21, 4, 88, 'FACTURA', NULL, NULL, '2021-03-18 11:49:44', '2021-03-18 11:49:44'),
-	(45, '2021-04-01 15:28:31', '7', '90-AA-72-99-13', 318.00, NULL, '5956471', 'aaaaa', 'bbbbb', NULL, NULL, 'asdfadfsfsd|dfsdfsdfsdf', 'jejeje', 0, 1, 3, 13, 4, 8, 'FACTURA', NULL, NULL, '2021-03-24 16:29:43', '2021-04-05 15:28:31'),
-	(46, '2021-04-05 15:19:32', '8', '54-A5-CA-F2', 260.00, NULL, '85402453', '', NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 10, 4, 3, 'FACTURA', NULL, NULL, '2021-03-25 14:31:07', '2021-04-05 15:19:32');
+	(44, '2021-03-18 11:49:44', '2', '7D-8A-40-88', 6200.00, NULL, '1016253021', 'En la ciudad de Santa Cruz', NULL, NULL, NULL, NULL, 'Por la impresion de 3 vallas de 10x4 e instalacion', 0, 1, 4, 21, 4, 88, 'FACTURA', NULL, NULL, '2021-03-18 11:49:44', '2021-03-18 11:49:44'),
+	(45, '2021-04-01 17:24:48', '7', '90-AA-72-99-13', 318.00, 'Fernando Banegas', '5956471', 'aaaaa', 'bbbbb', NULL, NULL, 'asdfadfsfsd|dfsdfsdfsdf', 'jejeje', 0, 1, 3, 13, 4, 8, 'FACTURA', NULL, NULL, '2021-03-24 16:29:43', '2021-04-12 17:24:48'),
+	(46, '2021-04-05 15:19:32', '8', '54-A5-CA-F2', 260.00, NULL, '85402453', '', NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 10, 4, 3, 'FACTURA', NULL, NULL, '2021-03-25 14:31:07', '2021-04-05 15:19:32'),
+	(47, '2021-04-12 11:19:30', '9', '15-F4-6C-61-EA', 2500.00, NULL, '1023281020', 'test de titulo', 'test de pie', NULL, NULL, 'OP: 454654654|CAM: FANTA', 'sdsddsdsds', 0, 1, 3, 69, 4, 173, 'FACTURA', NULL, NULL, '2021-04-12 16:04:33', '2021-04-14 11:19:30'),
+	(48, '2021-04-14 16:23:53', '10', '27-50-D0-6F-40', 2320.00, NULL, '310306022', '', NULL, NULL, NULL, NULL, 'impresión', 0, 1, 3, 21, 4, 175, 'FACTURA', NULL, NULL, '2021-04-14 16:23:53', '2021-04-14 16:23:53'),
+	(49, '2021-04-19 11:29:02', '3', '43-16-E6-0C-1B', 5000.00, NULL, '148406028', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 4, 30, 4, 169, 'FACTURA', NULL, NULL, '2021-04-19 11:29:02', '2021-04-19 11:29:02'),
+	(50, '2021-04-19 11:44:29', '11', '4A-D5-84-B9-20', 979.00, NULL, '310306022', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 21, 4, 86, 'FACTURA', NULL, NULL, '2021-04-19 11:44:29', '2021-04-19 11:44:29'),
+	(51, '2021-04-20 11:39:36', '12', '44-B9-F3-8A-DE', 1111.11, NULL, '8914345', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 32, 4, 52, 'FACTURA', NULL, NULL, '2021-04-20 11:39:36', '2021-04-20 11:39:36'),
+	(52, '2021-04-20 11:43:50', '13', 'BB-9B-E8-09-D5', 101110.10, NULL, '5838764', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 8, 4, 1, 'FACTURA', NULL, NULL, '2021-04-20 11:43:50', '2021-04-20 11:43:50');
 /*!40000 ALTER TABLE `invoices` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.invoice_product
@@ -1503,9 +1519,9 @@ CREATE TABLE IF NOT EXISTS `invoice_product` (
   KEY `invoice_products_product_id_foreign` (`product_id`),
   CONSTRAINT `invoice_product_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `invoice_product_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.invoice_product: ~103 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.invoice_product: ~105 rows (aproximadamente)
 /*!40000 ALTER TABLE `invoice_product` DISABLE KEYS */;
 INSERT INTO `invoice_product` (`id`, `invoice_id`, `product_id`, `quantity`, `description`, `price`, `subtotal`) VALUES
 	(1, 1, 31, 1, 'Santa Cruz: Av. Cristo Redentor, entre 5to y 6to anillo cara "A" y "B".', 8120.00, 8120.00),
@@ -1610,7 +1626,16 @@ INSERT INTO `invoice_product` (`id`, `invoice_id`, `product_id`, `quantity`, `de
 	(100, 43, 2, 2, 'ESTRUCTURA LATERALES SUPERIORES', 338.80, 677.60),
 	(101, 44, 31, 1, 'Material : Lona de 13 oz ,estrctura metalica', 6200.00, 6200.00),
 	(102, 45, 4, 5, 'Impresión mas ploteado  de adhesivo', 63.60, 318.00),
-	(103, 46, 1, 1, 'ALQUILER DE ESTRUCTURA MAS  IMPRESION DE LONA', 260.00, 260.00);
+	(103, 46, 1, 1, 'ALQUILER DE ESTRUCTURA MAS  IMPRESION DE LONA', 260.00, 260.00),
+	(104, 47, 31, 1, 'asdadas', 2500.00, 2500.00),
+	(105, 48, 2, 1, 'Impresión de lona 1440', 2320.00, 2320.00),
+	(106, 49, 1, 1, 'sdfsdfsdfsdfsdfsdfsdfs', 5000.00, 5000.00),
+	(107, 50, 2, 1, 'ESTRUCTURA DE FRENTE', 60.50, 60.50),
+	(108, 50, 2, 1, 'ESTRUCTURA SUPERIOR', 133.10, 133.10),
+	(109, 50, 2, 2, 'ESTRUCTURA LATERALES INFERIOR', 53.90, 107.80),
+	(110, 50, 2, 2, 'ESTRUCTURA LATERALES SUPERIORES', 338.80, 677.60),
+	(111, 51, 31, 1, 'Alquiler de Valla en La Paz, Av Calatayud del 01 de Julio 2020 al 01 Julio 2021', 1111.11, 1111.11),
+	(112, 52, 1, 1, 'tytytyjtyjtyjt', 101110.10, 101110.10);
 /*!40000 ALTER TABLE `invoice_product` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.licenses
@@ -1638,8 +1663,8 @@ CREATE TABLE IF NOT EXISTS `licenses` (
 INSERT INTO `licenses` (`id`, `nit`, `authorization`, `key`, `starting_number`, `deadline`, `activity`, `legend`, `status_date`, `office_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 164692025, 361401000148061, '28+Z]V5tswPg9i9b#FpLw+B9rA_PT*ZEKwhE5vA@V%VE[_U6G@Km98BLqV6K+HR8', 37, '2021-02-24 23:59:59', 'Publicidad', 'Ley Nº 453: Las publicaciones, mensajes e imágenes no deben deshonrar y atentar contra la dignidad e imagen de la mujer.', 0, 1, NULL, '2020-11-23 20:00:00', '2020-11-23 20:00:00'),
 	(2, 164692025, 361401000148057, 'kS@muW6frq6]6X$={Dv[PGL*(C{H_H@@*E6\\bL9[3cb)quI9PBtKuz*7+7EPD{j-', 2, '2021-02-24 23:59:59', 'Publicidad', 'Ley Nº 453: Las publicaciones, mensajes e imágenes no deben deshonrar y atentar contra la dignidad e imagen de la mujer.', 0, 2, NULL, '2020-11-23 20:00:00', '2020-11-23 20:00:00'),
-	(3, 164692025, 457401600000321, '(B{$$pp9i@-[%W48e]B4t2DFCZ+fKMM4J%sLK#I\\2CyEk\\Z=8=WXHGbVtTttXGQW', 9, '2021-08-28 23:59:59', 'Publicidad', 'Ley N° 453: El proveedor debe exhibir certificaciones de habilitación o documentos que acrediten las capacidades u ofertas de servicios especializados.', 1, 1, NULL, '2021-03-01 16:41:07', '2021-03-01 16:41:07'),
-	(4, 164692025, 359401600000460, 'FR5g)BD=%ee%e(uAeMKeMU9\\L[7QMUB@)GLRz=8L(Iz)Z@f[4QS$JursIYBSswh6', 3, '2021-08-28 23:59:59', 'Publicidad', 'Ley N° 453: El proveedor debe exhibir certificaciones de habilitación o documentos que acrediten las capacidades u ofertas de servicios especializados.', 1, 2, NULL, '2021-03-02 11:06:31', '2021-03-02 11:06:33');
+	(3, 164692025, 457401600000321, '(B{$$pp9i@-[%W48e]B4t2DFCZ+fKMM4J%sLK#I\\2CyEk\\Z=8=WXHGbVtTttXGQW', 14, '2021-08-28 23:59:59', 'Publicidad', 'Ley N° 453: El proveedor debe exhibir certificaciones de habilitación o documentos que acrediten las capacidades u ofertas de servicios especializados.', 1, 1, NULL, '2021-03-01 16:41:07', '2021-03-01 16:41:07'),
+	(4, 164692025, 359401600000460, 'FR5g)BD=%ee%e(uAeMKeMU9\\L[7QMUB@)GLRz=8L(Iz)Z@f[4QS$JursIYBSswh6', 4, '2021-08-28 23:59:59', 'Publicidad', 'Ley N° 453: El proveedor debe exhibir certificaciones de habilitación o documentos que acrediten las capacidades u ofertas de servicios especializados.', 1, 2, NULL, '2021-03-02 11:06:31', '2021-03-02 11:06:33');
 /*!40000 ALTER TABLE `licenses` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.machines
@@ -1663,7 +1688,7 @@ INSERT INTO `machines` (`id`, `description`, `created_at`, `updated_at`, `delete
 	(23, 'Test 1', '2021-04-08 21:10:39', '2021-04-08 21:10:39', NULL),
 	(24, 'Test 2', '2021-04-08 21:11:00', '2021-04-08 21:11:00', NULL),
 	(25, 'Test 3', '2021-04-08 21:12:45', '2021-04-08 21:12:45', NULL),
-	(26, 'Test 4', '2021-04-08 21:12:59', '2021-04-08 21:12:59', NULL),
+	(26, 'Test 4', '2021-04-08 21:12:59', '2021-04-12 16:38:53', '2021-04-12 16:38:53'),
 	(27, 'Test 5', '2021-04-09 16:15:08', '2021-04-09 16:15:25', NULL),
 	(28, 'Test 6', '2021-04-09 16:16:12', '2021-04-09 16:16:12', NULL);
 /*!40000 ALTER TABLE `machines` ENABLE KEYS */;
@@ -3088,9 +3113,9 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.payments: ~33 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.payments: ~34 rows (aproximadamente)
 /*!40000 ALTER TABLE `payments` DISABLE KEYS */;
 INSERT INTO `payments` (`id`, `date`, `type`, `op`, `number`, `path`, `amount`, `paymentable_id`, `paymentable_type`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(3, '2020-12-22', 'Transferencia', NULL, NULL, '16098707415ff4ad95cf109.jpeg', 109.98, 19, 'App\\Invoice', '2021-01-05 14:19:01', '2021-01-05 14:19:01', NULL),
@@ -3125,7 +3150,11 @@ INSERT INTO `payments` (`id`, `date`, `type`, `op`, `number`, `path`, `amount`, 
 	(32, '2021-03-29', 'Tarjeta', NULL, NULL, '1617047717606230a5ae340.jpeg', 79.00, 43, 'App\\Invoice', '2021-03-29 19:55:18', '2021-03-29 19:55:18', NULL),
 	(33, '2021-04-01', 'Efectivo', NULL, NULL, NULL, 100.00, 46, 'App\\Invoice', '2021-04-01 18:42:10', '2021-04-09 19:53:10', NULL),
 	(34, '2021-04-09', 'Efectivo', NULL, NULL, '16179959866070a8d2e9da0.jpeg', 50.00, 46, 'App\\Invoice', '2021-04-09 18:45:42', '2021-04-09 19:19:47', NULL),
-	(35, '2021-04-09', 'Efectivo', NULL, NULL, '16179960216070a8f51b0ef.jpeg', 250.00, 42, 'App\\Invoice', '2021-04-09 19:20:21', '2021-04-09 19:20:21', NULL);
+	(35, '2021-04-09', 'Efectivo', NULL, NULL, '16179960216070a8f51b0ef.jpeg', 250.00, 42, 'App\\Invoice', '2021-04-09 19:20:21', '2021-04-09 19:20:21', NULL),
+	(36, '2021-04-12', 'Efectivo', NULL, NULL, '1618240871607465674d1f6.jpeg', 10.00, 46, 'App\\Invoice', '2021-04-12 15:21:12', '2021-04-12 15:21:12', NULL),
+	(37, '2021-04-12', 'Transferencia', '01', 'P04', '161824188060746958d98ac.jpeg', 200.00, 43, 'App\\Invoice', '2021-04-12 15:38:00', '2021-04-12 15:38:00', NULL),
+	(38, '2021-04-12', 'Cheque', '03', 'P03', '161824277860746cda0899b.jpeg', 50.00, 46, 'App\\Invoice', '2021-04-12 15:52:58', '2021-04-12 16:26:21', NULL),
+	(39, '2021-04-14', 'Transferencia', '120', 'P1', '1618436673607762410f181.png', 320.00, 48, 'App\\Invoice', '2021-04-14 21:44:33', '2021-04-14 21:44:33', NULL);
 /*!40000 ALTER TABLE `payments` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.products
@@ -3247,9 +3276,9 @@ CREATE TABLE IF NOT EXISTS `product_quotation` (
   PRIMARY KEY (`id`),
   KEY `product_quotation_product_id_foreign` (`product_id`),
   KEY `product_quotation_quotation_id_foreign` (`quotation_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=654 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=657 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla imagen.product_quotation: ~329 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.product_quotation: ~331 rows (aproximadamente)
 /*!40000 ALTER TABLE `product_quotation` DISABLE KEYS */;
 INSERT INTO `product_quotation` (`id`, `quotation_id`, `product_id`, `uuid`, `quantity`, `dimension`, `description`, `material`, `quality`, `finish`, `materialCheck`, `qualityCheck`, `finishCheck`, `price`, `subtotal`, `state`, `price_type`, `type`, `unit`, `cooldown`, `deleted_at`) VALUES
 	(30, 1, 1, 'bf371df0-2042-4de2-b511-eaa847430938', 1, '1.50 x 2.00', NULL, NULL, NULL, NULL, 0, 0, 0, 60.00, 180.00, 1, 'price_with_tax', 'price_with_tax', 0, 0, NULL),
@@ -3593,7 +3622,9 @@ INSERT INTO `product_quotation` (`id`, `quotation_id`, `product_id`, `uuid`, `qu
 	(648, 170, 1, 'da0dbb3f-9e25-4404-a61e-c480f1cebd32', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
 	(649, 171, 31, 'd3ee9b77-87e2-4c6c-9404-0b36b01f51bf', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 1500.00, 1500.00, 0, 'price_service', 'price_service', 1, 1, NULL),
 	(650, 172, 2, '44ab1c89-757d-49d2-aec2-c40979d175e1', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
-	(653, 173, 31, 'f5215239-cc16-4526-b8ed-de17e8bd58fa', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 2500.00, 2500.00, 1, 'price_service', 'price_service', 1, 1, NULL);
+	(653, 173, 31, 'f5215239-cc16-4526-b8ed-de17e8bd58fa', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 2500.00, 2500.00, 1, 'price_service', 'price_service', 1, 1, NULL),
+	(655, 174, 1, 'be06a959-e987-42d0-9db9-ea6f0ad290d7', 1, '7.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 55.00, 1540.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
+	(656, 175, 2, '2f8e1092-663b-4ead-ac16-3d38c278fd7f', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 58.00, 2320.00, 1, 'normal_price', 'normal_price', 0, 0, NULL);
 /*!40000 ALTER TABLE `product_quotation` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.profiles
@@ -3648,12 +3679,12 @@ CREATE TABLE IF NOT EXISTS `quotations` (
   KEY `date` (`date`),
   KEY `quotations_office_id_foreign` (`office_id`),
   FULLTEXT KEY `cite` (`cite`)
-) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=176 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla imagen.quotations: ~153 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.quotations: ~155 rows (aproximadamente)
 /*!40000 ALTER TABLE `quotations` DISABLE KEYS */;
 INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment`, `date`, `amount`, `discount`, `iva`, `term`, `payment`, `validity`, `note`, `cancelled`, `condition`, `state_id`, `customer_id`, `user_id`, `office_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-	(1, 'SCZ-1-20', 'Maria Guzman', '75076273', 'Barrio Guaracachi', '2020-09-11', 180.00, 0.00, NULL, '2020-09-12', 'A contra entrega', '10 dias', 'Banner acabado con tubin', 0, 1, 3, 8, 2, 1, NULL, '2020-09-11 08:55:45', '2020-09-21 10:06:22'),
+	(1, 'SCZ-1-20', 'Maria Guzman', '75076273', 'Barrio Guaracachi', '2020-09-11', 180.00, 0.00, NULL, '2020-09-12', 'A contra entrega', '10 dias', 'Banner acabado con tubin', 0, 0, 3, 8, 2, 1, NULL, '2020-09-11 08:55:45', '2021-04-20 11:43:50'),
 	(2, 'SCZ-2-20', 'carlos añez', '78988344', 'EN SANTA CRUZ', '2020-09-14', 180.00, 0.00, NULL, '0020-09-16', 'efectivo', NULL, 'acabado con tubin', 0, 1, 3, 8, 1, 1, NULL, '2020-09-14 15:24:40', '2020-09-21 10:20:13'),
 	(3, 'SCZ-3-20', 'Gabriela Buheler', '78003331', 'santa cruz', '2020-09-14', 260.00, 0.00, NULL, '2020-09-16', 'A CONTRA ENTREGA', '5 DIAS', 'Se debe devolver  la estructura del roller', 0, 0, 3, 10, 1, 1, NULL, '2020-09-14 15:52:12', '2021-03-25 14:31:08'),
 	(5, 'SCZ-4-20', 'WALTER PANIAGUA', '70857933', 'SANTA CRUZ', '2020-09-16', 149.45, 0.00, NULL, '2020-09-18', 'CONTRA ENTREGA', NULL, NULL, 0, 2, 3, 11, 2, 1, NULL, '2020-09-16 14:48:27', '2021-03-24 16:38:58'),
@@ -3702,7 +3733,7 @@ INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment
 	(49, 'SCZ-48-20', 'YOLANDES ALANES', '76789859', 'VALLA  ISABEL AL CATOLICA SANTA CRUZ', '2020-11-10', 1305.00, 0.00, NULL, '2020-11-13', NULL, NULL, 'ORDEN DE TRABAJO  IMAGEN LA PAZ', 0, 1, 3, 14, 2, 1, NULL, '2020-11-10 09:05:26', '2020-11-24 10:35:50'),
 	(50, 'SCZ-49-20', 'LUCIA RECACOCHEA', '76086570', 'EN AGENCIAS DE LA CIUDAD DE LA   PAZ', '2020-11-10', 305.00, 20.00, NULL, '2020-11-11', NULL, NULL, NULL, 0, 0, 3, 12, 2, 1, NULL, '2020-11-10 09:25:34', '2020-12-10 06:54:37'),
 	(51, 'SCZ-50-20', 'ALEJANDRA', 'GO GREAM', 'SANTA CRUZ', '2020-11-11', 88.20, 0.00, NULL, '0001-01-01', 'A convenir el cliente', NULL, NULL, 0, 1, 1, 31, 2, 1, NULL, '2020-11-11 10:02:21', '2020-11-11 10:02:21'),
-	(52, 'SCZ-51-20', 'Julio Avila', '76722731', 'La Paz', '2020-11-11', 46433.88, 0.00, NULL, '2020-11-11', 'Transferencias', '60 días', NULL, 0, 1, 3, 32, 1, 1, NULL, '2020-11-11 10:33:28', '2020-12-11 10:11:55'),
+	(52, 'SCZ-51-20', 'Julio Avila', '76722731', 'La Paz', '2020-11-11', 46433.88, 0.00, NULL, '2020-11-11', 'Transferencias', '60 días', NULL, 0, 0, 3, 32, 1, 1, NULL, '2020-11-11 10:33:28', '2021-04-20 11:39:36'),
 	(53, 'SCZ-52-20', 'Bosques de la Colina', '..........1', 'Santa  Cruz', '2020-11-11', 4744.90, 0.00, NULL, NULL, 'Tranferencia', NULL, 'Se Coordinara la fecha de entrega con el cliente  a la aprobación del arte', 0, 1, 1, 22, 2, 1, NULL, '2020-11-11 14:22:39', '2020-11-17 14:39:48'),
 	(54, 'SCZ-53-20', 'MAIDA', '69121013', 'EN OFICINAS  DE LAS CIUDAD DE SANTA CRUZ', '2020-11-13', 1630.20, 0.00, NULL, NULL, 'Aconvenir el  cliente', '15 dás hábiles', 'La entrega se coordinara con el cliente a un tiempo límite de 5 días hábiles después de la aprobación del diseño', 0, 0, 3, 36, 2, 1, NULL, '2020-11-13 10:35:31', '2021-02-09 17:46:47'),
 	(55, 'SCZ-54-20', 'LUCIA RECACOCHEA', '76086570', 'ENTREGA EN SUS OFICINAS AV. SAN MARTIN', '2020-11-13', 800.00, 0.00, NULL, NULL, 'CHEQUE', NULL, NULL, 0, 0, 3, 12, 2, 1, NULL, '2020-11-13 12:33:52', '2020-12-18 12:08:13'),
@@ -3731,7 +3762,7 @@ INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment
 	(83, 'SCZ-77-20', 'CARGIL', '3 3336750', 'Santa Cruz', '2020-12-04', 18900.60, 900.00, NULL, NULL, 'A contra entrega', NULL, NULL, 0, 1, 1, 63, 2, 1, NULL, '2020-12-04 10:21:51', '2020-12-04 10:21:51'),
 	(84, 'LPZ-2-20', 'DIEGO ALVARAÑEZ', '69831499', 'LA PAZ', '2020-12-07', 700.00, 0.00, NULL, '2020-12-08', 'AL CONTADO', '10 DIAS', NULL, 0, 1, 2, 64, 15, 2, NULL, '2020-12-07 09:29:12', '2020-12-07 10:31:45'),
 	(85, 'SCZ-78-20', 'Luis Lopez', '60095922', 'La Paz', '2020-12-07', 5550.00, 0.00, NULL, '2020-12-09', 'tranferencia', NULL, NULL, 0, 0, 3, 46, 2, 1, NULL, '2020-12-07 11:11:59', '2020-12-17 11:07:08'),
-	(86, 'SCZ-79-20', 'Manuel', '70111791', 'Santa Cruz', '2020-12-07', 979.00, 79.00, NULL, NULL, 'Transferencia', NULL, NULL, 0, 1, 3, 21, 2, 1, NULL, '2020-12-07 11:20:46', '2020-12-15 08:59:47'),
+	(86, 'SCZ-79-20', 'Manuel', '70111791', 'Santa Cruz', '2020-12-07', 979.00, 79.00, NULL, NULL, 'Transferencia', NULL, NULL, 0, 0, 3, 21, 2, 1, NULL, '2020-12-07 11:20:46', '2021-04-19 11:44:29'),
 	(87, 'SCZ-80-20', 'ELIANA', '70896700', 'SANTA CRUZ', '2020-12-07', 75.00, 0.00, NULL, '2020-12-08', 'Contra entrega', NULL, NULL, 0, 2, 3, 65, 2, 1, NULL, '2020-12-07 11:50:41', '2021-01-05 08:23:03'),
 	(88, 'LPZ-3-20', 'MAX REYNOSO', '70511778', 'CALACOTO', '2020-12-07', 6200.00, 0.00, NULL, '2020-12-11', 'contra entrega', '10 días hábiles', 'Trabajo tercealizado  con Diego Yujra , lona impresa en Imagen', 0, 0, 3, 48, 6, 2, NULL, '2020-12-07 15:52:00', '2021-03-18 11:49:44'),
 	(89, 'LPZ-4-20', 'Ronal Gutierrez', '75263077', 'oficinas drogueria inti', '2020-12-07', 2765.60, 0.00, NULL, '2020-12-12', 'contra entrega', '10 días hábiles', 'se deben armar las cajas de  medicamentos', 0, 1, 2, 49, 6, 2, NULL, '2020-12-07 16:42:42', '2020-12-09 09:09:50'),
@@ -3811,11 +3842,13 @@ INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment
 	(166, 'SCZ-151-21', 'MARIO', '77078147', 'OFICINA', '2021-03-03', 2200.00, 0.00, NULL, '2021-03-03', NULL, NULL, NULL, 0, 2, 3, 69, 4, 1, NULL, '2021-03-03 13:35:35', '2021-03-17 17:05:45'),
 	(167, 'SCZ-152-21', 'fghdfhfghfgh', 'fghfghfghfgh', 'fghfghfghfgh', '2021-03-11', 505.00, 0.00, NULL, '2021-03-11', NULL, NULL, NULL, 0, 1, 1, 8, 4, 1, NULL, '2021-03-11 20:04:09', '2021-03-11 20:18:31'),
 	(168, 'SCZ-153-21', 'Fernando Banegas', '77078147', 'oficinas', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 2, 61, 4, 1, NULL, '2021-03-17 14:09:29', '2021-03-17 14:10:31'),
-	(169, 'SCZ-154-21', 'Manuel Banegas', '68774551', 'Oficinas', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 3, 30, 4, 1, NULL, '2021-03-17 14:15:47', '2021-04-09 17:54:45'),
+	(169, 'SCZ-154-21', 'Manuel Banegas', '68774551', 'Oficinas', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 0, 3, 30, 4, 1, NULL, '2021-03-17 14:15:47', '2021-04-19 11:29:03'),
 	(170, 'SCZ-155-21', 'Toto Banegas', '77078147', 'oficinas', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 0, 3, 23, 4, 1, NULL, '2021-03-17 15:01:16', '2021-03-18 10:21:37'),
 	(171, 'SCZ-156-21', 'Jose Padilla', '69854123', 'Oficinas', '2021-03-17', 1500.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 1, 15, 2, 1, NULL, '2021-03-17 21:02:49', '2021-03-17 21:02:49'),
 	(172, 'LPZ-10-21', 'sdasdasda', 'asdasdasdasd', 'asdasdasda', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 1, 61, 6, 2, NULL, '2021-03-17 21:51:48', '2021-03-17 21:51:48'),
-	(173, 'SCZ-157-21', 'Pedro Vargas', '77078147', 'Oficina', '2021-04-05', 2500.00, 0.00, NULL, '2021-04-05', NULL, NULL, NULL, 0, 1, 1, 69, 4, 1, NULL, '2021-04-05 20:31:28', '2021-04-06 14:55:45');
+	(173, 'SCZ-157-21', 'Pedro Vargas', '77078147', 'Oficina', '2021-04-05', 2500.00, 0.00, NULL, '2021-04-05', NULL, NULL, NULL, 0, 0, 3, 69, 4, 1, NULL, '2021-04-05 20:31:28', '2021-04-12 16:04:33'),
+	(174, 'SCZ-158-21', 'Jorge Cruz', '75246895', 'Oficina', '2021-04-14', 1540.00, 0.00, NULL, '2021-04-14', NULL, NULL, NULL, 0, 1, 2, 15, 4, 1, NULL, '2021-04-14 19:24:04', '2021-04-14 19:50:56'),
+	(175, 'SCZ-159-21', 'Carlos Campos', '33568974', 'Oficinas', '2021-04-14', 2320.00, 0.00, NULL, '2021-04-14', NULL, NULL, NULL, 0, 0, 3, 21, 4, 1, NULL, '2021-04-14 20:21:38', '2021-04-14 16:23:53');
 /*!40000 ALTER TABLE `quotations` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.states
@@ -3853,7 +3886,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   KEY `tasks_work_order_id_foreign` (`work_order_id`),
   CONSTRAINT `tasks_employee_id_foreign` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`),
   CONSTRAINT `tasks_work_order_id_foreign` FOREIGN KEY (`work_order_id`) REFERENCES `work_orders` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla imagen.tasks: ~10 rows (aproximadamente)
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
@@ -3869,7 +3902,8 @@ INSERT INTO `tasks` (`id`, `description`, `priority`, `completed`, `date_init`, 
 	(9, 'imprimir1', 'Alta', 1, '2021-03-17 15:00:00', '2021-03-17 11:17:38', 111, 3, '2021-03-17 11:02:44', '2021-03-17 11:17:38', NULL),
 	(10, 'serigrafiar lonas2', 'Media', 1, '2021-03-17 13:03:00', '2021-03-17 11:17:38', 111, 2, '2021-03-17 11:03:20', '2021-03-17 11:17:38', NULL),
 	(11, 'cortar lonas', 'Alta', 1, '2021-03-17 11:07:00', '2021-03-17 11:17:53', 111, 5, '2021-03-17 11:07:31', '2021-03-17 11:17:53', NULL),
-	(12, 'sfsdfsf', 'Baja', 1, '2021-04-09 13:53:00', '2021-04-09 13:54:34', 110, 1, '2021-04-09 13:53:17', '2021-04-09 13:54:34', NULL);
+	(12, 'sfsdfsf', 'Baja', 1, '2021-04-09 13:53:00', '2021-04-09 13:54:34', 110, 1, '2021-04-09 13:53:17', '2021-04-09 13:54:34', NULL),
+	(13, 'dsfsdfds', 'Baja', 1, '2021-04-14 16:52:00', '2021-04-14 15:51:59', 113, 1, '2021-04-14 15:51:43', '2021-04-14 15:51:59', NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.users
@@ -4137,9 +4171,9 @@ CREATE TABLE IF NOT EXISTS `work_orders` (
   KEY `work_orders_city_id_foreign` (`city_id`),
   KEY `work_orders_quotation_id_foreign` (`quotation_id`),
   FULLTEXT KEY `number` (`number`)
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.work_orders: ~100 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.work_orders: ~103 rows (aproximadamente)
 /*!40000 ALTER TABLE `work_orders` DISABLE KEYS */;
 INSERT INTO `work_orders` (`id`, `number`, `opening_date`, `estimated_date`, `closing_date`, `type_work`, `note`, `name_staff`, `address_work`, `quotation_id`, `city_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, '1', '2020-09-11', '2020-09-11', '2020-09-21', 'Impresión y armado de banner', NULL, NULL, NULL, 1, NULL, NULL, '2020-09-21 10:04:59', '2020-09-21 10:06:22'),
@@ -4249,7 +4283,10 @@ INSERT INTO `work_orders` (`id`, `number`, `opening_date`, `estimated_date`, `cl
 	(108, '108', '2021-03-03', '2021-03-03', '2021-03-03', 'impresion', NULL, NULL, NULL, 166, NULL, NULL, '2021-03-03 13:36:53', '2021-03-03 13:37:05'),
 	(109, '109', '2021-03-18', '2021-03-18', NULL, 'Impresión', NULL, NULL, NULL, 168, NULL, NULL, '2021-03-17 14:10:50', '2021-03-17 14:10:50'),
 	(110, '110', '2021-03-17', '2021-03-18', '2021-04-09', 'Impresión', NULL, NULL, NULL, 169, NULL, NULL, '2021-03-17 14:16:38', '2021-04-09 17:54:44'),
-	(111, '111', '2021-03-18', '2021-03-18', '2021-03-17', 'impresión', NULL, NULL, NULL, 170, NULL, NULL, '2021-03-17 15:02:09', '2021-03-17 15:18:00');
+	(111, '111', '2021-03-18', '2021-03-18', '2021-03-17', 'impresión', NULL, NULL, NULL, 170, NULL, NULL, '2021-03-17 15:02:09', '2021-03-17 15:18:00'),
+	(112, '112', '2021-04-12', '2021-04-12', '2021-04-12', 'ghghjgjg', NULL, NULL, NULL, 173, NULL, NULL, '2021-04-12 19:09:52', '2021-04-12 19:10:01'),
+	(113, '113', '2021-04-14', '2021-04-14', NULL, 'sdfsdfs', NULL, NULL, NULL, 174, NULL, NULL, '2021-04-14 19:51:10', '2021-04-14 19:51:10'),
+	(114, '114', '2021-04-14', '2021-04-14', '2021-04-14', 'asdasdasasdas', NULL, NULL, NULL, 175, NULL, NULL, '2021-04-14 20:23:10', '2021-04-14 20:23:12');
 /*!40000 ALTER TABLE `work_orders` ENABLE KEYS */;
 
 -- Volcando estructura para disparador imagen.after_invoice_insert
