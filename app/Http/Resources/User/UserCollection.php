@@ -13,6 +13,8 @@ class UserCollection extends ResourceCollection
                 return [
                     'id' => $user->id,
                     'name' => $user->name,
+                    'forename' => $user->forename,
+                    'surname' => $user->surname,
                     'email' => $user->email,
                     'phone' => $user->phone,
                     'state' => ($user->state === 1) ? 'Activo' : 'Inactivo',

@@ -26,7 +26,7 @@ class InvoiceResource extends JsonResource
             'total' => $this->total,
             'title' => $this->title,
             'footer' => $this->footer,
-            'nit_name' => $this->nit_name,
+            'nit_name' => $this->nit_name ? $this->nit_name : $this->customer->business_name,
             // 'oc' => $this->oc,
             // 'hea' => $this->hea,
             'details' => is_null($this->details) ? [] : array_map(function($iter) { return array('description' => $iter); }, explode('|', $this->details)),

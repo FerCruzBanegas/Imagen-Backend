@@ -179,25 +179,25 @@
         </tr>
         @foreach($data['invoice']['products'] as $key => $product)  
           <tr class="invoice_line" style="text-align: center;">
-            <td style="color: #000000; font-size: 15px;">
+            <td style="color: #000000; font-size: 14px;">
               @if ($key === 0 && $data['invoice']['title'])
                <div style="margin-bottom: 8px;">&nbsp;</div>
               @endif
               {{ $product['quantity'] }}
             </td>
-            <td style="color: #000000; text-align: justify; font-size: 15px;">
+            <td style="color: #000000; text-align: justify; font-size: 14px;">
               @if ($key === 0 && $data['invoice']['title'])
                <div style="color: #000000; margin-bottom: 8px;">{{ $data['invoice']['title'] }}:</div> 
               @endif
               {{ $product['description'] }}
             </td>
-            <td style="color: #000000; font-size: 15px;">
+            <td style="color: #000000; font-size: 14px;">
               @if ($key === 0 && $data['invoice']['title'])
                <div style="margin-bottom: 8px;">&nbsp;</div>
               @endif
               {{ number_format($product['price'], 2, '.', ',') }}
             </td>
-            <td style="color: #000000; font-size: 15px;">
+            <td style="color: #000000; font-size: 14px;">
               @if ($key === 0 && $data['invoice']['title'])
                <div style="margin-bottom: 8px;">&nbsp;</div>
               @endif
@@ -207,7 +207,7 @@
         @endforeach
         <tr>
           <td>&nbsp;</td>
-          <td style="color: #000000; font-size: 15px;">&nbsp;
+          <td style="color: #000000; font-size: 14px;">&nbsp;
             @if ($data['invoice']['footer'])
              <div style="margin-left: 2px;">{{ $data['invoice']['footer'] }}</div>
             @endif
@@ -236,7 +236,7 @@
       </div>
     </div>
     <div id="light-table" style="margin-top: 5px; margin-left: 10px; color: black;">
-      <div style="float: right;">{!! QrCode::size(150)->generate($data['qr']); !!}</div>
+      <div style="margin-top: 0; float: right;">{!! QrCode::size(150)->generate($data['qr']); !!}</div>
       <div><b>Código de Control: &nbsp;&nbsp; {{ $data['invoice']['control_code'] }}</b></div>
       <div><b>Fecha Límite de Emisión: &nbsp;</b>{{ $data['invoice']['license']['deadline'] }}</div>
       <div style="margin-top: 2px; font-size: 11px; letter-spacing: 0.1em;">"ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PA&Iacute;S, EL USO IL&Iacute;CITO DE &Eacute;STA SER&Aacute; SANCIONADO DE ACUERDO A LEY."</div>

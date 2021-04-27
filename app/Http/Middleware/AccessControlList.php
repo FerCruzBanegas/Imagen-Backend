@@ -22,7 +22,7 @@ class AccessControlList
             return response()->json(['success' => false], 403);
         } else if($route == 'quotations.show') {
             $office = $request->quotation->office->id;
-            if (auth()->user()->office->id === $office || in_array('quotations.showall', $cache) || in_array('*', $cache)) {
+            if ((in_array('quotations.show', $cache) && auth()->user()->office->id === $office) || in_array('quotations.showall', $cache) || in_array('*', $cache)) {
                 return $next($request);
             } else {
                 return response()->json(['message' => message('MSG010')], 403);
