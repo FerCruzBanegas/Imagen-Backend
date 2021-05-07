@@ -15,6 +15,7 @@ class AccountCollection extends ResourceCollection
                 $amount_pay = $account->payments->sum('amount');
                 return [
                     'id' => $account->id,
+                    'date' => $account->date,
                     'cite' => $account->quotation->cite,
                     'number' => str_pad($account->number, 8, '0', STR_PAD_LEFT),
                     'type' => $account->type,

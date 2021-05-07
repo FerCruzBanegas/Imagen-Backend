@@ -207,14 +207,14 @@
         @endforeach
         <tr>
           <td>&nbsp;</td>
-          <td style="color: #000000; font-size: 14px;">&nbsp;
-            @if ($data['invoice']['footer'])
+          <td style="color: #000000; font-size: 0.90rem;">&nbsp;
+            @if (!is_null($data['invoice']['footer']))
              <div style="margin-left: 2px;">{{ $data['invoice']['footer'] }}</div>
             @endif
             @if (!is_null($data['invoice']['details']))
               <div style="margin-left: 2px;">
               @foreach($data['invoice']['details'] as $key => $detail)
-                <div style="margin-right: 12px; display: inline-block; padding: 2px;">
+                <div style="margin-left: 2px; margin-right: 12px; display: inline-block; padding: 2px;">
                   {{ $detail['description'] }}
                 </div>
               @endforeach

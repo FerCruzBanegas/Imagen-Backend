@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Cotizacion</title>
+    <title>Cotización</title>
     
     <style>
     .text-right {

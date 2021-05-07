@@ -23,6 +23,11 @@ class City extends Model
         return static::orderBy('id', 'DESC')->select('id', 'name')->get();
     }
 
+    public function billboards()
+    {
+        return $this->hasMany(Billboard::class);
+    }
+
     public function customers()
     {
         return $this->hasMany(Customer::class);

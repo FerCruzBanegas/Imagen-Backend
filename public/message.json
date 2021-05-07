@@ -11,9 +11,13 @@
   "MSG010":"Usted no está autorizado para realizar esta acción.",
   "MSG011":"El recurso al que intenta acceder no se encuentra disponible.",
   "MSG012":"Se produjo un error interno. Inténtalo de nuevo más tarde.",
-  "MSG013":"Esta Factura ya se encuentra anulada!.",
+  "MSG013":"Esta Factura ya se encuentra anulada.",
   "MSG014":"No existe una dosificación vigente para generar la factura.",
   "MSG015":"No puede registrar tareas, por que la orden de trabajo ya está cerrada.",
   "MSG016":"No puede cerrar la orden de trabajo, por que aún tiene tareas pendientes.",
-  "MSG017":"No puede modificar la nota, por que la cuenta ya se cerró."
+  "MSG017":"No puede modificar la nota, por que la cuenta ya se cerró.",
+  "MSG018":"No puede eliminar la nota, por que la cuenta ya se cerró.",
+  "MSG019":"No puede anular la factura, por que la cuenta ya se cerró.",
+  "MSG020":"No puede anular la factura, por que ya tiene pagos registrados.",
+  "MSG021":"No puede eliminar la nota, por que ya tiene pagos registrados."
 }

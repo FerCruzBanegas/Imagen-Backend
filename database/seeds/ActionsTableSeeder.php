@@ -72,22 +72,27 @@ class ActionsTableSeeder extends Seeder
         Action::create(['name' => 'Modificar', 'method' => 'users.show|users.update', 'order' => 43, 'title' => 'Usuarios']);
         Action::create(['name' => 'Eliminar', 'method' => 'users.destroy', 'order' => 44, 'title' => 'Usuarios']);
 
-        //Informes
-        Action::create(['name' => 'Ver Todos', 'method' => 'reports.index', 'order' => 45, 'title' => 'Informes']);
-
         //Facturas
-        Action::create(['name' => 'Ver Lista', 'method' => 'invoices.index', 'order' => 46, 'title' => 'Facturas']);
-        Action::create(['name' => 'Listar Datos (Sucursal)', 'method' => 'invoices.single', 'order' => 47, 'title' => 'Facturas']);
-        Action::create(['name' => 'Listar Datos (Todos)', 'method' => 'invoices.all', 'order' => 48, 'title' => 'Facturas']);
-        Action::create(['name' => 'Registrar', 'method' => 'invoices.create', 'order' => 49, 'title' => 'Facturas']);
-        Action::create(['name' => 'Modificar', 'method' => 'invoices.update', 'order' => 50, 'title' => 'Facturas']);
-        Action::create(['name' => 'Anular', 'method' => 'invoices.cancel', 'order' => 51, 'title' => 'Facturas']);
+        Action::create(['name' => 'Ver Lista', 'method' => 'invoices.index', 'order' => 45, 'title' => 'Facturas']);
+        Action::create(['name' => 'Listar Datos (Sucursal)', 'method' => 'invoices.single', 'order' => 46, 'title' => 'Facturas']);
+        Action::create(['name' => 'Listar Datos (Todos)', 'method' => 'invoices.all', 'order' => 47, 'title' => 'Facturas']);
+        Action::create(['name' => 'Registrar', 'method' => 'invoices.create', 'order' => 48, 'title' => 'Facturas']);
+        Action::create(['name' => 'Modificar', 'method' => 'invoices.update', 'order' => 49, 'title' => 'Facturas']);
+        Action::create(['name' => 'Anular', 'method' => 'invoices.cancel', 'order' => 50, 'title' => 'Facturas']);
         
         //Notas de Remision
-        Action::create(['name' => 'Ver Lista', 'method' => 'notes.index', 'order' => 52, 'title' => 'Notas de Remision']);
-        Action::create(['name' => 'Listar Datos (Sucursal)', 'method' => 'notes.single', 'order' => 53, 'title' => 'Notas de Remision']);
-        Action::create(['name' => 'Listar Datos (Todos)', 'method' => 'notes.all', 'order' => 54, 'title' => 'Notas de Remision']);
-        Action::create(['name' => 'Registrar', 'method' => 'notes.create', 'order' => 55, 'title' => 'Notas de Remision']);
-        Action::create(['name' => 'Modificar', 'method' => 'notes.update', 'order' => 56, 'title' => 'Notas de Remision']);
+        Action::create(['name' => 'Ver Lista', 'method' => 'notes.index', 'order' => 51, 'title' => 'Notas de Remision']);
+        Action::create(['name' => 'Listar Datos (Sucursal)', 'method' => 'notes.single', 'order' => 52, 'title' => 'Notas de Remision']);
+        Action::create(['name' => 'Listar Datos (Todos)', 'method' => 'notes.all', 'order' => 53, 'title' => 'Notas de Remision']);
+        Action::create(['name' => 'Registrar', 'method' => 'notes.create', 'order' => 54, 'title' => 'Notas de Remision']);
+        Action::create(['name' => 'Modificar', 'method' => 'notes.update', 'order' => 55, 'title' => 'Notas de Remision']);
+        Action::create(['name' => 'Eliminar', 'method' => 'notes.destroy', 'order' => 56, 'title' => 'Notas de Remision']);
+
+        //Cuentas
+        Action::create(['name' => 'Ver Lista', 'method' => 'accounts.index', 'order' => 57, 'title' => 'Cuentas']);
+        Action::create(['name' => 'Cerrar Cuenta', 'method' => 'accounts.close', 'order' => 58, 'title' => 'Cuentas']);
+
+        //Informes
+        Action::create(['name' => 'Ver Todos', 'method' => 'reports.index', 'order' => 59, 'title' => 'Informes']);
     }
 }

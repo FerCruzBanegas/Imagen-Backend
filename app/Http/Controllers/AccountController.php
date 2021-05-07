@@ -38,12 +38,12 @@ class AccountController extends ApiController
         if ($request->filled('filter.filters')) {
             $invoices = InvoiceAccountSearch::apply($request, $this->invoice);
             $notes = NoteAccountSearch::apply($request, $this->note);
-            return new AccountCollection(collect($invoices)->merge($notes)->paginate($request->take));
+            return new AccountCollection(collect($invoices)->merge($notes)->sortByDesc('date')->paginate($request->take));
         }
         
         $invoices = InvoiceAccountSearch::checkSortFilter($request, $this->invoice->newQuery())->get();
         $notes = NoteAccountSearch::checkSortFilter($request, $this->note->newQuery())->get();
-        $data = collect($invoices)->merge($notes);
+        $data = collect($invoices)->merge($notes)->sortByDesc('date');
 
         return new AccountCollection($data->paginate($request->take));
     }
@@ -53,12 +53,12 @@ class AccountController extends ApiController
         if ($request->filled('filter.filters')) {
             $invoices = InvoiceAccountCancelledSearch::apply($request, $this->invoice);
             $notes = NoteAccountCancelledSearch::apply($request, $this->note);
-            return new AccountCollection(collect($invoices)->merge($notes)->paginate($request->take));
+            return new AccountCollection(collect($invoices)->merge($notes)->sortByDesc('date')->paginate($request->take));
         }
         
         $invoices = InvoiceAccountCancelledSearch::checkSortFilter($request, $this->invoice->newQuery())->get();
         $notes = NoteAccountCancelledSearch::checkSortFilter($request, $this->note->newQuery())->get();
-        $data = collect($invoices)->merge($notes);
+        $data = collect($invoices)->merge($notes)->sortByDesc('date');
 
         return new AccountCollection($data->paginate($request->take));
     }

@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Filters\InvoiceSearch;
+namespace App\Filters\BillboardSearch;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
-use App\Filters\SearchMorph;
+use App\Filters\Search;
 
-class InvoiceAccountSearch extends SearchMorph
+class BillboardSearch extends Search
 {
 	public static function checkSortFilter(Request $request, Builder $query)
     {
         if ($request->filled('sort')) {
             $sort = $request->input('sort');
-            return $query->where('cancelled', 0)->where('state_id', 1)->orderBy($sort[0]['field'], $sort[0]['dir'])->checklist();
+            return $query->orderBy($sort[0]['field'], $sort[0]['dir']);
               
         } else {
-            return $query->where('cancelled', 0)->where('state_id', 1)->orderBy('id', 'DESC')->checklist();
+            return $query->orderBy('id', 'DESC');
         }
     }
     
@@ -27,6 +27,6 @@ class InvoiceAccountSearch extends SearchMorph
 
     protected static function getResults(Builder $query, Request $request)
     {
-        return $query->get();
+        return $query->paginate($request->take);
     }
 }

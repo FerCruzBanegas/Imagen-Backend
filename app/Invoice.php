@@ -5,13 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;//AQUI
 
-// cambio en vista orden de trabajo
-
-// $user = auth()->user();
-//         $cache = Cache::get('actions_' . $user->id);
-//         return $query->when(in_array('*', $cache), function ($query) {
-//             return $query;
-//         })->where('office_id', $user->office->id);
 class Invoice extends Model
 {
     protected $dates = ['deleted_at'];

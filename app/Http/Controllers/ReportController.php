@@ -16,34 +16,6 @@ class ReportController extends ApiController
         $this->service = $service;
     } 
 
-    public function getAccounts(Request $request)
-    {
-        $invoices = DB::table('invoices AS i')
-            ->select('i.id', 'i.date', 'i.type', 'i.number', 'i.summary', 'i.total')
-            ->join('customers AS c', 'c.id', '=', 'i.customer_id')
-            ->join('quotations AS q', 'q.id', '=', 'i.quotation_id')
-            ->join('users AS u', 'u.id', '=', 'q.user_id')
-            ->join('licenses AS l', 'l.id', '=', 'i.license_id')
-            ->join('offices AS o', 'o.id', '=', 'l.office_id')
-            ->where('o.id', $request->office)
-            ->when($request->customer, function($query) use ($request) {
-                $query->where('i.customer_id', $request->customer);
-            })
-            ->when($request->user, function($query) use ($request) {
-                $query->where('q.user_id', $request->customer);
-            })
-            ->where(function($query) use ($request) {
-                $query->whereDate('i.date', '>=', $request->initial_date)
-                  ->whereDate('i.date', '<=', $request->final_date);
-            })
-            ->groupBy('i.id')
-            ->get();
-
-        $data = collect(\App\Invoice::hydrate($invoices->toArray()));
-        
-        return new GetAccountsCusCollection($data);
-    }
-
     public function totalQuotation(Request $request)
     {
         $invoices = DB::table('invoices AS i')
@@ -66,8 +38,8 @@ class ReportController extends ApiController
             })
             ->where(function($query) use ($request) {
                 $query->whereDate('i.date', '>=', $request->initial_date)
-                  ->whereDate('i.date', '<=', $request->final_date);
-                //   ->whereNull('q.deleted_at');
+                  ->whereDate('i.date', '<=', $request->final_date)
+                  ->where('i.state_id', 1);
             })
             ->groupBy('i.id')
             ->get();
@@ -92,8 +64,8 @@ class ReportController extends ApiController
             })
             ->where(function($query) use ($request) {
                 $query->whereDate('n.date', '>=', $request->initial_date)
-                  ->whereDate('n.date', '<=', $request->final_date);
-                //   ->whereNull('q.deleted_at');
+                  ->whereDate('n.date', '<=', $request->final_date)
+                  ->whereNull('n.deleted_at');
             })
             ->groupBy('n.id')
             ->get();  
@@ -101,6 +73,65 @@ class ReportController extends ApiController
         $data = collect($invoices)->merge($notes);
 
         return $this->respond($data);
+    }
+
+    public function invoiceReport(Request $request)
+    {
+        //cambiar vendedor tabla cotizacion
+        $quotations = DB::table('invoices AS i')
+            ->select(DB::raw('UPPER(c.business_name) as cliente'), DB::raw('IFNULL(UPPER(i.nit_name), UPPER(c.business_name)) as "razón social"'), 'i.number AS número', DB::raw('(CASE i.state_id WHEN 1 THEN "VÁLIDA" ELSE "ANULADA" END) as estado'), DB::raw('DATE_FORMAT(i.date,"%d/%m/%Y") as fecha'), 'i.summary as detalle', 'u.name as vendedor', DB::raw('FORMAT(i.total, 2) as monto'))
+            ->join('customers AS c', 'c.id', '=', 'i.customer_id')
+            ->join('quotations AS q', 'q.id', '=', 'i.quotation_id')
+            ->join('users AS u', 'u.id', '=', 'q.user_id')
+            ->join('licenses AS l', 'l.id', '=', 'i.license_id')
+            ->join('offices AS o', 'o.id', '=', 'l.office_id')
+            ->where('o.id', $request->office)
+            ->when($request->customer, function($query) use ($request) {
+                $query->where('i.customer_id', $request->customer);
+            })
+            ->when($request->user, function($query) use ($request) {
+                $query->where('i.user_id', $request->user);
+            })
+            ->where(function($query) use ($request) {
+                $query->whereDate('i.date', '>=', $request->initial_date)
+                  ->whereDate('i.date', '<=', $request->final_date);
+                //   ->where('i.state_id', 1);
+            })
+            ->groupBy('i.id')
+            ->get();
+
+        $data = collect($quotations);
+
+        return $this->respond($data);
+    }
+
+    public function getAccounts(Request $request)
+    {
+        $invoices = DB::table('invoices AS i')
+            ->select('i.id', 'i.date', 'i.type', 'i.number', 'i.summary', 'i.total')
+            ->join('customers AS c', 'c.id', '=', 'i.customer_id')
+            ->join('quotations AS q', 'q.id', '=', 'i.quotation_id')
+            ->join('users AS u', 'u.id', '=', 'q.user_id')
+            ->join('licenses AS l', 'l.id', '=', 'i.license_id')
+            ->join('offices AS o', 'o.id', '=', 'l.office_id')
+            ->where('o.id', $request->office)
+            ->when($request->customer, function($query) use ($request) {
+                $query->where('i.customer_id', $request->customer);
+            })
+            ->when($request->user, function($query) use ($request) {
+                $query->where('q.user_id', $request->customer);
+            })
+            ->where(function($query) use ($request) {
+                $query->whereDate('i.date', '>=', $request->initial_date)
+                  ->whereDate('i.date', '<=', $request->final_date)
+                  ->where('i.state_id', 1);
+            })
+            ->groupBy('i.id')
+            ->get();
+
+        $data = collect(\App\Invoice::hydrate($invoices->toArray()));
+        
+        return new GetAccountsCusCollection($data);
     }
 
     public function listQuotationGeneral(Request $request)
@@ -211,36 +242,6 @@ class ReportController extends ApiController
                   ->whereNull('q.deleted_at');
             })
             ->groupBy('q.id')
-            ->get();
-
-        $data = collect($quotations);
-
-        return $this->respond($data);
-    }
-
-    public function invoiceReport(Request $request)
-    {
-        //cambiar vendedor tabla cotizacion
-        $quotations = DB::table('invoices AS i')
-            ->select(DB::raw('UPPER(c.business_name) as cliente'), 'i.number AS número', DB::raw('(CASE i.state_id WHEN 1 THEN "VÁLIDA" ELSE "ANULADA" END) as estado'), DB::raw('DATE_FORMAT(i.date,"%d/%m/%Y") as fecha'), 'i.summary as detalle', 'u.name as vendedor', DB::raw('FORMAT(i.total, 2) as monto'))
-            ->join('customers AS c', 'c.id', '=', 'i.customer_id')
-            ->join('quotations AS q', 'q.id', '=', 'i.quotation_id')
-            ->join('users AS u', 'u.id', '=', 'q.user_id')
-            ->join('licenses AS l', 'l.id', '=', 'i.license_id')
-            ->join('offices AS o', 'o.id', '=', 'l.office_id')
-            ->where('o.id', $request->office)
-            ->when($request->customer, function($query) use ($request) {
-                $query->where('i.customer_id', $request->customer);
-            })
-            ->when($request->user, function($query) use ($request) {
-                $query->where('i.user_id', $request->user);
-            })
-            ->where(function($query) use ($request) {
-                $query->whereDate('i.date', '>=', $request->initial_date)
-                  ->whereDate('i.date', '<=', $request->final_date)
-                  ->whereNull('i.deleted_at');
-            })
-            ->groupBy('i.id')
             ->get();
 
         $data = collect($quotations);

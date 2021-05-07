@@ -111,6 +111,23 @@ class NoteController extends ApiController
         return $this->respondUpdated();
     }
 
+    public function destroy(Note $note)
+    {
+        try {
+            if($note->cancelled) {
+                return $this->respond(message('MSG018'), 406);
+            }
+
+            if($note->payments()->count() > 0) {
+                return $this->respond(message('MSG021'), 406);
+            }
+            $note->delete();
+        } catch (Exception $e) {
+            return $this->respondInternalError();
+        }
+        return $this->respondDeleted($note);
+    }
+
     public function getProductsNote(Note $note)
     {
         return new NoteProductResource($note);

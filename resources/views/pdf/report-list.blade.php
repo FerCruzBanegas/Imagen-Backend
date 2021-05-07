@@ -16,7 +16,7 @@
     .text-content {
       text-align: center;
       font-weight: bold;
-      font-size: 11pt;
+      font-size: 8pt;
     }
 
     .text-title {
@@ -29,10 +29,10 @@
     .invoice-box {
       max-width: 100%;
       margin: auto;
-      padding: 30px;
-      border: 2px solid #000;
-      box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-      font-size: 16px;
+      /* padding: 30px; */
+      /* border: 2px solid #000; */
+      /* box-shadow: 0 0 10px rgba(0, 0, 0, .15); */
+      font-size: 12px;
       line-height: 24px;
       font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
       color: #555;
@@ -79,14 +79,6 @@
       text-align: center;
     }
 
-    #light-table-paragraph {
-      font-family: 'Droid Serif';
-      font-size: 20px;
-      color: #2e2e2e;
-      text-align: center;
-      line-height: 40px;
-    }
-
     .clearfix:after {
       clear: both;
     }
@@ -111,7 +103,7 @@
       <div id="light-table">
         <div id="leftdivcontainer" class="clearfix">
           <div class="leftdiv">
-            <div style="border: 2px solid #9e0207; border-radius: 7px; text-align: left; width: 65%; padding: 10px;">
+            <div style="border: 2px solid #9e0207; border-radius: 7px; text-align: left; width: 60%; padding: 10px;">
               <span style="color: #000; font-weight: bold; font-size: 15px; letter-spacing: 1px;">PUBLICIDAD VIAL IMAGEN</span>
               <span style="color: #000; font-weight: bold; font-size: 15px; letter-spacing: 3px;">{{ $office  }}</span>
             </div>
@@ -159,7 +151,7 @@
                 $totalSaldo += $item['saldo'];
               @endphp 
             @endisset
-            <tr style="page-break-inside: avoid;">
+            <tr style="page-break-inside: avoid; letter-spacing: 0.1em;">
               @foreach($columns as $column)
                 @if (is_numeric($item[$column]) && !is_string($item[$column]))
                   <td class="text-content">{{ number_format($item[$column], 2, '.', ',') }}</td>

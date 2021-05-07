@@ -423,7 +423,7 @@ Route::get('test', function() {
 	// ];
 	
 	// $string = ':asdfsfs:df|';
-	// return rtrim($string, ':');
+	return \Uuid::generate();
 });
 
 Route::get('invoice', 'TestController@index');
@@ -483,11 +483,21 @@ Route::get('profiles/listing', 'ProfileController@listing');
 Route::get('users/listing', 'UserController@listing');
 Route::get('users/seller/listing', 'UserController@listSeller');
 Route::get('actions/listing', 'ActionController@listing');
+Route::get('billboard_types/listing', 'BillboardTypeController@listing');
 
 Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
 	Route::post('logout', 'AuthController@logout');
 	
-	
+	//billboards
+	Route::get('billboards', 'BillboardController@index');
+	Route::get('billboards/search', 'BillboardController@search');
+	Route::post('billboards', 'BillboardController@store');
+	Route::put('billboards/{billboard}', 'BillboardController@update');
+    Route::delete('billboards', 'BillboardController@destroy');
+	Route::post('billboards/list-pdf', 'BillboardController@listPdf');
+	Route::post('billboards/detail-pdf', 'BillboardController@detailPdf');
+	Route::post('billboards/list-excel', 'BillboardController@listExcel');
+
 	//accounts
 	Route::get('accounts/receivable', 'AccountController@receivable')->name('accounts.index');//agregar y ver permisos
     Route::get('accounts/cancelled', 'AccountController@cancelled')->name('accounts.index');
@@ -506,8 +516,8 @@ Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
 	Route::delete('machines', 'MachineController@destroy')->name('designs.update');
 
 	//tasks
-	Route::post('tasks', 'TaskController@store');
-	Route::post('tasks/close', 'TaskController@closeTasks');
+	Route::post('tasks', 'TaskController@store')->name('tasks.create');
+	Route::post('tasks/close', 'TaskController@closeTasks')->name('tasks.close');
 
     //licenses
 	Route::post('licenses/dosage', 'LicenseController@getLicense');
@@ -532,11 +542,12 @@ Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
 	//notes
 	Route::get('notes', 'NoteController@index')->name('notes.index');
     Route::post('notes', 'NoteController@store')->name('notes.create');
-	Route::put('notes/{note}', 'NoteController@update')->name('invoices.notes');
+	Route::put('notes/{note}', 'NoteController@update')->name('notes.update');
 	Route::get('notes/products/{note}', 'NoteController@getProductsNote');
 	Route::get('notes/download/{note}', 'NoteController@notePdf');
 	Route::post('notes/list-pdf', 'NoteController@listPdf');
 	Route::post('notes/list-excel', 'NoteController@listExcel');
+	Route::delete('notes/{note}', 'NoteController@destroy')->name('notes.destroy');
 
 	//materials
 	Route::get('materials', 'MaterialController@index');

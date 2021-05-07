@@ -121,12 +121,21 @@ class InvoiceController extends ApiController
     public function cancelInvoice(Invoice $invoice) 
     {
         try {
-            if($invoice->state_id === 0)
+            if(!$invoice->state_id)
             {
-                return $this->respondAnuled();
-            } else {
-                $invoice->update(['state_id' => 0]);
+                return $this->respond(message('MSG013'), 406);
             }
+
+            if($invoice->cancelled) {
+                return $this->respond(message('MSG019'), 406);
+            }
+
+            if($invoice->payments()->count() > 0) {
+                return $this->respond(message('MSG020'), 406);
+            }
+
+            $invoice->update(['state_id' => 0]);
+            
         } catch (\Exception $e) {
             return $this->respondInternalError();
         }
