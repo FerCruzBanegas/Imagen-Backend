@@ -17,8 +17,9 @@
         "laravel/framework": "5.8.*",
         "laravel/passport": "7.5.1",
         "laravel/tinker": "^1.0",
+        "lcobucci/jwt": "3.3.3",
         "maatwebsite/excel": "^3.1",
-        "simplesoftwareio/simple-qrcode": "^2.0",
+        "simplesoftwareio/simple-qrcode": "~4",
         "spatie/laravel-cors": "^1.6",
         "villca/numeros-en-letras": "^1.2",
         "webpatser/laravel-uuid": "^3.0"

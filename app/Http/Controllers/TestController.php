@@ -193,7 +193,7 @@ class TestController extends Controller
         $customer = \App\Customer::find(21);
         $data = $this->service->getAccounts($customer);
 
-        return view('pdf.test', compact('data'));
+        return view('pdf.test2', compact('data'));
     }
 
 
@@ -202,13 +202,13 @@ class TestController extends Controller
       $customer = \App\Customer::find(21);
       $data = $this->service->getAccounts($customer);
       
-    	$pdf = PDF::loadView('pdf.test', compact('data'))
+    	$pdf = PDF::loadView('pdf.test2', compact('data'))
 	       ->setOption('margin-top', 1)
 	       ->setOption('margin-bottom', 1)
 	       ->setOption('margin-left', 1)
 	       ->setOption('margin-right', 1)
 	       ->setPaper('letter')
-	       ->setOrientation('portrait');
+	       ->setOrientation('landscape');
         return $pdf->download('test.pdf');
     }
 }
