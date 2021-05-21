@@ -31,13 +31,9 @@ class BillboardService
 
     public function detailPdfDownload(Request $request) 
     {
-        if (empty($request->billboard)) {
-            $billboards = $this->transformer->collection(Billboard::desc()->get());
-        } else {
-            $billboards = $this->transformer->collection(Billboard::in($request->billboard)->get());
-        }
+        $billboards = $this->transformer->collection(Billboard::in($request->billboard)->get());
 
-        $export = new PdfExport('pdf.billboard-list', $billboards);
+        $export = new PdfExport('pdf.billboard-photo', $billboards);
         return $export->options()->letter()->landscape()->download();
     }
 

@@ -1,0 +1,10 @@
+https://blogelegant.com/how-to-install-wordpress-with-slickstack/
+https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-an-ubuntu-20-04-server
+https://www.journaldev.com/25670/install-wordpress-nginx-ubuntu
+https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-lemp-on-ubuntu-20-04
+https://www.hostinger.es/tutoriales/linux-comandos#6-comando-mv
+https://github.com/littlebizzy/slickstack
+https://slickstack.io/install
+https://serverfault.com/questions/1041031/nginx-sometimes-gets-killed-after-reloading-it-using-systemd
+https://www.digitalocean.com/community/questions/how-to-troubleshoot-common-nginx-issues-on-linux-server
+https://stackoverflow.com/questions/50150709/using-32768kib-of-shared-memory-for-nchan-in-etc-nginx-nginx-conf71

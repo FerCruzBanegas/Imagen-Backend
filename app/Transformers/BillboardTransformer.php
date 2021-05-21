@@ -22,6 +22,8 @@ class BillboardTransformer extends Transformer
               $state = "No Disponible";
         };
 
+        $user = auth()->user();
+
         return [
             'code' => $data['code'],
             'zone' => $data['zone'],
@@ -32,6 +34,19 @@ class BillboardTransformer extends Transformer
             'state' => $state,
             'city' => $data['city']['name'],
             'type' => $data['billboard_type']['description'],
+            'user' => [
+                'forename' => $user->forename,
+                'surname' => $user->surname,
+                'email' => $user->email,
+                'phone' => $user->phone,
+            ],
+            'office' => [
+                'address' => $user->office->address,
+                'detail' => explode(',', $user->office->detail),
+                'phone_one' => $user->office->phone_one,
+                'phone_two' => $user->office->phone_two,
+                'city' => $user->office->city->name,
+            ],
         ];
     }
 }

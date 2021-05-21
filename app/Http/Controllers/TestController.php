@@ -202,7 +202,7 @@ class TestController extends Controller
       $customer = \App\Customer::find(21);
       $data = $this->service->getAccounts($customer);
       
-    	$pdf = PDF::loadView('pdf.test2', compact('data'))
+    	$pdf = PDF::loadView('pdf.billboard-photo', compact('data'))
 	       ->setOption('margin-top', 1)
 	       ->setOption('margin-bottom', 1)
 	       ->setOption('margin-left', 1)
