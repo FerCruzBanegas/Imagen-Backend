@@ -101,9 +101,9 @@
           <div class="right">
             <p class="data-user" style="color: #0000;">
               <span style="font-size: 22px; font-weight: bold;">CONTACTOS:</span>
-              <span style="font-size: 18px; font-weight: bold;">Fernando Ladislao Cruz Banegas</span>
-              <span style="font-size: 18px; font-weight: bold;">Telf.: 68774551</span>
-              <span style="font-size: 18px; font-weight: bold;">Correo: sistemas@imagenpublicidad.com.bo</span>
+              <span style="font-size: 18px; font-weight: bold;">{{ $billboard['user']['forename'] }} {{ $billboard['user']['surname'] }}</span>
+              <span style="font-size: 18px; font-weight: bold;">Telf.: {{ $billboard['user']['phone'] }}</span>
+              <span style="font-size: 18px; font-weight: bold;">Correo: {{ $billboard['user']['email'] }}</span>
             </p>
           </div>
           <div class="center">ESPACIOS DISPONIBLES "SANTA CRUZ DE LA SIERRA"</div>
@@ -139,9 +139,9 @@
         </div>
         <div class="detail">
           <div><strong>Publicidad Vial Imagen S.R.L © {{ date('Y') }}</strong></div>
-          <div>Calle Nicolas Acosta esq. Pedro Blanco Nº 1471</div>
+          <div>@if($billboard['office']['city'] == 'La Paz') {{ $billboard['office']['address'] }} {{ $billboard['office']['detail'][1] }} @else {{ $billboard['office']['address'] }} @endif</div>
           <div>Telf.: {{ $billboard['office']['phone_one'] }}  @if($billboard['office']['phone_two']) - {{ $billboard['office']['phone_two'] }} @endif</div>
-          <div>{{  $billboard['office']['city'] }} - Bolivia</div>
+          <div>{{ $billboard['office']['city'] }} - Bolivia</div>
           <div>
             <img src="{{url('/img/chrome.svg')}}"/> 
             <a href="https://imagenpublicidad.com.bo/">http://imagenpublicidad.com.bo/</a>
