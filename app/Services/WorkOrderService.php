@@ -35,13 +35,28 @@ class WorkOrderService
         return $export->options()->letter()->landscape()->download();
     }
 
+    public function manyPendingPdfDownload(Request $request)
+    {
+        $workOrders = $this->transformer->collection(WorkOrder::whereNull('closing_date')->orderBy('created_at', 'desc')->get());
+
+        $export = new PdfExport('pdf.workorder-pending-list', $workOrders);
+        return $export->options()->letter()->landscape()->download();
+    }
+
     public function manyExcelDownload(Request $request) 
     {
         if (empty($request->workOrder)) {
-            $workOrders = $this->transformer->collection(WorkOrder::desc()->checklist()->get());
+            $workOrders = $this->transformer->collection2(WorkOrder::desc()->checklist()->get());
         } else {
-            $workOrders = $this->transformer->collection(WorkOrder::in($request->workOrder)->checklist()->get());
+            $workOrders = $this->transformer->collection2(WorkOrder::in($request->workOrder)->checklist()->get());
         }
+
+        return (new WorkOrdersExport($workOrders))->download('workorders.xlsx');
+    }
+
+    public function manyPendingExcelDownload(Request $request)
+    {
+        $workOrders = $this->transformer->collection2(WorkOrder::whereNull('closing_date')->orderBy('created_at', 'desc')->get());
 
         return (new WorkOrdersExport($workOrders))->download('workorders.xlsx');
     }

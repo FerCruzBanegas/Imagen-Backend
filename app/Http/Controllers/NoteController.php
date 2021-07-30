@@ -52,6 +52,7 @@ class NoteController extends ApiController
                 'discount' => floatval(str_replace(',', '.', str_replace(',', '', $request->note['discount']))),
                 'nit' => $request->note['nit'],
                 'summary' => $request->note['summary'],
+                'accounts' => $request->note['accounts'],
                 'voucher_id' => $voucher->id,
                 'customer_id' => $request->note['customer_id']['id'],
                 'user_id' => $request->note['user_id'],
@@ -88,6 +89,7 @@ class NoteController extends ApiController
                 'total' => $request->note['total'],
                 'discount' => $request->note['discount'],
                 'summary' => $request->note['summary'],
+                'accounts' => $request->note['accounts'],
             ]);
 
             if (!$this->service->checkDataChange($note, $request)) {

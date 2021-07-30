@@ -91,6 +91,11 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'dsn' => 'mongodb+srv://ferdev:68774551NanoBanegas@cluster-erp.oofc1.mongodb.net/imagen?retryWrites=true&w=majority',
+            'database' => 'imagen',
+        ],
     ],
 
     /*

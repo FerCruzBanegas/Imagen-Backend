@@ -7,7 +7,7 @@
     .invoice-box {
       max-width: 100%;
       margin: auto;
-      padding: 30px;
+      padding: 25px;
       font-size: 16px;
       line-height: 24px;
       font-family: 'Ubuntu', sans-serif;
@@ -132,7 +132,10 @@
     <div style="width: 500px; margin: 50px auto; margin-bottom: 0; text-align: center;">
       <span style="font-size: 45px; font-weight: bold;">NOTA DE REMISION</span>
     </div>
-    <div id="light-table" style="margin-top: 20px; color: #000000;">
+    @if (!$data['note']['accounts']) 
+      <div style="color: #000;"><b>(NO CONTABILIZADO)</b></div>
+    @endif 
+    <div id="light-table" style="color: #000000;">
       <div style="border: 2px solid #9e0207; border-radius: 7px;">
         <div style="float: right; margin: 15px;"><b>NIT/CI: {{ $data['note']['customer']['nit'] }}</b></div>
         <div style="margin: 15px;">{{ $data['note']['voucher']['office']['name'] }}, {{ $data['spanish_date'] }}</div>
@@ -191,8 +194,8 @@
       <div style="color: black; font-size: 12px;"><b>Nota:</b> Este documento no es válido para crédito fiscal.</div>
     </div>
     <div class="wrap">
-        <div class="left">AUTORIZADO POR</div>
-        <div class="right">CLIENTE</div>
+      <div class="left">AUTORIZADO POR</div>
+      <div class="right">CLIENTE</div>
     </div>
   </div>
 </body>

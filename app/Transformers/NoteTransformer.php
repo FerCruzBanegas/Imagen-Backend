@@ -13,8 +13,9 @@ class NoteTransformer extends Transformer
             'id' => $data['id'],
             'number' => $data['number'],
             'date' => $data['date'],
-            'total' => $data['total'],
+            'total' => $data['accounts'] === 0 ? 0 : $data['total'],
             'discount' => $data['discount'],
+            'accounts' => $data['accounts'] === 0 ? false : true,
             'customer' => [
                 'name' => $data['customer']['business_name'],
                 'nit' => $data['nit'],
@@ -43,7 +44,7 @@ class NoteTransformer extends Transformer
             'id' => $data['id'],
             'number' => str_pad($data['number'], 8, '0', STR_PAD_LEFT),
             'date' => Carbon::parse($data['date'])->format('d/m/Y'),
-            'total' => number_format($data['total'], 2, '.', ','),
+            'total' => $data['accounts'] === 0 ? number_format(0, 2, '.', ',') : number_format($data['total'], 2, '.', ','),
             'customer' => $data['customer']['business_name'],
             'cite' => $data['quotation']['cite'],
         ];

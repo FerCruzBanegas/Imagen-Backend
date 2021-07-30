@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\WorkOrder;
+use App\Employee;
 use Illuminate\Http\Request;
 use App\Http\Requests\WorkOrderRequest;
 use App\Http\Resources\WorkOrder\WorkOrderResource;
 use App\Services\WorkOrderService;
 use App\Filters\WorkOrderSearch\WorkOrderSearch;
 use App\Http\Resources\WorkOrder\WorkOrderCollection;
+use App\Http\Resources\WorkOrder\WorkOrderPendingCollection;
+use Illuminate\Support\Facades\DB;
 
 class WorkOrderController extends ApiController
 {
@@ -30,6 +33,31 @@ class WorkOrderController extends ApiController
         $workOrders = WorkOrderSearch::checkSortFilter($request, $this->workOrder->newQuery());
 
         return new WorkOrderCollection($workOrders->paginate($request->take));
+    }
+
+    public function pending(Request $request)
+    {
+        $office = auth()->user()->office->id;
+
+        $employees = Employee::where('office_id', $office)->pluck('id');
+
+        $workOrders = DB::table('work_orders AS w')
+        ->select('w.*')
+        ->join('quotations AS q', 'w.quotation_id', '=', 'q.id')
+        ->leftjoin('tasks AS t', function($join) {
+            $join->on('w.id', 't.work_order_id')
+            ->whereNull('w.closing_date');
+        })
+        ->whereNull('w.closing_date')
+        ->where('q.office_id', $office)
+        ->orWhereIn('t.employee_id', $employees)
+        ->groupBy('w.id')
+        ->orderBy('created_at', $request->sort)
+        ->get();
+
+        $data = collect(WorkOrder::hydrate($workOrders->toArray()))->paginate($request->per_page);
+
+        return new WorkOrderPendingCollection($data, $office);
     }
 
     public function store(WorkOrderRequest $request)
@@ -63,10 +91,20 @@ class WorkOrderController extends ApiController
     {
         return $this->service->manyPdfDownload($request);
     }
+
+    public function listPendingPdf(Request $request)
+    {
+        return $this->service->manyPendingPdfDownload($request);
+    }
     
     public function listExcel(Request $request) 
     {
         return $this->service->manyExcelDownload($request);
+    }
+
+    public function listPendingExcel(Request $request) 
+    {
+        return $this->service->manyPendingExcelDownload($request);
     }
 
     public function finishWorkOrder(WorkOrder $workOrder) 

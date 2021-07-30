@@ -89,9 +89,14 @@ class InvoiceController extends ApiController
         DB::beginTransaction();
         try {
             $date = \DateTime::createFromFormat('Y-m-d', $request->invoice['date']);
+            $license = License::find($request->invoice['license']);
+
+            $controlCode = $this->service->makeControlCode($license->authorization, ltrim($request->invoice['number'], '0'), $request->invoice['nit'], date('Y/m/d', strtotime($request->invoice['date'])), round($request->invoice['total']), $license->key);
 
             $invoice->update([
                 'date' => $date->format('Y-m-d H:i:s'),
+                'control_code' => $controlCode,
+                'nit' => $request->invoice['nit'],
                 'nit_name' => $request->invoice['nit_name'],
                 'title' => rtrim($request->invoice['title'], ':'),
                 'footer' => $request->invoice['footer'],

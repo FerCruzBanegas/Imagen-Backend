@@ -14,15 +14,20 @@ class Billboard extends Model
     protected $hidden = ['deleted_at'];
 
     protected $fillable = [
-        'code', 'uuid', 'zone', 'location', 'dimension', 'price', 'illumination', 'state_id', 'latitude', 'longitude', 'photosphere', 'city_id', 'billboard_type_id'
+        'code', 'uuid', 'zone', 'location', 'dimension', 'price', 'illumination', 'state_id', 'latitude', 'longitude', 'img_customer', 'img_user', 'photosphere', 'city_id', 'billboard_type_id'
     ];
 
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string) \Uuid::generate(4);
         });
+    }
+
+    public static function listBillboards()
+    {
+        return static::orderBy('id', 'DESC')->select('id', 'code',  'price', 'dimension');
     }
 
     public function scopeDesc($query)
@@ -43,5 +48,10 @@ class Billboard extends Model
     public function billboard_type()
     {
         return $this->belongsTo(BillboardType::class);
+    }
+
+    public function rentals()
+    {
+        return $this->hasMany(Rental::class);
     }
 }

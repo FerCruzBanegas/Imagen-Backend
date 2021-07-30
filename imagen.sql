@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `actions` (
   `title` varchar(120) NOT NULL,
   `order` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla imagen.actions: ~59 rows (aproximadamente)
 /*!40000 ALTER TABLE `actions` DISABLE KEYS */;
@@ -87,7 +87,8 @@ INSERT INTO `actions` (`id`, `name`, `method`, `title`, `order`) VALUES
 	(56, 'Eliminar', 'notes.destroy', 'Notas de Remision', 56),
 	(57, 'Ver Lista', 'accounts.index', 'Cuentas', 57),
 	(58, 'Cerrar Cuenta', 'accounts.close', 'Cuentas', 58),
-	(59, 'Ver Todos', 'reports.index', 'Informes', 59);
+	(59, 'Ver Todos', 'reports.index', 'Informes', 59),
+	(60, 'Ver Todos', 'jobs.index', 'Trabajos Pendientes', 60);
 /*!40000 ALTER TABLE `actions` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.action_profile
@@ -100,27 +101,60 @@ CREATE TABLE IF NOT EXISTS `action_profile` (
   KEY `action_profile_action_id_foreign` (`action_id`),
   CONSTRAINT `action_profile_action_id_foreign` FOREIGN KEY (`action_id`) REFERENCES `actions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `action_profile_profile_id_foreign` FOREIGN KEY (`profile_id`) REFERENCES `profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.action_profile: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.action_profile: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `action_profile` DISABLE KEYS */;
 INSERT INTO `action_profile` (`id`, `profile_id`, `action_id`) VALUES
-	(1, 1, 1);
+	(1, 1, 1),
+	(2, 13, 1),
+	(3, 12, 60),
+	(4, 10, 2),
+	(5, 10, 10),
+	(6, 10, 11),
+	(7, 10, 7),
+	(8, 10, 9),
+	(9, 10, 13),
+	(10, 10, 14),
+	(11, 10, 15),
+	(12, 10, 16),
+	(13, 10, 17),
+	(14, 10, 18),
+	(15, 10, 19),
+	(16, 10, 20),
+	(17, 10, 21),
+	(18, 10, 22),
+	(19, 10, 23),
+	(20, 10, 24),
+	(21, 10, 25),
+	(22, 10, 26),
+	(23, 10, 27),
+	(24, 11, 2),
+	(25, 11, 6),
+	(26, 11, 8),
+	(27, 11, 10),
+	(28, 11, 11),
+	(29, 11, 28),
+	(30, 11, 29),
+	(31, 11, 30),
+	(32, 11, 31);
 /*!40000 ALTER TABLE `action_profile` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.billboards
 CREATE TABLE IF NOT EXISTS `billboards` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `code` varchar(32) NOT NULL,
-  `uuid` varchar(36) NOT NULL,
+  `uuid` varchar(36) DEFAULT NULL,
   `zone` varchar(64) NOT NULL,
   `location` varchar(128) NOT NULL,
   `dimension` varchar(32) NOT NULL,
   `price` decimal(14,2) unsigned NOT NULL,
   `illumination` tinyint(1) unsigned NOT NULL,
   `state_id` tinyint(1) unsigned NOT NULL DEFAULT '1',
-  `latitude` double unsigned DEFAULT NULL,
-  `longitude` double unsigned DEFAULT NULL,
+  `latitude` float DEFAULT NULL,
+  `longitude` float DEFAULT NULL,
+  `img_customer` varchar(128) DEFAULT NULL,
+  `img_user` varchar(128) DEFAULT NULL,
   `photosphere` varchar(256) DEFAULT NULL,
   `city_id` int(10) unsigned NOT NULL,
   `billboard_type_id` int(10) unsigned NOT NULL,
@@ -134,14 +168,541 @@ CREATE TABLE IF NOT EXISTS `billboards` (
   FULLTEXT KEY `location` (`location`),
   CONSTRAINT `billboards_billboard_type_id_foreign` FOREIGN KEY (`billboard_type_id`) REFERENCES `billboard_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `billboards_city_id_foreign` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=538 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.billboards: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.billboards: ~530 rows (aproximadamente)
 /*!40000 ALTER TABLE `billboards` DISABLE KEYS */;
-INSERT INTO `billboards` (`id`, `code`, `uuid`, `zone`, `location`, `dimension`, `price`, `illumination`, `state_id`, `latitude`, `longitude`, `photosphere`, `city_id`, `billboard_type_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, '1-SCZ', 'e7ad5ea0-a91c-11eb-b93a-218bacc51bce', 'La Ramda', 'Av. Isabela Catolica', '10 x 4', 2500.00, 1, 1, NULL, NULL, NULL, 2, 1, '2021-04-29 15:18:22', '2021-04-29 15:18:23', NULL),
-	(2, '2-SCZ', '42b07210-a9f4-11eb-8707-616c9fc5099d', 'Los Pozos', 'Calle Charcas', '6 x 4', 3000.00, 1, 0, NULL, NULL, NULL, 1, 2, '2021-04-30 16:40:56', '2021-04-30 16:40:57', NULL),
-	(3, '3-SCZ', '67a723a0-a9f4-11eb-b366-29f7146fecf2', 'Mutualista', '3 Anillo Interno', '12 x 6', 1800.00, 1, 2, NULL, NULL, NULL, 3, 3, '2021-04-30 16:42:06', '2021-04-30 16:42:06', NULL);
+INSERT INTO `billboards` (`id`, `code`, `uuid`, `zone`, `location`, `dimension`, `price`, `illumination`, `state_id`, `latitude`, `longitude`, `img_customer`, `img_user`, `photosphere`, `city_id`, `billboard_type_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, '1-LPZ', '', 'Sopocachi', 'Av. Kantutani Carril de Subida', '15 x 5', 8437.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(2, '2-LPZ', '', 'Zona Sur', 'Av Roma - Puente Calacoto', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(3, '3-LPZ', '', 'Zona Sur', 'Av. Roma - Puente Calacoto', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(4, '4-LPZ', '47ac2c30-2599-11e9-9c9e-c95ee5084b29', 'Zona Sur', 'Av. Ballivián  Calle 13 Automóvil Club Boliviano - SEGUNDO (cara B)', '12 x 4', 8500.00, 1, 2, NULL, NULL, NULL, NULL, '4-LPZ.jpg', 1, 2, NULL, NULL, NULL),
+	(5, '5-LPZ', '', 'Zona Sur', 'Av. Ballivián  Calle 13 Automóvil Club Boliviano - SEGUNDO cara A', '12 x 4', 9500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(6, '6-LPZ', '121b5900-22ac-11ea-b00c-b514de712ec7', 'Zona Sur', 'Irpavi - Av. Rafael Pabon Frente Estación Linea Verde del Teleférico (Cara A)', '10 x 4', 7500.00, 1, 1, -16.5372, -68.0891, NULL, NULL, '1576793302.jpg', 1, 2, NULL, NULL, NULL),
+	(7, '7-LPZ', '937c6f20-2b05-11e9-b9ec-370f2fee50b1', 'Zona Sur', 'Irpavi -  Av. Rafael Pabon Frente Estación Linea Verde del Teleférico (Cara B)', '10 x 4', 7500.00, 1, 1, -16.5369, -68.0891, NULL, NULL, '1576792776.jpg', 1, 2, NULL, NULL, NULL),
+	(8, '8-LPZ', 'abe8b720-352b-11e9-9f65-c1ce3d1a969c', 'Zona Sur', 'Achumani - Garcia Lanza y C. 15 - frente a BICICROS', '10 x 4', 7500.00, 1, 1, -16.5319, -68.0759, NULL, NULL, '1550679929.jpg', 1, 1, NULL, NULL, NULL),
+	(9, '9-LPZ', 'a534e950-46a7-11e9-bcb9-2d2b871c4509', 'San Pedro', 'Calle Zoilo Flores - Mercado Rodríguez', '10 x 5', 7500.00, 1, 2, -16.5008, -68.1411, NULL, NULL, '1552602145.jpg', 1, 1, NULL, NULL, NULL),
+	(10, '10-LPZ', '', 'Zona Norte', 'Av. Perú - Nudo Vita - Valla IZQUIERDA', '8 x 6', 7000.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(11, '11-LPZ', '', 'Zona Norte', 'Av. Perú - Nudo Vita - DERECHA', '8 x 6', 7000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(12, '12-LPZ', '', 'Zona Norte', 'Plaza Eguino - Edificio Zaiduni', '12 x 22', 14500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 3, NULL, NULL, NULL),
+	(13, '13-LPZ', '', 'Zona Norte', 'Av. Manco Kapac', '12.5 x 10', 7500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 3, NULL, NULL, NULL),
+	(14, '14-LPZ', '1194c030-beaf-11e9-8639-99df3b3476c7', 'Zona Central', 'Pérez Velasco', '10 x 4', 7500.00, 1, 1, -16.4953, -68.1378, NULL, NULL, '1565799473.jpg', 1, 1, NULL, NULL, NULL),
+	(15, '17-LPZ', '', 'Miraflores', 'Av. Busch esq. Brasil', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(16, '18-LPZ', '', '(OJO) Miraflores', 'Calle Juan Manuel Loza - Frente Estadio H. Siles', '15 x 5', 7500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(17, '19-LPZ', '7f89e770-07ba-11ea-8f16-c7cf8fe68ef0', 'Zona Central', 'Batallón Colorados - Plaza del Estudiante – Café Ciudad', '10 x 4', 8000.00, 1, 0, -16.5039, -68.1333, NULL, NULL, '1573848019.jpg', 1, 1, NULL, NULL, NULL),
+	(18, '20-LPZ', '4a5c6c50-2319-11e9-9ea5-ef2215b851c7', 'Zona Central', 'Plaza del Estudiante al lado de AFP entre Av. Villazón y Landaeta', '10 x 5', 11830.00, 1, 2, -16.5044, -68.1312, NULL, NULL, '20-LPZ.jpg', 1, 1, NULL, NULL, NULL),
+	(19, '21-LPZ', 'c56188c0-2b05-11e9-834a-e786ccded412', 'Zona Central', '(T) Entre Av, 16 de Julio - C. Mexico, Hotel Copacabana', '12 x 4', 8250.00, 1, 1, NULL, NULL, NULL, NULL, '21-LPZ.jpg', 1, 1, NULL, NULL, NULL),
+	(20, '22-LPZ', '', 'Zona Central', 'Calle Federico Suazo frente Hermenca', '5 x 6', 6500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 3, NULL, NULL, NULL),
+	(21, '23-LPZ', '', 'Zona Central', 'Av. del Ejercito - Av. Del Poeta - detrás de HERMENCA', '25 x 6', 22000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(22, '24-LPZ', '', 'Villa - Fatima', 'Av. Las Américas Frente a Ex Gasolinera ', '8 x 3', 7000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(23, '25-LPZ', '', 'Zona Sur', 'Plaza Mario Mercado - Rotonda Central Bajo Llojeta', '12 x 5', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(24, '27-LPZ', '', 'Zona Sur', 'Av. Max Fernandez ', '12 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(25, '28-LPZ', '88914030-bf99-11e9-8a52-8fce87b51aa6', 'Zona Sur', 'Av. Libertadores el carril de Bajada', '10 x 4', 8000.00, 1, 1, -16.5132, -68.1193, NULL, NULL, '1565900175.jpg', 1, 1, NULL, NULL, NULL),
+	(26, '29-LPZ', '98729520-bf9f-11e9-b607-c1cdcebd3baa', 'Zona Sur - OBRAJES', 'Av. Libertadores el carril de subida', '10 x 4', 7000.00, 1, 1, -16.5133, -68.1202, NULL, NULL, '1565903207.jpg', 1, 1, NULL, NULL, NULL),
+	(27, '30-LPZ', '2cc1fa40-2599-11e9-9da5-0585cbcf6def', 'Zona Sur', 'Av. Costanera - Cancha Adesu (Cara B)', '10 x 4', 7000.00, 1, 1, NULL, NULL, NULL, NULL, '30-LPZ.jpg', 1, 2, NULL, NULL, NULL),
+	(28, '31-LPZ', '12e91540-2599-11e9-b5ae-f99f9ce3db45', 'Zona Sur', 'Av. Costanera - Cancha Adesu (Cara A)', '10 x 4', 7500.00, 1, 2, NULL, NULL, NULL, NULL, '31-LPZ.jpg', 1, 2, NULL, NULL, NULL),
+	(29, '34-LPZ', 'f27d5a60-2598-11e9-b43f-4186ed1b5ba0', 'Zona Sur', 'Av. Garcia Lanza -Ingreso Achumani  Cara A', '10 x 4', 10000.00, 1, 2, NULL, NULL, NULL, NULL, '', 1, 2, NULL, NULL, NULL),
+	(30, '35-LPZ', '', 'Zona Sur', 'Av. Garcia Lanza Ingreso Achumani Cara B', '10 x 4', 10000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(31, '36-LPZ', '', 'Zona Sur', 'Av. Costanera - Parque Las Cholas Cara A', '12 x 4', 13280.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(32, '37-LPZ', '', 'Zona Sur', 'Av. Costanera - Parque Las Cholas Cara B', '12 x 4', 13280.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(33, '38-LPZ', '', 'Zona Sur', 'Av Hernán Siles Zuazo - Parque Las Cholas Cara C', '16 x 4', 8500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(34, '39-LPZ', '', 'Zona Este', 'Av. Landaeta Esq. Jaimes Freyre  Cara A', '10 x 4', 7562.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(35, '40-LPZ', '', 'Cotahuma', 'Av. Buenos Aires Esq. Moxos Frente Teleférico Amarillo 2 C A', '10 x 4', 7000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(36, '41-LPZ', '', 'Cotahuma', 'Av. Buenos Aires Esq. Moxos Frente Teleférico Amarillo 2 C B', '10 x 4', 7000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(37, '42-LPZ', '04c2cb10-c041-11e9-b07b-d51fb525d671', 'Zona Sur', 'Av. Muñoz Reyes altura Calle 28 de Cota Cota - Cara A', '10 x 4', 7000.00, 1, 0, -16.5404, -68.0696, NULL, NULL, '1565972109.jpg', 1, 2, NULL, NULL, NULL),
+	(38, '43-LPZ', '53ec5460-c045-11e9-8de1-c7b97b12a59d', 'Zona Sur', 'Av. Muñoz Reyes altura Calle 28 de Cota Cota - Cara B', '10 x 4', 7000.00, 0, 1, -16.5406, -68.0691, NULL, NULL, '1565973960.jpg', 1, 2, NULL, NULL, NULL),
+	(39, '44-LPZ', '', 'Mallasa', 'Frente Ingreso Zoológico de Mallasa Cara A', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(40, '45-LPZ', '', 'Mallasa', 'Frente Ingreso Zoológico de Mallasa Cara B', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(41, '46-LPZ', '128f8aa0-c02c-11e9-8ef7-6d0864bce27c', 'Zona Sur', 'Av. Roma Frente al Comando General de la Armada', '10 x 4', 7000.00, 1, 0, -16.5378, -68.0972, NULL, NULL, '1565963155.jpg', 1, 1, NULL, NULL, NULL),
+	(42, '47-LPZ', '', 'Mallasa', 'Ingreso a Mallasa - Av. Principal', '10 x 4', 6500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(43, '48-LPZ', '', 'Villa - Fatima', 'Salida A Yungas - Proximo Tranca de Hurujara Cara A', '10 x 4', 7000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(44, '49-LPZ', '', 'Villa - Fatima', 'Salida a Yungas - Proximo Tranca de Hurujara Cara B', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(45, '50-LPZ', '', 'Zona Central', 'Av. 6 de Agosto casi Aspiazu Nº 2135', '3.60 x 8', 7150.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 3, NULL, NULL, NULL),
+	(46, '53-LPZ', '', 'Zona Norte', 'Av. Buenos Aires esq. Julio Tapia', '6 x 8', 7150.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 3, NULL, NULL, NULL),
+	(47, '54-LPZ', '', 'Zona Sur', 'Av. Kantutani - Escuela de Guerra IZQUIERDA (T)', '15 x 5', 7500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(48, '55-LPZ', '', 'Miraflores', 'Frontis Estadio Hernando Siles', '12 x 5 ', 18500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(49, '56-LPZ', '', 'Miraflores', 'Frontis Estadio Hernando Siles', '21.50 x 4', 26000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(50, '57-LPZ', '', 'Miraflores', 'Frontis Estadio Hernando Siles', '10 x 4', 200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(51, '58-LPZ', '', 'Miraflores', 'Frontis Estadio Hernando Siles', '12 x 5', 200.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(52, '59-LPZ', '', 'Zona Sur', 'Av. Los Álamos (Av. Costanera)  altura Calle 10  SAMAPA Cara A', '12 x 4', 7500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(53, '60-LPZ', '', 'Zona Sur', 'Av. Los Álamos (Av. Costanera) altura Calle 10 SAMAPA Cara B', '12 x 4', 7500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(54, '61-LPZ', '6e1b0aa0-a9a2-11e9-9aad-e9489bf6a334', 'Villa - Fatima', 'Av. Ramiro Castillo, Plaza del Maestro Cara B', '10 x 4', 8000.00, 0, 1, -16.4742, -68.1197, NULL, NULL, '1563485070.jpg', 1, 2, NULL, NULL, NULL),
+	(55, '64-LPZ', 'a352fc50-a9a1-11e9-86ce-e51d72769960', 'Villa - Fatima', 'Av. Ramiro Castillo - Plaza del Maestro Cara A', '10 x 4', 8000.00, 1, 1, -16.4749, -68.1198, NULL, NULL, '1563484730.jpg', 1, 2, NULL, NULL, NULL),
+	(56, '65-LPZ', '', 'Cotahuma', 'Av. Buenos Aires Esq. Moxos Frente Teleférico Amarillo 1 C A', '10 x 4', 7000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(57, '66-LPZ', '', 'Cotahuma', 'Av. Buenos Aires Esq. Moxos Frente Teleférico Amarillo 1 C B', '10 x 4', 7000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(58, '68-LPZ', '', '(OJO Mayo 2020)Miraflores', 'Av. Saavedra esq. Radio Club La Paz - Cara A', '11 x 4', 10625.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(59, '69-LPZ', '', '(OJO Mayo 2020)Miraflores ', 'Av. Saavedra Esq. Radio Club La Paz - Cara B', '11 x 4', 7150.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(60, '70-LPZ', '', 'Achacachi', 'Ingreso a Achacachi de La Paz Cara A', '10 x 4', 5000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(61, '71-LPZ', '', 'Copacabana', 'Ingreso a Copacabana', '10 x 4', 6000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(62, '72-LPZ', 'bfc7b2e0-c511-11e9-8857-238323a19fcb', 'Copacabana', 'Plaza Sucre (COPACABANA) CARA A', '10 x 4', 5500.00, 0, 1, -16.1653, -69.0897, NULL, NULL, '1566501563.jpg', 1, 1, NULL, NULL, NULL),
+	(63, '74-LPZ', '50affbc0-46a7-11e9-8862-b39eefa4c3a7', 'Zona Central', 'Plazuela Gran Poder (OBS)', '15 x 6', 12000.00, 0, 0, -16.4997, -68.1433, NULL, NULL, '1552602003.jpg', 1, 3, NULL, NULL, NULL),
+	(64, '75-LPZ', '', 'Zona Sur', 'Av. Libertadores - Curva de Holguin Cara A', '10 x 4', 8500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(65, '77-LPZ', '', 'Desaguadero', 'Puente Fronterizo Peatonal  Desaguadero', '10 x 4', 5500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(66, '78-LPZ', '', 'Tiquina', 'San Pablo de Tiquina - Cara A', '10 x 4', 7000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(67, '79-LPZ', '', 'Tiquina', 'San Pablo de Tiquina Cara B', '10 x 4', 7000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(68, '80-LPZ', '', 'Zona Este', 'Av. Landaeta Esq. Jaimes Freyre Cara B', '10 x 4', 7000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(69, '81-LPZ', '40104d30-a999-11e9-b3ed-455a5af0ba9c', 'Miraflores', 'Plaza Triangular - Estadio Obrero Valla Izquierda', '10 x 5.85', 16875.00, 1, 1, -16.504, -68.1218, NULL, NULL, '1564697731.jpg', 1, 1, NULL, NULL, NULL),
+	(70, '82-LPZ', 'f0624e30-a977-11e9-9d2c-033dc8936d43', 'Miraflores', 'Plaza Triangular - Estadio Obrero Valla Derecha ', '12 x 6.40', 16875.00, 1, 2, -16.5041, -68.1217, NULL, NULL, '1564698053.jpg', 1, 1, NULL, NULL, NULL),
+	(71, '85-LPZ', '', 'Zona Central', '(T) C. Murillo - Plaza Eguino', '12 x 4', 7400.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(72, '86-LPZ', '', 'Miraflores', 'Frente Estadio Hernando Siles', '6 x 3', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(73, '87-LPZ', '', 'Zona Este', 'Eloy Salmón Calle Pedro de la Gasca esq. Sebastián Segurola', '12 x 4', 7000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(74, '88-LPZ', 'bc8967e0-2951-11e9-8086-e7f896d0949e', 'Zona Sur', 'Av. José Manuel Chinchilla esq. Tomasa Murillo, Cara A -  Achumani ', '10 x 4', 8500.00, 1, 1, -16.5353, -68.0797, NULL, NULL, '1574189130.jpg', 1, 2, NULL, NULL, NULL),
+	(75, '89-LPZ', 'd445c5c0-2598-11e9-9de6-7d95401227ca', 'Zona Sur', 'Av. José Manuel Chinchilla esq. Tomasa Murillo, Cara B -  Achumani ', '10 x 4', 8500.00, 0, 1, -16.5332, -68.0771, NULL, NULL, '1574189473.jpg', 1, 2, NULL, NULL, NULL),
+	(76, '90-LPZ', '43118e60-2319-11e9-beb3-4ffca37f52e3', 'Zona Sur', 'Av. Costanera altura calle 9 (Bajo Seguencoma) Cara A', '10 x 4', 10000.00, 1, 0, -16.5405, -68.0946, NULL, NULL, '90-LPZ.jpg', 1, 2, NULL, NULL, NULL),
+	(77, '91-LPZ', '', 'Zona Sur', 'Av. Costanera altura calle 9 (Bajo Seguencoma) Cara B', '10 x 4', 10000.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(78, '92-LPZ', '', 'Nor Yungas', 'Coroico - Ingreso Población', '9 x 3', 5500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(79, '93-LPZ', '', 'Nor Yungas', 'Caranavi - Ingreso Población', '9 x 3', 5500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(80, '94-LPZ', '', 'Nor Yungas', 'Guanay - Ingreso Población', '9 x 3', 5500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(81, '95-LPZ', '', 'Nor Yungas', 'Guanay - Salida a Tipuani', '9 x 3', 5500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(82, '96-LPZ', '', 'Nor Yungas', 'Rurrenabaque - Tranca Salida a Reyes', '9 x 3', 5000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(83, '97-LPZ', '', 'Nor Yungas', 'Rurrenabaque - Ingreso Terminal', '9 x 3', 5000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(84, '98-LPZ', '', 'Terminal', 'San Borja - Ingreso Terminal', '9 x 3', 5000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 10, 1, NULL, NULL, NULL),
+	(85, '99-LPZ', '09fecba0-46a8-11e9-8c74-f93635edd3de', 'San Pedro', 'Av. Max Paredes - Mercado Rodríguez  ', '10 x 4', 7000.00, 1, 1, -16.5005, -68.1397, NULL, NULL, '1552602314.jpg', 1, 1, NULL, NULL, NULL),
+	(86, '100-LPZ', '51ecd700-46a5-11e9-abdf-0574ab5310b6', 'San Pedro', 'Rodríguez - Mercado Rodríguez', '10 x 4', 7000.00, 1, 1, -16.5001, -68.1395, NULL, NULL, '1552601146.jpg', 1, 1, NULL, NULL, NULL),
+	(87, '105-LPZ', '0d6f36c0-a99e-11e9-b741-bf375596f53f', 'Miraflores', 'Av. de las Américas frente a Plaza Villarroel - Cara A', '10 x 4', 8500.00, 1, 1, -16.4831, -68.1241, NULL, NULL, '1563483190.jpg', 1, 2, NULL, NULL, NULL),
+	(88, '106-LPZ', '4d814490-a9a0-11e9-9146-471b57cfac47', 'Miraflores', 'Av. de las Américas frente a Plaza Villarroel - Cara B', '10 x 4', 8500.00, 1, 1, -16.4743, -68.1199, NULL, NULL, '1564693732.jpg', 1, 2, NULL, NULL, NULL),
+	(89, '107-LPZ', 'b1063950-5ad4-11e9-b042-6b155a15c3f4', 'San Pedro', 'C. Calatayud - Huyustus', '7 x 2.50', 1726.19, 1, 2, -16.4945, -68.15, NULL, NULL, '1554820578.jpg', 1, 1, NULL, NULL, NULL),
+	(90, '1-SCZ', 'd6ef8610-4a5a-11e9-96fb-5bbd8d050242', '1er Anillo', 'Av. Monseñor Rivero (ex Bingo Bahiti) 12x6', '12 x 6', 11000.00, 0, 0, -17.7732, -63.1823, NULL, NULL, '1553008962.jpg', 2, 1, NULL, NULL, NULL),
+	(91, '2-SCZ', '7a30b2c0-4a5a-11e9-b016-9760f05b41d3', '1er Anillo', 'Av. Monseñor Rivero (ex Bingo Bahiti)', '10 x 4', 7500.00, 1, 0, -17.7732, -63.1823, NULL, NULL, '1553008806.jpg', 2, 1, NULL, NULL, NULL),
+	(92, '3-SCZ', '75ab5600-4a48-11e9-aed8-ef335ac48cbe', 'Equipetrol', 'Av. San martín frente Hotel Los Tajibos 1', '12 x 4', 10000.00, 0, 2, -17.7644, -63.1979, NULL, NULL, '1553001068.jpg', 2, 1, NULL, NULL, NULL),
+	(93, '4-SCZ', '1fe469b0-4a59-11e9-97ca-e5cf145586be', '2do Anillo', 'Isabel La Católica y Yotau (RAMADA)', '7.50 x 3.00', 4500.00, 0, 2, -17.7954, -63.1948, NULL, NULL, '1553008225.jpg', 2, 1, NULL, NULL, NULL),
+	(94, '5-SCZ', 'c4752280-4a58-11e9-acad-878c6c07135b', '2do Anillo', 'Isabel La Católica y Yotau 6x3(RAMADA)', '6 x 3', 3500.00, 0, 2, -17.7953, -63.1932, NULL, NULL, '1553008072.jpg', 2, 1, NULL, NULL, NULL),
+	(95, '6-SCZ', 'aa595370-4a57-11e9-aedc-bfd9900fcb63', '4to Anillo', 'Av. Banzer (Cristo Redentor) entre 5to y 6to  Anillo Cara A', '10 x 4', 4000.00, 1, 2, -17.7366, -63.1719, NULL, NULL, '1553007599.jpg', 2, 2, NULL, NULL, NULL),
+	(96, '7-SCZ', '6b869160-4a57-11e9-ae09-7d476611f573', '4to Anillo', 'Av. Banzer (Cristo Redentor) entre 5to y 6to Anillo Cara B', '10 x 4', 4000.00, 1, 2, -17.7365, -63.1702, NULL, NULL, '1553007493.jpg', 2, 2, NULL, NULL, NULL),
+	(97, '8-SCZ', 'f3ac0450-2f94-11e9-8076-addc45e1e177', '1er Anillo', 'Av. Grigota - Mercado La Ramada', '10 x 4', 4500.00, 0, 1, -17.7951, -63.1914, NULL, NULL, '1551215053.jpg', 2, 1, NULL, NULL, NULL),
+	(98, '9-SCZ', '07548030-2f95-11e9-918f-419408601803', '1er Anillo', 'Av. Grigota - Mercado La Ramada (mural)(juan carlos nuñez)', '10 x 10', 6000.00, 0, 1, -17.7964, -63.1917, NULL, NULL, '1553614497.jpg', 2, 3, NULL, NULL, NULL),
+	(100, '11-SCZ', '60d90860-47f8-11e9-b26e-b14d6c7c93c4', '2do Anillo', 'Av. El Trompillo esq. Heroes del Chaco Cara A (2do Anillo)', '10 x 4', 4000.00, 0, 1, -17.8007, -63.1891, NULL, NULL, '1552746771.jpg', 2, 2, NULL, NULL, NULL),
+	(101, '12-SCZ', 'c3c4d660-46a1-11e9-8234-1ff572fa1228', '2do Anillo', 'Av. El Trompillo esq. Héroes del Chaco Cara B (2do Anillo)', '10 x 4', 4000.00, 0, 1, -17.8009, -63.1875, NULL, NULL, '1552599619.jpg', 2, 2, NULL, NULL, NULL),
+	(102, '13-SCZ', '9cbcac00-469f-11e9-bca7-9d6515415ee1', 'Por definir', 'Curva de ingreso Aeropuerto N°11  Viru Viru Cara A', '10 x 4', 6500.00, 0, 2, -17.6583, -63.1578, NULL, NULL, '1552598695.jpg', 2, 2, NULL, NULL, NULL),
+	(103, '14-SCZ', '61e4d0d0-468f-11e9-a5c2-3b5585063479', 'Por definir', 'Curva de ingreso Aeropuerto N°11  Cara B', '10 x 4', 6500.00, 0, 2, -17.6583, -63.1592, NULL, NULL, '1552591724.jpg', 2, 2, NULL, NULL, NULL),
+	(104, '15-SCZ', '', '2do Anillo', 'Av. Cristo Redentor (Rotonda El Cristo) 2', '10 x 4', 14000.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(105, '16-SCZ', '29ff57a0-2319-11e9-9aeb-9f8001723c9b', '2do Anillo', 'Av. Cristo Redentor (Rotonda El Cristo) 1', '10 x 4', 9000.00, 1, 2, -17.7704, -63.1824, NULL, NULL, '16-SCZ.jpg', 2, 2, NULL, NULL, NULL),
+	(106, '17-SCZ', '1c589610-4bf0-11e9-95e3-45fe1f975bfa', '2do Anillo', 'Av. Busch y 2do Anillo frente UNIFRANZ Cara A', '10 x 4', 4000.00, 0, 0, -17.7734, -63.1922, NULL, NULL, '1563915607.jpg', 2, 2, NULL, NULL, NULL),
+	(107, '18-SCZ', 'f3ca64b0-4bef-11e9-a803-396f04604a3c', '2do Anillo', 'Av. Busch y 2do Anillo - frente UNIFRANZ Cara B', '10 x 4', 4000.00, 0, 0, -17.7726, -63.1932, NULL, NULL, '1563915789.jpg', 2, 2, NULL, NULL, NULL),
+	(108, '19-SCZ', '86e1c0e0-45d8-11e9-8706-adfd72d8f383', '5to Anillo', 'Av. Tres Pasos al Frente entre 4to y 5to Anillo', '10 x 4', 6500.00, 1, 0, -17.8008, -63.1422, NULL, NULL, '1552513188.jpg', 2, 1, NULL, NULL, NULL),
+	(109, '21-SCZ', '', 'Puerto Suarez', 'Puerto Quijarro - Av Naval', '9 x 4', 4000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(110, '22-SCZ', '', 'Puerto Quijarro', 'Puerto Quijarro- Rotonda Frente Cemento Itacamba', '10 x 4', 3750.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(112, '24-SCZ', 'e5d08330-45d6-11e9-8357-0935789d57b9', 'Puerto Suarez', 'Puerto Suárez - Av. Principal Frente al Surtidor (Varadero)', '10 x 4', 4000.00, 0, 1, -18.9854, -57.7953, NULL, NULL, '1552512489.jpg', 2, 1, NULL, NULL, NULL),
+	(113, '2-CBA', 'ff62ab00-2318-11e9-9d60-5b5f8c7dd1cd', 'Cercado', 'Av. Pando,  casi Esq. América', '10 x 4', 6500.00, 1, 2, -17.3891, -66.0881, NULL, NULL, '1551213510.jpg', 3, 2, NULL, NULL, NULL),
+	(114, '3-CBA', 'ac52e160-3aa7-11e9-9f90-cd1b2caab005', 'Cercado', '(T) Puente Huayna Kapac esq. Final Jordán', '17 x 5', 7500.00, 1, 1, -17.3969, -66.1693, NULL, NULL, '1551282743.jpg', 3, 1, NULL, NULL, NULL),
+	(115, '4-CBA', '', 'Cercado', 'Av América esq Villarroel', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(116, '6-CBA', '5e4c4020-3aa1-11e9-90b2-d1bbe74a068c', 'Cercado', '(T) Av Blanco Galindo km 3 llegada a Cbba Cercado', '10 x 4', 6500.00, 0, 1, -17.3929, -66.1895, NULL, NULL, '1551280035.jpg', 3, 1, NULL, NULL, NULL),
+	(117, '7-CBA', '995a42c0-3aa1-11e9-9f02-6d4542c222d2', 'Cercado', 'Av. Blanco Galindo Km. 3 Segunda Valla - Salida a Quillacollo', '10 x 4', 6500.00, 0, 1, -17.3929, -66.1895, NULL, NULL, '1551280134.jpg', 3, 1, NULL, NULL, NULL),
+	(118, '8-CBA', '0f6060e0-3aa4-11e9-a8ca-572100111c84', 'Cercado', 'Av. Ayacucho esq. Colombia', '9 x 3', 4500.00, 0, 2, -17.3914, -66.1614, NULL, NULL, '1551281191.jpg', 3, 1, NULL, NULL, NULL),
+	(119, '9-CBA', '', 'Cercado', 'Av. Heroinas esq. Lanza', '9 x 10', 8500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 3, 3, NULL, NULL, NULL),
+	(120, '10-CBA', '6d8fc800-3aa4-11e9-805f-21bf6613fde6', 'Cercado', 'Puente Killman - Av. Ingavi esq. Benemeritos del Chaco', '10 x 4', 7500.00, 0, 0, -17.4091, -66.1771, NULL, NULL, '1551281349.jpg', 3, 1, NULL, NULL, NULL),
+	(121, '11-CBA', '875b1a60-3aa3-11e9-b922-3b2824efa84f', 'Cercado', '(T) Av. Heroinas Esq. Lanza (16 de Julio)', '9 x 10', 7000.00, 0, 1, -17.3914, -66.1554, NULL, NULL, '1551281039.jpg', 3, 3, NULL, NULL, NULL),
+	(122, '12-CBA', '52f75c10-3aa2-11e9-bfd1-6bfc2035381a', 'Cercado', '(T) Av. Aroma esq. Nataniel Aguirre', '8 x 14', 6000.00, 0, 1, -17.3995, -66.1589, NULL, NULL, '1551280446.jpg', 3, 3, NULL, NULL, NULL),
+	(123, '13-CBA', '98b7b570-3aac-11e9-af3e-ff93ccd953d6', 'Cercado', '(T) Av Ayacucho Casi Aroma - Hostal Kanata ', '9 x 6', 8000.00, 0, 1, -17.4012, -66.1582, NULL, NULL, '1551284858.jpg', 3, 3, NULL, NULL, NULL),
+	(124, '14-CBA', '', 'Cercado', 'Laguna Alalay - Av. 4to Centenario esq. Circuito Bolivia', '12 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(125, '15-CBA', '124a6f00-3a09-11e9-975b-4fa27a73797e', 'Cercado', 'Plaza Quintanilla esq. La Paz', '10 x 4', 6500.00, 0, 0, -17.3825, -66.1545, NULL, NULL, '1551214624.jpg', 3, 1, NULL, NULL, NULL),
+	(126, '16-CBA', '', 'Cercado', 'Plaza Quintanilla esq. La Paz', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(127, '19-CBA', '', 'Cercado', '(T) Parqueo Aeropuerto j. Wilsterman', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(128, '20-CBA', '', 'Cercado', '(T) Ingreso Aeropuerto J. Wilsterman - Parqueo ', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(129, '21-CBA', '', 'Cercado', 'Ingreso Aeropuerto J. Wilsterman Cara A', '9 x 3', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(130, '22-CBA', '', 'Cercado', 'Ingreso Aeropuerto J. Wilsterman Cara B', '9 x 3', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(131, '23-CBA', '', 'Cercado', 'Av. Aroma esq. Ayacucho', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(132, '24-CBA', '8dca35e0-3aa2-11e9-bacd-e3e2b2b51a70', 'Cercado', 'Av. Ayacucho esq. Aroma', '10 x 4', 6500.00, 0, 1, -17.3992, -66.1603, NULL, NULL, '1551280544.jpg', 3, 1, NULL, NULL, NULL),
+	(133, '25-CBA', 'deac7050-3aa1-11e9-9bb4-453a3712e1f8', 'Cercado', 'Mercado Calatayud La Cancha  Superior', '9 x 4', 6500.00, 0, 1, -17.3988, -66.1544, NULL, NULL, '1551280251.jpg', 3, 1, NULL, NULL, NULL),
+	(134, '26-CBA', '', 'Cercado', 'Mercado Calatayud La Cancha Inferior', '9 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(135, '29-CBA', '307a27a0-3a08-11e9-9278-3d390cb28811', 'Cercado', 'Av. América esq. Pando', '5 x 8', 8500.00, 1, 2, -17.3733, -66.1526, NULL, NULL, '1551214245.jpg', 3, 2, NULL, NULL, NULL),
+	(136, '1-EA', 'f3998ba0-0fd8-11e9-b526-2793f5fdb29c', 'Ciudad de El Alto', 'Av. 6 de Marzo entre calles 1 y 2 Cara A', '10 x 4', 7475.00, 1, 2, -16.5063, -68.1635, NULL, NULL, '1-EA.jpg', 4, 2, NULL, NULL, NULL),
+	(137, '2-EA', '00af7fc0-0fd9-11e9-953f-63ca55d9d08a', 'Ciudad de El Alto', 'Av. 6 de Marzo entre calles 1 y 2 Cara B', '10 x 4', 7475.00, 1, 2, -16.506, -68.1635, NULL, NULL, '2-EA.jpg', 4, 2, NULL, NULL, NULL),
+	(138, '3-EA', '', 'Ciudad de El Alto', 'Av. 6 de Marzo entre calles 4 y 5 Cara B', '10 x 4', 6500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(139, '4-EA', '', 'Ciudad de El Alto', '(T) Av. 6 de Marzo entre calles 4 y 5 Cara B', '10 x 4 ', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(140, '5-EA', '', 'Ciudad de El Alto', 'Av. Juan Pablo II frente Puerta del TAM Cara A', '10 x 4 ', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(141, '6-EA', '', 'Ciudad de El Alto', 'Av. Juan Pablo II  frente Puerta del TAM Cara B', '10 x 4 ', 6500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(142, '7-EA', '', 'Ciudad de El Alto', 'Av. Juan Pablo II fret Surtidor Av. La Paz Cara A', '10 x 4 ', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(143, '8-EA', '', 'Ciudad de El Alto', 'Av. Juan Pablo II frete Surtidor Av. La Paz Cara B', '10 x 4 ', 6500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(144, '9-EA', '', 'Ciudad de El Alto', 'AV. JUAN PABLO II FINAL LOS ANDES CARA A', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(145, '10-EA', '', 'Ciudad de El Alto', 'AV. JUAN PABLO II FINAL LOS ANDES CARA B', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(146, '11-EA', '', 'Ciudad de El Alto', 'Av. Juan Pablo II frente Cruz Papal Cara A', '10 x 4 ', 6500.00, 0, 2, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(147, '12-EA', '', 'Ciudad de El Alto', 'Av. Juan Pablo II frente Cruz Papal Cara B', '10 x 4 ', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(148, '13-EA', '', 'Ciudad de El Alto', 'Av. Juan Pablo II - Frente al Tránsito Cara A', '10 x 4', 6500.00, 0, 2, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(149, '14-EA', '', 'Ciudad de El Alto', 'Av. Juan Pablo II - Frente al Tránsito Cara B', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(150, '19-EA', '', 'Ciudad de El Alto', 'Av. Fuerza Aerea Cara A', '10 x 4 ', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(151, '20-EA', '', 'Ciudad de El Alto', 'Av. Fuerza Aerea Cara B', '10 x 4 ', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(152, '21-EA', '', 'Ciudad de El Alto', 'Av. Fuerza Aerea frente Ingreso FAB Cara A', '10 x 4 ', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(153, '22-EA', '', 'Ciudad de El Alto', 'Av. Fuerza Aerea frente Ingreso FAB Cara B', '10 x 4 ', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(154, '33-EA', '', 'Ciudad de El Alto', ' Ingreso Aeropuerto Internacional de EL ALTO - Unipolar 1 Cara A Unipolar 1 Cara  A', '10 x 4', 7500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(155, '34-EA', '', 'Ciudad de El Alto', 'Ingreso Aeropuerto Internacional de EL ALTO - Unipolar  Cara A ', '10 x 4', 7500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(156, '35-EA', '', 'Ciudad de El Alto', 'Av. Santos Dumont (Ingreso Aeropuerto) Unipolar 3 Cara A', '10 x 4 ', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(157, '36-EA', '', 'Ciudad de El Alto', 'Av. Santos Dumont (Ingreso Aeropuerto) Unipolar 3 Cara B', '10 x 4 ', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(158, '37-EA', '', 'Ciudad de El Alto', 'Ingreso Aeropuerto Internacional de EL ALTO - Unipolar  Cara A', '10 x 4', 7000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(159, '38-EA', '', 'Ciudad de El Alto', 'Ingreso Aeropuerto Internacional de EL ALTO - Unipolar 1 Cara A', '10 x 4', 7500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(160, '39-EA', '', 'Ciudad de El Alto', 'Ingreso Aeropuerto Internacional de EL ALTO - Cara A', '10 x 4', 7500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(161, '40-EA', '', 'Ciudad de El Alto', '(T) Ingreso Aeropuerto Internacional de EL ALTO U2C-6 - Cara A', '10 x 4', 7500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(162, '41-EA', '', 'Ciudad Satélite', 'Ingreso a Ciudad Satélite, frente a Plaza Tejada Alpacoma Cara A', '9 x 4', 6500.00, 0, 2, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(163, '42-EA', 'b9b95850-b571-11e9-8b50-254d70fdef4c', 'Ciudad de El Alto', 'Ingreso a Ciudad Satélite, frente a Plaza Tejada Alpacoma Cara B', '9 x 4', 6500.00, 1, 2, -16.5247, -68.1505, NULL, NULL, '1564783566.jpg', 4, 2, NULL, NULL, NULL),
+	(164, '43-EA', '', 'Ciudad de El Alto', 'Av. Satélite Cara A', '9 x 4 ', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(165, '44-EA', '', 'Ciudad de El Alto', 'Av. Satélite Cara B', '9 x 4 ', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(166, '45-EA', '7a322ac0-0fd9-11e9-a5b3-9fdf330aa183', 'Ciudad de El Alto', 'Av. Satélite frente Mercado Satélite Cara A', '10 x 4 ', 6500.00, 1, 0, -16.5244, -68.15, NULL, NULL, '45-EA.jpg', 4, 2, NULL, NULL, NULL),
+	(167, '46-EA', '84570e70-0fd9-11e9-9fa1-f3efab297bf2', 'Ciudad de El Alto', 'Av. Satélite frente Mercado Satélite Cara B', '10 x 4 ', 6500.00, 1, 0, -16.5245, -68.1497, NULL, NULL, '46-EA.jpg', 4, 2, NULL, NULL, NULL),
+	(168, '49-EA', '', 'Ciudad de El Alto', 'AVENIDA BOLIVIA-CRUCE VILLA ADELA Cara B', '10 x 4', 7200.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(169, '50-EA', '', 'Ciudad de El Alto', 'AVENIDA BOLIVIA-CRUCE VILLA ADELA Cara A', '10 x 4', 7200.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(170, '51-EA', '', 'Ciudad de El Alto', 'Av. Panoramica - Frente Teleferico Linea Roja - Cara A', '10 x 4 ', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(171, '52-EA', '', 'Ciudad de El Alto', 'Av. Panoramica - frente Teleferico Linea Roja Cara B', '10 x 4 ', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(172, '54-EA', '', 'Ciudad de El Alto', 'AV. JUAN PABLO II - RIO SECO, EX TRANCA, FRENTE ESTACIÓN TELEFÉRICO AZUL CARA A', '10 x 4', 7500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(173, '55-EA', '', 'Ciudad de El Alto', 'AV. JUAN PABLO II - RIO SECO, EX TRANCA, FRENTE ESTACIÓN TELEFÉRICO AZUL CARA B', '10 x 4', 7500.00, 0, 2, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(174, '58-EA', '', 'Ciudad de El Alto', 'Av. Panoramica frente Estación Linea Teleferico Rojo Cara A', '10 x 4 ', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(175, '59-EA', '', 'Ciudad de El Alto', 'Av. Panoramica frente Estación Linea Teleferico Rojo Cara B', '10 x 4 ', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(176, '2-OR', '', 'Ciudad', 'Av. Cívica esq. Adolfo Mier', '9 x 4', 6500.00, 0, 2, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(177, '3-OR', '', 'Ciudad', 'Av. Civica esq. Adolfo Mier', '10 x 4 ', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(178, '7-OR', '116d0130-2319-11e9-80c7-a1abb0bb696e', 'Ciudad', ' Junin y Av. Civica ', '10 x 4', 7000.00, 1, 1, -17.9672, -67.1177, NULL, NULL, '7-OR.jpg', 5, 1, NULL, NULL, NULL),
+	(179, '10-OR', '6272af70-2598-11e9-86a5-1da8f4e2d14d', 'Centro', 'Calle Bolivar esq. Soria Galvarro', '10 x 5', 8500.00, 1, 0, NULL, NULL, NULL, NULL, '10-OR.jpg', 5, 1, NULL, NULL, NULL),
+	(180, '11-OR', '26122c80-2598-11e9-9f19-4933585f6578', 'Ciudad', 'Av. 6 de Agosto - Hotel Monarca', '15 x 5', 9500.00, 0, 1, NULL, NULL, NULL, NULL, '11-OR.jpg', 5, 1, NULL, NULL, NULL),
+	(181, '13-OR', '559b4d80-1862-11ea-b066-05b14f6e9926', 'Ciudad', 'Calle Herrera esq. La Paz Diagonal Luna Pomier', '6 x 4', 5500.00, 0, 0, -19.5976, -65.7485, NULL, NULL, '1575662121.jpg', 5, 1, NULL, NULL, NULL),
+	(182, '14-OR', '', 'Ciudad', 'Terminal de Buses( Provincias) - Av. Rajka Bakovic esquina Av. Villarroel ', '10 x 4', 6500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(183, '15-OR', '', 'Ciudad', 'Av. Circunvalación y Av. del Valle - Salida  a Cochabamba Cara A', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 5, 2, NULL, NULL, NULL),
+	(184, '16-OR', '', 'Ciudad', 'Av. Circunvalación y Av. del Valle - Salida  a Cochabamba Cara B', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 5, 2, NULL, NULL, NULL),
+	(185, '17-OR', '', 'Ciudad', 'Av. Circunvalación - Salida a La Paz (Casco del Minero) Cara A', '10 x 4 ', 6500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 5, 2, NULL, NULL, NULL),
+	(186, '18-OR', '', 'Ciudad', 'Av. Circunvalación - Salida a La Paz  (Casco del Minero) Cara B', '10 x 4', 6500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 5, 2, NULL, NULL, NULL),
+	(187, '19-OR', 'fa0a2ab0-2597-11e9-89b2-6d8c72348eb1', 'Ciudad', 'Av. España (Mercado Walter Khon)', '7 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, '19-OR.jpg', 5, 1, NULL, NULL, NULL),
+	(188, '20-OR', '', 'Ciudad', 'Velasco Galvarro y Bolívar - Mercado Campero - (Izquierda)', '20 x 4', 8500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(189, '23-OR', '', 'Ciudad', 'Frente Terminal de Buses - Av. Brasil', '10 x 4 ', 8500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(190, '25-OR', '', 'Caracollo', 'Carocollo desvio a Oruro Cara A', '10 x 4 ', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 5, 2, NULL, NULL, NULL),
+	(191, '26-OR', '', 'Caracollo', 'Caracollo Carretera desvío a Oruro Cara A', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 5, 2, NULL, NULL, NULL),
+	(192, '27-OR', '', 'Ciudad', 'Av. Cívica y Junín (grande)', '17 x 4', 8500.00, 0, 2, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(193, '28-OR', '', 'Huanuni', 'HUANUNI - Av. Camacho', '10 x 4 ', 5500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(194, '29-OR', '', 'Huanuni', 'Ingreso Población', '10 x 4 ', 5500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(195, '30-OR', '', 'Challapata', 'Ingreso Población Cara A', '10 x 4 ', 5500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(196, '31-OR', '', 'Llallagua', 'Ingreso Población', '10 x 4 ', 5500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(197, '32-OR', '', 'Llallagua', 'Llallagua Frente Terminal de Buses ', '10 x 4', 6000.00, 0, 2, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(198, '33-OR', '', 'Ciudad', 'Entrada Aeropuerto Cara A', '10 x 4 ', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 5, 2, NULL, NULL, NULL),
+	(199, '34-OR', '', 'Ciudad', '(TM) Av. Velasco Galvarro - Mercado Campero (Izquierda)', '9 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(200, '36-OR', '', 'Ciudad', '(T) Frente Terminal de Buses (Montano)', '10 x 5 ', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(201, '1-POT', 'c69bcfd0-17a0-11ea-9b09-abf18cd3fe1c', 'Por definir', 'Puente San Roque - Cementerio Cara A', '10 x 4', 6500.00, 0, 1, -19.5728, -65.7511, NULL, NULL, '1575578988.jpg', 6, 2, NULL, NULL, NULL),
+	(202, '2-POT', '4310cc20-17a9-11ea-9eeb-b1d60f6037bd', 'Por definir', 'Puente San Roque - Cementerio Cara B', '10 x 4 ', 5500.00, 0, 1, -19.5722, -65.7505, NULL, NULL, '1575582633.jpg', 6, 2, NULL, NULL, NULL),
+	(203, '3-POT', '85924490-1839-11ea-b5f4-0f5e3816586d', 'Por definir', 'C. Chayanta - Frente Cementerio', '10 x 4 ', 6500.00, 0, 1, -19.5744, -65.7519, NULL, NULL, '1575644592.jpg', 6, 1, NULL, NULL, NULL),
+	(204, '4-POT', '', 'Por definir', 'Frente al Cementerio', '10 x 4 ', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(205, '6-POT', '', 'Por definir', 'Terminal Nueva - Alojamiento La Plata', '6 x 6', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 3, NULL, NULL, NULL),
+	(206, '8-POT', '', 'Calvario', 'Calvario - C. Hernández,  Mercado Minero', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(207, '9-POT', '', 'Por definir', 'Av. Fortunato Gumiel esq. Antofagasta', '15 x 5', 9500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(208, '10-POT', '4821b770-183d-11ea-a987-b383e6519f8e', 'Por definir', 'Calle Oruro - Hotel San Antonio', '10 x 4', 6500.00, 0, 1, -19.584, -65.7578, NULL, NULL, '1575646207.jpg', 6, 1, NULL, NULL, NULL),
+	(209, '11-POT', '73f36de0-183f-11ea-86bd-033332741a9b', 'Por definir', 'Calle Oruro - Hotel San Antonio', '8 x 7', 6500.00, 0, 1, -19.585, -65.7589, NULL, NULL, '1575647139.jpg', 6, 3, NULL, NULL, NULL),
+	(210, '13-POT', '', 'Por definir', 'Av. Universitaria  casi esq. Gabriel René Moreno', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(211, '14-POT', '', 'Por definir', 'Tranca de San Antonio - Ingreso a Potosí Cara A', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(212, '15-POT', '', 'Por definir', 'Tranca de San Antonio - Ingreso a Potosí Cara B', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(213, '16-POT', '', 'Por definir', 'Salida a Tarija y Sucre - La Garita', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(214, '17-POT', '', 'Por definir', 'Tranca de karachipampa - salida a Sucre Cara B', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(215, '18-POT', '', 'Por definir', 'Tranca de karachipampa - salida a Sucre Cara B', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(216, '19-POT', '', 'Por definir', 'Ingreso Aduana - Salida a Sucre Cara A', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(217, '20-POT', '', 'Por definir', 'Ingreso Aduana - Salida a Sucre Cara B', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(218, '21-POT', '61d9b4c0-1799-11ea-b2c1-bd84007b30a6', 'Por definir', 'Av. Las Banderas a 3 cuadras de la Nueva Terminal de Buses Cara B', '10 x 4', 6500.00, 1, 2, -19.561, -65.7617, NULL, NULL, '1575575812.jpg', 6, 2, NULL, NULL, NULL),
+	(219, '22-POT', '25b86fe0-179e-11ea-b2b2-13f11197ee67', 'Por definir', 'Av. Las Banderas a 3 cuadras de la Nueva Terminal de Buses Cara A', '10 x 4', 6500.00, 0, 1, -19.5629, -65.7616, NULL, NULL, '1575577859.jpg', 6, 2, NULL, NULL, NULL),
+	(220, '24-POT', 'b45c5050-e75e-11e8-b797-45f85780a265', 'Por definir', 'Av. Tinkuy', '9 x 3', 6500.00, 1, 1, -19.5835, -65.7613, NULL, NULL, '24-POT.jpg', 6, 1, NULL, NULL, NULL),
+	(221, '26-POT', '', 'Uyuni', 'Ingreso Aeropuerto (UYUNI)', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(222, '27-POT', '', 'Villazon', 'Villazon Salida a Tupiza', '10 x 4', 5500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(223, '28-POT', '', 'Uyuni', 'Zona Aeropuerto  - Salida Aeropuerto (UYUNI)', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(224, '29-POT', '', 'Tupiza', 'TUPIZA, Zona Terminal Provincial - Av. Barrientos', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(225, '30-POT', '', 'Tupiza', 'Zona Puente Chajra Huasi - salida a Tupiza', '10 x 4', 5000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(226, '31-POT', '', 'Villazon', 'Zona Estación de Trenes', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(227, '32-POT', '', 'Villazon', 'Zona Salida Carretera a Tupiza', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(228, '34-POT', '', 'Por definir', 'Tranca/Reten San Antonino Salida a Oruro Cara Cara A', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(229, '35-POT', '', 'Por definir', 'Reten Salida a Cucho Ingenio Cara A - salida a Tarija', '10 x 4', 5000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(230, '36-POT', '', 'Por definir', 'Reten Salida a Cucho Ingenio Cara B Salida a Tarija', '10 x 4', 5000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(231, '37-POT', '', 'Por definir', 'Tranca/Reten San Antonino Salida a Oruro Cara B', '10 x 4', 5000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(232, '38-POT', '', 'Por definir', 'Tranca de karachipampa - salida a Sucre Cara A', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(233, '39-POT', '', 'Por definir', 'Tranca de karachipampa - salida a Sucre Cara B', '10 x 4', 5000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(234, '40-POT', '', 'Por definir', 'Tupiza - Ingreso Distrito 11 Av. Diego de Almagro', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(235, '41-POT', '', 'Por definir', 'Villazón - Detrás del Cine Bolívar Terminal de Buses', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(236, '1-SCR', '', 'Ciudad', 'Ruta 6 (Rio Quirpinchaca) Ingreso a Condominio Bancario ', '15 x 5', 7000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(237, '3-SCR', '', 'Ciudad', 'Terminal de Buses - Parqueo', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(238, '4-SCR', 'ac0ecc50-186e-11ea-b439-f96e116b1055', 'Ciudad', 'Av. Ostria Gutierrez Terminal de Buses Cara B', '10 x 4', 6500.00, 1, 1, -19.0392, -65.2491, NULL, NULL, '1575667420.jpg', 7, 2, NULL, NULL, NULL),
+	(239, '5-SCR', 'c6df2ff0-1868-11ea-a829-979616c3a873', 'Ciudad', 'Av. Ostria Gutiérrez Terminal de Buses Cara A', '10 x 4', 6500.00, 0, 1, -19.0389, -65.2491, NULL, NULL, '1575664888.jpg', 7, 2, NULL, NULL, NULL),
+	(240, '6-SCR', '', 'Ciudad', 'Terminal de Buses - Casetas ', '10 x 4', 6500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(241, '9-SCR', '3ae3d3b0-1029-11e9-8ce1-4971692d3edc', 'Ciudad', 'Final Av. Las Américas y C. Destacamento 317', '10 x 4', 6500.00, 1, 1, -19.0407, -65.2447, NULL, NULL, '9-SCR.jpg', 7, 1, NULL, NULL, NULL),
+	(242, '10-SCR', '', 'Ciudad', 'Final Av. Las Américas', '9 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(243, '11-SCR', '', 'Ciudad', 'Mercado Campesino', '15 x 4 ', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(244, '19-SCR', '', 'Ciudad', 'Aeropuerto Alcantarí - Parqueo Cara A', '8 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 7, 2, NULL, NULL, NULL),
+	(245, '20-SCR', '', 'Ciudad', 'Aeropuerto Alcantarí - Parqueo Cara B ', '8 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 7, 2, NULL, NULL, NULL),
+	(246, '29-SCR', '86b40b30-1871-11ea-b54a-bd90f8098878', 'Ciudad', 'Av. Ostria Gutiérrez - Frente Gas Center', '10 x 4', 6500.00, 1, 2, -19.0389, -65.2489, NULL, NULL, '1575668955.jpg', 7, 1, NULL, NULL, NULL),
+	(247, '30-SCR', '', 'Ciudad', '(C) Rotonda Colegio Humboldt', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(248, '31-SCR', '', 'Ciudad', 'Nataniel Aguirre - Mercado Campesino', '9 x 3', 6500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(249, '32-SCR', '', 'Provincia', 'Camargo - Ingreso Población - Lado cancha', '9 x 3', 2500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(250, '33-SCR', '4fa9fb10-1063-11e9-8d5e-cd05a801c926', 'Ciudad', '(T) Av. Las Americas (Banderas)', '10 x 4', 8000.00, 1, 0, -19.0485, -65.2461, NULL, NULL, '33-SCR.jpg', 7, 1, NULL, NULL, NULL),
+	(251, '34-SCR', '', 'Ciudad', '(B) Destacamento 11 Rotonda Humboldt', '10 x 4', 6500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(252, '35-SCR', '', 'Ciudad', '(A) Destacamento 11 Rotonda Humboldt', '10 x 4', 6500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(253, '1-TRJ', 'cff189f0-4b5c-11e9-a5d0-9d847bcc99fd', 'Por definir', 'Av. La Paz - Frente Cine Teatro Municipal de Tarija Cara A', '10 x 4', 6500.00, 0, 1, -21.5314, -64.7215, NULL, NULL, '1553119760.jpg', 8, 2, NULL, NULL, NULL),
+	(254, '2-TRJ', '5f86c810-2593-11e9-adcc-c540948f87a2', 'Por definir', 'Av. La Paz - Frente Cine Teatro Municipal de Tarija Cara B', '10 x 4', 6500.00, 0, 1, -21.5314, -64.7215, NULL, NULL, '2-TRJ.jpg', 8, 2, NULL, NULL, NULL),
+	(255, '7-TRJ', 'ec5bf470-4b5d-11e9-b807-4d9508703609', 'Por definir', 'Av. Panamericana - Mercado Campesino', '10 x 4', 6500.00, 0, 1, -21.523, -64.7425, NULL, NULL, '1553120238.jpg', 8, 3, NULL, NULL, NULL),
+	(256, '9-TRJ', '89c0feb0-1028-11e9-8c34-81d9e2ae4a92', 'Por definir', 'Av. La Paz y Belgrano', '4 x 9', 6500.00, 1, 1, -21.5377, -64.7239, NULL, NULL, '9-TRJ.jpg', 8, 1, NULL, NULL, NULL),
+	(257, '10-TRJ', '05406fa0-4be1-11e9-a6c5-eb7893829edb', 'Por definir', '(T) Aeropuerto - Parqueo 1', '9 x 3', 6500.00, 0, 1, -21.5474, -64.7101, NULL, NULL, '1553176543.jpg', 8, 1, NULL, NULL, NULL),
+	(258, '12-TRJ', 'c97258c0-4be1-11e9-b2ba-4fe726e73621', 'Por definir', 'Rotonda Aeropuerto', '7.70 x 4 ', 6500.00, 0, 1, -21.5473, -64.71, NULL, NULL, '1553176873.jpg', 8, 1, NULL, NULL, NULL),
+	(259, '13-TRJ', 'b7b1a710-2593-11e9-a5ac-a3ec42d9485f', 'Por definir', 'Rotonda Aeropuerto 15 x 5', '15 x 5', 7000.00, 0, 1, -21.5472, -64.7099, NULL, NULL, '1553177701.jpg', 8, 1, NULL, NULL, NULL),
+	(260, '14-TRJ', '278360b0-1063-11e9-a9cf-c38a8bee64e0', 'Por definir', 'Av. Circunvalción Torre Petrolera 2', '10 x 4', 6500.00, 0, 1, -21.5141, -64.7372, NULL, NULL, '14-TRJ.jpg', 8, 1, NULL, NULL, NULL),
+	(261, '15-TRJ', '8dd20ba0-2593-11e9-83eb-ed6bf3201e80', 'Por definir', 'Mercado Campesino - Pro Mujer', '6 x 9', 6500.00, 0, 0, NULL, NULL, NULL, NULL, '15-TRJ.jpg', 8, 1, NULL, NULL, NULL),
+	(262, '16-TRJ', 'eab91910-4be4-11e9-bfc2-afa2f75a410a', 'Centro', 'Av. Víctor Paz frente Barrio San Gerónimo', '10 x 4', 6500.00, 0, 2, -21.5425, -64.7186, NULL, NULL, '1553178217.jpg', 8, 1, NULL, NULL, NULL),
+	(263, '17-TRJ', '13ac9370-4be7-11e9-8dad-d5ff637d816e', 'Por definir', 'Av. Panamericana - Mercado Campesino (Pro Mujer)', '8 x 6', 6000.00, 0, 1, -21.5219, -64.7445, NULL, NULL, '1553179145.jpg', 8, 1, NULL, NULL, NULL),
+	(264, '18-TRJ', 'e8f3f270-4be7-11e9-8d56-d795575fe315', 'Por definir', 'Av. Circunvalación Salida a Tomatitas Cara A', '10 x 4', 6500.00, 0, 1, -21.5053, -64.7535, NULL, NULL, '1553179502.jpg', 8, 2, NULL, NULL, NULL),
+	(265, '19-TRJ', '1b20cfe0-4be8-11e9-96e9-51086e7c866d', 'Por definir', 'Av. Circunvalación Salida a Tomatitas Cara B', '10 x 4', 6500.00, 0, 1, -21.5053, -64.7535, NULL, NULL, '1553179587.jpg', 8, 2, NULL, NULL, NULL),
+	(266, '20-TRJ', '', 'Yacuiba', 'YACUIBA - Club Deportivo Independiente', '10 x 5', 5000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 8, 1, NULL, NULL, NULL),
+	(267, '1-PND', '', 'Cobija', 'Av. 9 de Febrero Lado Cementerio', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 9, 1, NULL, NULL, NULL),
+	(268, '2-PND', '', 'Cobija', 'COBIJA Frente Mercado Central', '8.50 x 5', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 9, 3, NULL, NULL, NULL),
+	(269, '3-PND', '', 'Cobija', 'Av. 9 de Febrero esq. Miguel Becerra', '10 x 5', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 9, 3, NULL, NULL, NULL),
+	(270, '4-PND', '', 'Cobija', 'Av. Pando esq. 27 de Mayo', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 9, 3, NULL, NULL, NULL),
+	(271, '5-PND', '', 'Cobija', 'Av. Teniente Coronel Cornejo', '8 x 5', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 9, 1, NULL, NULL, NULL),
+	(272, '7-PND', '', 'Cobija', 'Aeropuerto - Area de Parqueo', '10 x 4 ', 5500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 9, 1, NULL, NULL, NULL),
+	(273, '8-PND', '', 'Cobija', 'Parqueo Aeropuerto', '10 x 4', 5500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 9, 1, NULL, NULL, NULL),
+	(274, '9-PND', '', 'Cobija', 'Parqueo Aeropuerto', '10 x 4', 5000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 9, 1, NULL, NULL, NULL),
+	(275, '1-BEN', 'a92a8e60-4bee-11e9-b5fe-63b462c1383b', 'Trinidad', 'Av. Circunvalación frente Mercado campesino', '10 x 4', 4500.00, 1, 1, -14.8473, -64.9074, NULL, NULL, '1553182402.jpg', 10, 1, NULL, NULL, NULL),
+	(276, '2-BEN', '', 'Trinidad', 'Av. Panemericana', '14 x 5', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 10, 1, NULL, NULL, NULL),
+	(277, '3-BEN', 'dd43e8b0-4bed-11e9-8f23-bf7a338b6de1', 'Trinidad', 'Av. Gran Paititi Ingreso Aeropuerto 3', '14 x 5', 4000.00, 0, 1, -14.8286, -64.9168, NULL, NULL, '1553182060.jpg', 10, 1, NULL, NULL, NULL),
+	(278, '4-BEN', '57b10270-4bed-11e9-bc6a-77c7d0fd65d7', 'Trinidad', 'Av. Gran Paititi Ingreso Aeropuerto 2', '10 x 4', 4000.00, 0, 1, -14.8286, -64.9168, NULL, NULL, '1553181836.jpg', 10, 1, NULL, NULL, NULL),
+	(279, '5-BEN', '34c45630-4bed-11e9-a4a8-fdbad36888c2', 'Trinidad', 'Av. Gran Paititi Ingreso Aeropuerto', '10 x 4', 6500.00, 0, 1, -14.8286, -64.9168, NULL, NULL, '1553181777.jpg', 10, 1, NULL, NULL, NULL),
+	(280, '6-BEN', '9bc08be0-4bec-11e9-b35c-d3f33791c6d8', 'Trinidad', 'Av. Circunvalación - Ingreso Laguna Suarez', '6 x 8', 4000.00, 0, 1, -14.8482, -64.8983, NULL, NULL, '1553181520.jpg', 10, 1, NULL, NULL, NULL),
+	(281, '7-BEN', '06a4d340-4bec-11e9-9a3f-0353e73faaf3', 'Trinidad', 'Av. Bolivar esq. Beni', '10 x 4', 6500.00, 1, 0, -14.8305, -64.8965, NULL, NULL, '1553181270.jpg', 10, 1, NULL, NULL, NULL),
+	(282, '8-BEN', '67c816a0-4beb-11e9-ac71-854255ea3233', 'Trinidad', 'Av. Bolivar', '10 x 4 ', 6500.00, 0, 1, -14.8301, -64.8946, NULL, NULL, '1553181004.jpg', 10, 1, NULL, NULL, NULL),
+	(283, '10-BEN', '', 'Trinidad ', 'Mercado campesino', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 10, 1, NULL, NULL, NULL),
+	(284, '11-BEN', 'bddc17e0-e75e-11e8-896c-79fffb80ade0', 'Trinidad', 'Calle Romulo Mendoza Esq. Vlador Pinto', '10 x 4', 6500.00, 1, 1, -14.8352, -64.8931, NULL, NULL, '11-BEN.jpg', 10, 1, NULL, NULL, NULL),
+	(285, '25-SCZ', '', 'Por definir', 'Aeropuerto Viru Viru Cara B', '10 x 4', 0.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(286, '26-SCZ', 'ece71240-45d4-11e9-96ec-a916fd8e485f', 'Puerto Quijarro', 'Puerto Quijarro - Colegio Adventista', '10 x 5', 4000.00, 0, 0, -19.0134, -57.7152, NULL, NULL, '1552511702.jpg', 2, 1, NULL, NULL, NULL),
+	(287, '27-SCZ', '', 'Equipetrol', 'Av. San Martin y 3 Anillo externo', '10 x 4', 9000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(288, '28-SCZ', '115ed8a0-3c30-11e9-b6a4-f5c2b1fe5b3d', '1er Anillo', 'Av. San Martín (Av. Enrique Finot 3er anillo interno) ', '12 x 4', 11500.00, 1, 2, -17.7642, -63.1981, NULL, NULL, '1551451275.jpg', 2, 1, NULL, NULL, NULL),
+	(289, '29-SCZ', '7ba3b460-3ba4-11e9-b72b-fd65fb5b936a', '2do Anillo', 'Isabel La Católica y Yotau 6x2.80 (RAMADA)', '6 x 2.80', 4000.00, 0, 0, -17.7952, -63.1948, NULL, NULL, '1551391324.jpg', 2, 1, NULL, NULL, NULL),
+	(294, '34-SCZ', 'c57bff00-3ba3-11e9-9ce8-ef8f2b167f57', 'Puerto Suarez', 'Puerto Suárez- Rotonda ingreso Aeropuerto', '9 x 4', 4000.00, 0, 1, -18.9852, -57.8202, NULL, NULL, '1551391019.jpg', 2, 1, NULL, NULL, NULL),
+	(295, '36-SCR', '', 'Destacamento 11', 'Rotonda Colegio Humboldt', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(296, '108-LPZ', '', 'Yungas', 'Palos Blancos', '9 x 4', 5500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(298, '30-CBA', '', 'Cercado', '(T) Aeropuerto Internacional Jorge Wiltermann (valla 1)', '9 x 3', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(299, '31-CBA', '', 'Cercado', 'Aeropuerto Internacional Jorge Wiltermann (valla 3)', '10 x 4 ', 4431.34, 1, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(300, '32-CBA', '26ce92b0-3aa6-11e9-8134-a9128b2b3bdb', 'Cercado', '(T) Aeropuerto Internacional Jorge Wilstermann (valla 7)', '9 x 4', 6500.00, 1, 1, -17.4128, -66.182, NULL, NULL, '1551282090.jpg', 3, 1, NULL, NULL, NULL),
+	(301, '33-CBA', '', 'Cercado', '(T) Aeropuerto Internacional Jorge Wiltermann (valla 10)', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(302, '34-CBA', '', 'Cercado', 'Aeropuerto Internacional Jorge Wiltermann (valla 14)', '9 x 3', 3798.33, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(303, '35-CBA', '', 'Cercado', 'Aeropuerto Internacional Jorge Wiltermann (valla 16)', '10 x 4 ', 4431.34, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(304, '36-CBA', '', 'Cercado', '(T) Aeropuerto Internacional Jorge Wiltermann (valla 17)', '10 x 4', 8862.78, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(305, '37-CBA', '', 'Cercado', '(T) Aeropuerto Internacional Jorge Wiltermann ', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(306, '38-CBA', '89bf2d10-3aa5-11e9-884e-494818f93530', 'Cercado', '(T) Aeropuerto Internacional Jorge Wiltermann (valla 20)', '10 x 4', 7475.00, 1, 0, -17.4138, -66.1797, NULL, NULL, '1551281826.jpg', 3, 1, NULL, NULL, NULL),
+	(307, '35-SCZ', '', 'URUBO', '4to. ANILLO Y AV. SAN MARTÍN VENIDA DEL URUBO (CARA A)', '10 x 4 ', 7850.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(308, '60-EA', '', 'Río Seco Ex Tranca', 'Río Seco Ex Tranca Frente Teleférico Linea Azul Cara A', '10 x 4 ', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(309, '61-EA', '', 'Río Seco Ex Tranca', 'Río Seco Ex Tranca Frente Teleférico Linea Azul Cara B', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(310, '36-SCZ', '', 'VIRU VIRU', 'VIADUCTO VIRU VIRU', '10 x 4', 6690.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(311, '37-SCZ', '', 'Urubo', '4to anillo av san martin ( Urubo ) Valla 5 CARA A', '10 x 4', 6690.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(312, '37-OR', '', 'CIUDAD', '(TMont) Velasco Galvarro y Bolivar - MERCADO CAMPERO ', '9 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(313, '109-LPZ', '', 'NORTE', 'Nudo Vita', '10 x 4', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(314, '21-TRJ', '', 'Por Definir', 'Av. Panoramica 16 de julio (Frente al Teleferico Rojo) Cara A', '10 x 7', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 8, 2, NULL, NULL, NULL),
+	(315, '22-TRJ', '4e3d7a30-2334-11ea-89a5-616d89b3edd8', 'Por Definir', 'Av. Víctor Paz - Puente Membrillo frente al Coliseo Universitario', '6 x 9', 7000.00, 0, 2, -21.5422, -64.7189, NULL, NULL, '1576851814.jpg', 8, 1, NULL, NULL, NULL),
+	(316, '62-EA', '', 'AEROPUERTO', '(T) Salida Aeropuerto Internacional de El Alto Cara B (U2C-14) ', '10 x 4', 7500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(317, '110-LPZ', '580a7660-0bc9-11ea-8330-afed66c2b019', 'ZONA SUR', 'Av. Ballivián Calle 13 Automóvil Club Boliviano-PRIMERO - cara A', '9 x 4', 8800.00, 1, 2, -16.54, -68.0891, NULL, NULL, '1574276998.jpg', 1, 2, NULL, NULL, NULL),
+	(318, '111-LPZ', 'b2080330-2598-11e9-b9af-09eb90297653', 'SUR ', 'Av. Ballivián  Calle 13 Automóvil Club Boliviano- PRIMERO- (cara B)', '9 x 4', 8800.00, 1, 2, -16.5397, -68.0889, NULL, NULL, '1574276226.jpg', 1, 2, NULL, NULL, NULL),
+	(319, '38-SCZ', '', 'BANZER ', '(EH) AV.BANZER 1 FRENTE CATERING CARA B', '10 x 4', 4600.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(320, '39-CBA', 'fc3fc440-3aa7-11e9-922e-f5add61de30f', 'HIPODROMO ', 'AV.MELCHOR PEREZ DE OLGUIN Y AV.D\'ORBIGNI (T)', '10 x 4', 8000.00, 1, 0, -17.3879, -66.1808, NULL, NULL, '1551282877.jpg', 3, 2, NULL, NULL, NULL),
+	(321, '112-LPZ', '', 'CENTRAL', '(T) C. Uruguay Frente a la Terminal de Buses DERECHA', '10 x 4', 7500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(322, '113-LPZ', '', 'SUR', 'Av. Kantutani Escuela de Guerra ', '15 x 5', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(323, '114-LPZ', '', 'SUR', 'José Manuel Chinchilla esq. Calle 14  (Cara A) Achumani', '10 x 4', 7500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(324, '115-LPZ', '', 'SUR', 'José Manuel Chinchilla esq. Calle 14  (Cara B) Achumani', '10 x 4', 7500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(325, '23-TRJ', '066794a0-4be9-11e9-bd95-218fda942b12', 'ZONA ', 'Av. Circunvalción Torre Petrolera 1', '10 x 4', 6500.00, 0, 1, -21.5173, -64.738, NULL, NULL, '1553179981.jpg', 8, 1, NULL, NULL, NULL),
+	(326, '42-POT', '', 'Cementerio', 'Chayanta frente al Cementerio', '8 x 4', 3000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 3, NULL, NULL, NULL),
+	(327, '43-POT', '', 'Central', 'Av. Tinkuy esquina Av. Universitaria, riel del Tren Cara A', '9 x 4', 6500.00, 0, 2, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(328, '40-CBA', '0d958720-3aa0-11e9-aa56-2d32998ea9e9', 'Municipio Colcapiruhua', '(T) Av. Blanco Galindo Km 5.5 carril de vuelta  a Cercado CARA A ', '10 x 4', 7500.00, 0, 0, -17.3922, -66.2187, NULL, NULL, '1551279470.jpg', 3, 2, NULL, NULL, NULL),
+	(329, '41-CBA', 'ad8ed920-3aa0-11e9-9ee6-ff9c91692566', 'Municipio Colcapiruhua', '(T)  Av Blanco Galindo km 6.5 carril de ida a Quillacollo CARA A', '10 x 4', 7000.00, 0, 1, -17.3924, -66.2186, NULL, NULL, '1551279739.jpg', 3, 2, NULL, NULL, NULL),
+	(330, '42-CBA', '', '  Petrolera ', '(T) Av circunvalación esq Villarroel ', '10 x 4', 4500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(331, '43-CBA', '', 'NE ', '(T) Av. Beiging Esq. Juan de la Rosa - CARA A', '5X8', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(332, '44-CBA', '', ' Quillacollo ', '(T) Av. Blanco Galindo km. 12.5 CARA A', '10 x 4', 6325.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(333, '45-CBA', '', ' Quillacollo ', '(T) Av. Blanco Galindo km. 12.5 CARA B', '10 x 4', 4500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(334, '46-CBA', '', ' Camino a Sacaba ', '(T) Av. Villazon 6,5 - Camino a Sacaba - Frente a la botella de Pepsi- CARA A', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(335, '47-CBA', '', ' Norte Queru Queru', '(T) Av. Circunvalación casi Av. Villarroel CARA B', '9 x 3', 5000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(336, '39-SCZ', '', 'RADIAL 26', '(T) 4TO ANILLO Y RADIAL 26 (CARA A) ', '10 x 4', 3625.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(337, '40-SCZ', '', 'RADIAL 26', '(T) 4TO ANILLO Y RADIAL 26 (CARA B) ', '10 x 4', 4205.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(338, '48-CBA', '', 'Cercado', 'Av. Villazon 6,5 frente a la botella de Pepsi CARA B', '10 x 4', 4500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(339, '49-CBA', 'f9149cf0-3aa2-11e9-9b9b-492040fab0a9', 'Camino a Sacaba ', '(T) Av. Villazon km 6 frente botella Pepsi CARA B', '10 x 4', 6500.00, 0, 1, -17.3891, -66.0881, NULL, NULL, '1551280724.jpg', 3, 2, NULL, NULL, NULL),
+	(340, '50-CBA', 'ffd49ea0-3aa4-11e9-a1cb-878ea24e7b40', 'AEROPUERTO', '(T) Aeropuerto Internacional Jorge Wilstermann ingreso DER', '9 x 3', 6500.00, 1, 1, -17.412, -66.1796, NULL, NULL, '1551281595.jpg', 3, 1, NULL, NULL, NULL),
+	(341, '116-LPZ', '', 'CENTRAL', '(T) C. Uruguay Frente a la Terminal de Buses IZQUIERDA', '10 x 4', 7500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(342, '51-CBA', '8592c670-3a08-11e9-a1eb-95035d13bb7f', 'CENTRAL', 'Av. Oblitas Esq Libertador S Bolívar  frente a Estadio F Capriles', '10 x 4', 6500.00, 0, 2, -17.3806, -66.1623, NULL, NULL, '1551214388.jpg', 3, 2, NULL, NULL, NULL),
+	(343, '38-OR', '', 'Prov.  Pantaleón Dalence', 'Huanuni  - Ingreso a la poblacion', '10 x 4', 6000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 5, 1, NULL, NULL, NULL),
+	(344, '39-OR', '', ' Eduardo Abaroa', 'Challapata (Potosi) Cara A', '10 x 4', 6000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 5, 2, NULL, NULL, NULL),
+	(345, '12-BEN', '', 'Rurrenabaque', 'Rurrenabaque - Ingreso Terminal', '9 x 3', 6000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 10, 1, NULL, NULL, NULL),
+	(346, '24-TRJ', '', 'Yacuiba', 'Estadio Club Independiente ', '10 x 4', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 8, 1, NULL, NULL, NULL),
+	(347, '13-BEN', '', 'Rurrenabaque', 'Rurrenabaque ', '9 x 3', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 10, 1, NULL, NULL, NULL),
+	(348, '14-BEN', '', 'Rurrenabaque', 'Rurrenabaque - Tranca Salida a Reyes', '9 x 3', 6000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 10, 1, NULL, NULL, NULL),
+	(349, '41-SCZ', '030edbe0-3ba1-11e9-acf5-6ff8d3a2b85a', '2do Anillo', 'Av Cristo Redentor Casi 2do Anillo Cara A', '10 x 4', 6000.00, 1, 2, -17.7693, -63.1833, NULL, NULL, '1551389833.jpg', 2, 2, NULL, NULL, NULL),
+	(350, '25-TRJ', '', 'CENTRAL', 'Rotonda de Morros Blancos frente a la gasolinera. Sointa cara B', '10 x 4', 7000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 8, 2, NULL, NULL, NULL),
+	(351, '42-SCZ', '', 'AEROPUERTO', 'INGRESO A PEAJE AEROPUERTO VIRU VIRU CARA B (N°12)', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(352, '44-POT', '2efce0e0-17ad-11ea-a1a0-cbe979d938ef', 'Cementerio', 'Pza. San Andrés - Frente a Cementerio', '10 x 4', 6500.00, 0, 1, -19.5761, -65.7503, NULL, NULL, '1575584317.jpg', 6, 1, NULL, NULL, NULL),
+	(353, '43-SCZ', '', 'PLAN 3000.', '(T) 5TO Anillo/San Aurelio ', '8 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(354, '52-CBA', '18a1c900-3aa7-11e9-856e-5fa5f7698cdd', 'NOR OESTE ', '(T) Av. Beiging Esq J.de la Rosa - CARA B', '8 x 5', 4500.00, 1, 0, -17.3751, -66.1827, NULL, NULL, '1551282495.jpg', 3, 2, NULL, NULL, NULL),
+	(355, '53-CBA', '', 'Cochabamba', '(T) Av. Villazon casi esq. Servicio de Caminos', '5.5 x 9.10', 6000.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(356, '37-SCR', '', 'Aeropuerto', 'Camino al Aeropuerto Alcantari Cara A', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 7, 2, NULL, NULL, NULL),
+	(357, '26-TRJ', '', 'Salida a san Jacinto', 'Salida a san Jacinto Cara A', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 8, 2, NULL, NULL, NULL),
+	(358, '27-TRJ', '', 'Salida a san Jacinto', 'Salida a san Jacinto Cara B', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 8, 2, NULL, NULL, NULL),
+	(359, '45-POT', '', 'Terminal', 'Av. Las Banderas - Nueva Terminal de Buses  - Cara A', '10 x 4', 6500.00, 0, 2, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(360, '46-POT', '', 'Central', 'Av. Universitaria (Panamericana) Viaducto Cara A', '10.50 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(361, '47-POT', '', 'Central', 'AV. UNIVERSITARIA (PANAMERICANA) VIADUCTO CARA B', '10.50 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(362, '48-POT', '', 'Terminal', 'Av. Las Banderas - Nueva Terminal de Buses  - Cara B', '10 x 4', 6500.00, 0, 2, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(363, '44-SCZ', 'e1fa0120-3b9c-11e9-9b25-6583dff6a4bd', '2do Anillo', 'Av Cristo Redentor Casi 2do Anillo Cara B', '10 x 4', 4000.00, 1, 2, -17.7698, -63.1834, NULL, NULL, '1551388060.jpg', 2, 2, NULL, NULL, NULL),
+	(364, '54-CBA', 'b1b1f670-3aa6-11e9-aa36-b12bbbcb031a', 'Aeropuerto', '(T) Aeropuerto Jorge Wilstermann - Frente al parqueo IZQ', '10 x 4', 6500.00, 1, 2, -17.4139, -66.1797, NULL, NULL, '1551282323.jpg', 3, 1, NULL, NULL, NULL),
+	(365, '117-LPZ', '', 'AEROPUERTO', '(T) Salida Aeropuerto Internacional de El Alto Cara B (U2C-11)', '10 x 4', 7500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(366, '63-EA', '', 'Ciudad de El Alto ', 'Av. 6 de Marzo entre calles 4 y 5 Cara A', '10 x 4', 6500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(367, '55-CBA', '', 'Central', '(T) Av Panamericana y Av. 6 de Agosto', '5 x 8', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(368, '56-CBA', '', 'Cercado', '(T) Av. Villazon casi Esq servicio de caminos - Salida de Cochabamba CA', '9 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(369, '57-CBA', '', 'Cercado', '(T) Av. Villazon Km 0 de salida a Sacaba', '9 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(370, '118-LPZ', '', 'Achacachi', '(T) Achacachi - Pza. Mariscal Santa Cruz', '9 x 3', 6000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 3, NULL, NULL, NULL),
+	(371, '119-LPZ', '', 'Desaguadero', '(T) Desaguadero - Av. La Paz y Mariscal Santa Cruz', '9 x 3', 6600.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 3, NULL, NULL, NULL),
+	(372, '120-LPZ', '811e87f0-c517-11e9-97e3-cb64f1db74cd', 'Copacana', ' Plaza Sucre (COPACABANA) CARA B', '9 x 3', 6600.00, 0, 1, -16.1653, -69.0897, NULL, NULL, '1566504035.jpg', 1, 3, NULL, NULL, NULL),
+	(373, '58-CBA', '', 'Quillacollo', '(T) Av Blanco Galindo km 12.5 sector terminal dé Quillacollo', '10 x 4', 6000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 3, 3, NULL, NULL, NULL),
+	(374, '45-SCZ', '', 'Montero', '(T Mul) Montero', '9 x 3', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(375, '59-CBA', '', 'Sacaba', '(T) Sacaba Frente a la Plaza Principal', '9 m x 3 m', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 3, NULL, NULL, NULL),
+	(376, '46-SCZ', '', 'Cotoca', '(T Mul) Cotoca', '9 x 3', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(377, '47-SCZ', '', 'Vallegrande', '(T Mul) Vallegrande', '10 x 4', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(378, '48-SCZ', '', 'Samaipata', '(T Mul) Samaipata', '10 x 4', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(379, '60-CBA', '', 'Villa Tunari', '(T) Chapare- Villa Tunari', '9 x 4', 6000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(380, '49-SCZ', '4d7d70f0-3918-11e9-8cee-27e585403ae7', 'AEROPUERTO', 'INGRESO A PEAJE AEROPUERTO VIRU VIRU CARA A(N°12)', '10 x 4', 6500.00, 1, 0, -17.6575, -63.1586, NULL, NULL, '1551111215.jpg', 2, 2, NULL, NULL, NULL),
+	(381, '61-CBA', '', 'PUNATA', '(T) Punata, Av Principal', '9 x 3', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(382, '38-SCR', '', 'CAMARGO', '(T) CAMARGO', '9 x 3', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(383, '121-LPZ', '914cd0b0-c392-11e9-9aa8-7902ebff7771', 'Sur', 'Av. Kantutani, de Subida Curva CARA B', '10 x 4', 7500.00, 1, 1, -16.5183, -68.1197, NULL, NULL, '1566336988.jpg', 1, 2, NULL, NULL, NULL),
+	(384, '50-SCZ', '', 'Camiri', '(T Mul) Camiri', '9 x 3', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(385, '39-SCR', '', 'Camargo ', 'Camargo - Ingreso Población - Lado cancha', '10 x 4', 6000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(386, '40-OR', '', 'Potosi', 'C. Arce y C. Pando - Mercado Uyuni', '10 x 4', 3000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 3, NULL, NULL, NULL),
+	(387, '49-POT', '', 'Norte', 'C. Bolivar casi C. Soria Galvarro', '4 x 10', 3000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 5, 3, NULL, NULL, NULL),
+	(388, '50-POT', '', 'Potosi', 'C. Murillo y C. Tapia', '4 x 10', 3000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 6, 3, NULL, NULL, NULL),
+	(389, '62-CBA', '', 'Cercado', '(T) Av Villazon km 0 de ingreso a Cercado', '9 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(390, '51-SCZ', '0182e5e0-3b9a-11e9-8882-2776c8eb8ef3', '2do Anillo', '(EH) AV PARAGUA Y 2do ANILLO ', '9 x 3', 4205.00, 1, 0, -17.7754, -63.1677, NULL, NULL, '1551386824.jpg', 2, 1, NULL, NULL, NULL),
+	(391, '122-LPZ', NULL, 'Central', 'C. Colón esquina Mariscal Santa Cruz (EKKLESIA)', '8 x 4', 16000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(392, '51-POT', NULL, 'UYUNI', 'SALIDA DE UYUNI A POTOSI CERCA AEROPUERTO Cara A', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(393, '52-POT', NULL, 'UYUNI', 'SALIDA DE UYUNI A ORURO CERCA AEROPUERTO Cara B ', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(394, '52-SCZ', NULL, 'NORTE ', '(BT) 4TO ANILLO – CIRCULO OFICIAL DEL EJERCITO  CARA A ', '10 x 4', 14000.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(395, '53-SCZ', NULL, 'NORTE CERCA AL MALL VENTURA', '(T)4TO ANILLO 2CUADRA HACIA AVENTURA MALL', '10 x 4', 15600.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(396, '54-SCZ', NULL, '4to ANILLO', '(T) CIRCULO OFICIAL DEL EJERCITO', '10 x 4', 12180.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(397, '55-SCZ', NULL, '4to ANILLO', '(T) 2 CUADRAS HACIA EL VENTURA MALL', '10 x 4', 10788.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(398, '53-POT', NULL, 'UYUNI', '(T) Plaza de Armas - Uyuni', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 1, NULL, NULL, NULL),
+	(399, '28-TRJ', NULL, 'VILLAMONTES', '(T) VILLAMONTES ', '9 x 3', 6000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 8, 1, NULL, NULL, NULL),
+	(400, '123-LPZ', NULL, 'Achacachi', 'Ingreso a Achacachi de La Paz Cara B', '10 x 4', 6600.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(401, '40-OR', NULL, ' CARACOLLO', '(T) CARACOLLO - Área Parada Buses', '9 x 3', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 5, 3, NULL, NULL, NULL),
+	(402, '63-CBA', NULL, 'ESTE', '(T) Av América esq Villarroel frente a toyosa', '10 x 4', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(403, '64-CBA', NULL, 'ESTE', '(T) AV Pando en jardinera de hotel portales', '10 x 4', 7000.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(404, '56-SCZ', '9e794ef0-45d3-11e9-bdfc-cfec1f521939', 'URUBO', '(T) INGRESO AL URUBO VALLA 5 CARA A', '10 x 4', 7850.00, 0, 0, -17.7562, -63.2062, NULL, NULL, '1552511081.jpg', 2, 2, NULL, NULL, NULL),
+	(405, '57-SCZ', '2e0d77c0-45d2-11e9-b6db-b1b0a2f5d066', 'URUBO', '(T) INGRESO AL URUBO VALLA 10 CARA A', '10 x 4', 10205.00, 1, 0, -17.7566, -63.2059, NULL, NULL, '1552510462.jpg', 2, 2, NULL, NULL, NULL),
+	(406, '58-SCZ', '43be2a50-818f-11e9-b946-4bb6c6da2034', 'NORTE', '(T) 4TO ANILLO Y AV PIRAI', '10 x 4', 6400.00, 1, 0, -17.797, -63.2179, NULL, NULL, '1559078792.jpg', 2, 1, NULL, NULL, NULL),
+	(407, '15-BEN', NULL, 'TRINIDAD', '(T) CIPRIANO BARACE ESQUINA AV BOLIVAR 1', '10 x 3', 4524.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 10, 1, NULL, NULL, NULL),
+	(408, '59-SCZ', NULL, 'URUBO', '(T) 4to. ANILLO INGRESO AL URUBO Cara A', '10 x 4', 8030.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(409, '124-LPZ', NULL, 'Sur', 'Calacoto C. 18 - Frente a Hipermaxi Cara A', '10 x 4', 8800.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(410, '60-SCZ', NULL, 'OESTE', '(BT) 4TO ANILLO ROCA Y CORONADO CARA A ', '10 x 4', 7150.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(411, '61-SCZ', NULL, 'OESTE', '(BT) 4TO ANILLO ROCA Y CORONADO CARA B ', '10 x 4', 7150.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(412, '62-SCZ', NULL, 'NORTE', '(BT)CARRETERA AL NORTE KM8 CARA B', '10 x 4', 5200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(413, '63-SCZ', NULL, 'NORTE', '(BT)CARRETERA AL NORTE KM 10 CARA B', '10 x 4', 5200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(414, '64-SCZ', NULL, 'NORTE', '(BT) AV BANZER FRENTE ENTRADA VIRU VIRU ', '12 x 4', 5200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(415, '65-SCZ', NULL, 'ESTE', '(BT) AV. JUAN PABLO II FRENTE A LOS FERRETEROS ', '9 x 4', 5200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(416, '66-SCZ', NULL, 'OESTE', '(BT) 3er ANILLO PASOS AL FRENTE  ', '10 x 4', 5200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(417, '67-SCZ', NULL, 'OESTE', '(BT) 3er ANILLO TRES PASOS AL FRENTE ', '10 x 4', 5200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(418, '68-SCZ', NULL, 'OESTE', '(BT) CARRETERA AL NORTE KM8 ', '9 x 3', 5200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(419, '69-SCZ', NULL, 'NORTE', '(BT) KM 10 DOBLE VIA A LA GUARDIA CARA B', '10 x 4', 5200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(420, '70-SCZ', NULL, 'NORTE', '(BT) KM 10 DOBLE VIA A LA GUARDIA CARA B', '10 x 4', 5200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(421, '71-SCZ', NULL, 'SUR', '(BT) KM 10 DOBLE VIA LA GUARDIA CARA A  ', '10 x 4', 5200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(422, '72-SCZ', NULL, 'NORTE', '(BT) KM 10 DOBLE VIA LA GUARDIA CARA A  ', '10 x 4', 5200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(423, '73-SCZ', NULL, 'NORTE', '(BT) LLEGADA A MONTERO PASANDO EL SURT MUYURINA', '10 x 4', 5200.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(424, '74-SCZ', NULL, 'NORTE', '(BT) CARRETERA A MONTERO INGRESO FERIA VIDAS', '6 x 3', 4000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(425, '75-SCZ', NULL, 'NORTE', '(BT) FRENTE AL PUENTE AEROPUERTO', '20 x 5', 13650.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(426, '76-SCZ', NULL, 'ESTE', '(BT) 8vo.ANILLO AVDA.ALEMANA CERCA DEL NUEVO LOS POZOS ', '10 x 4', 5850.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(427, '77-SCZ', NULL, 'OESTE', '(BT) 8vo.ANILLO AV. ALEMANA CER. DEL NUEVO MERCADO LOS POZO ', '10 x 4', 5850.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(428, '78-SCZ', NULL, 'ESTE ', '(BT) SALIDA A COTOCA ENTRADA A CAMPERO', '12 x 4', 4550.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(429, '79-SCZ', NULL, 'ESTE ', '(BT)SALIDA A COTOCA ENTRADA COMPERO ', '12 x 4', 4550.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(430, '80-SCZ', 'c9dcbe60-818f-11e9-8381-e9ca1039e253', 'NORTE', '(BT) 4TO ANILLO – CIRCULO OFICIAL DEL EJERCITO CARA B', '10 x 4', 14000.00, 1, 0, -17.7584, -63.2038, NULL, NULL, '1559134889.jpg', 2, 2, NULL, NULL, NULL),
+	(431, '81-SCZ', NULL, 'OESTE', '(BT) 4TO ANILLO DOBLE VIA LA GUARDIA CARA A ', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(432, '82-SCZ', NULL, 'OESTE', '(BT) 4TO ANILLO DOBLE VIA A LA GUARDIA  CARA B ', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(433, '125-LPZ', NULL, 'Prov. Aroma', 'Patacamaya, área comercial', '9 x 3', 6600.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(434, '126-LPZ', NULL, 'Sur', 'Calacoto C. 15 entre C.Bustamante y C.Patiño CB', '10 x 4', 8800.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(435, '65-CBA', NULL, 'QUILLACOLLO', '(T) Quillacollo,  Carretera Principal ', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(436, '40-SCR', NULL, 'YOTALA', '(T) Yotala, Plaza Central', '9 x 3', 6000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(437, '10-PND', NULL, 'COBIJA', '(T) INTERIOR AEROPUERTO DE COBIJA ÁREA DE LLEGADAS', '7 x 4', 5000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 9, 1, NULL, NULL, NULL),
+	(438, '11-PND', NULL, 'COBIJA', '(T) Cobija,  Aeropuerto', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 9, 1, NULL, NULL, NULL),
+	(439, '16-BEN', NULL, 'RIBERALTA', '(T) Riberalta, Frente al Mercado Central', '9 x 3', 6000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 10, 1, NULL, NULL, NULL),
+	(440, '127-LPZ', NULL, 'Terminal', 'Av. Uruguay hacia la  Av. Montes cerca de la Terminal de Buses CARA A', '9 x 4', 7000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(441, '128-LPZ', NULL, 'Terminal', 'Av. Uruguay hacia la  Av. Montes cerca de la Terminal de Buses CARA B', '9 x 4', 7000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(442, '83-SCZ', NULL, 'ESTE', '(ED) 3er ANILLO Y MUTUALISTA', '10 x 4', 4000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(443, '129-LPZ', '6f3fcd80-a998-11e9-9221-f71f7bfd94b4', 'Miraflores', 'Av. Brasil y C. San Salvador frente a Monumento a Busch', '10 x 4', 7000.00, 1, 0, -16.4944, -68.123, NULL, NULL, '1563480777.jpg', 1, 1, NULL, NULL, NULL),
+	(444, '64-EA', NULL, 'Ciudad Satélite', 'C. 5T Rectangular-Frente a la Estación de Teleférico Amarillo C A', '10 x 4', 7500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(445, '65-EA', NULL, 'Ciudad Satélite', 'C. 5T Rectangular-Frente a la Estación de Teleférico Amarillo C B', '10 x 4', 7500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 4, 2, NULL, NULL, NULL),
+	(446, '130-LPZ', NULL, 'Buenos Aires', 'Plaza Garita de Lima, Av. Tumusla CARA A', '4 x 6', 7000.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(447, '131-LPZ', NULL, 'Buenos Aires', 'Plaza Garita de Lima, Av. Tumusla CARA B', '4 x 6', 7000.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(448, '84-SCZ', NULL, '4 DE NOVIEMBRE ', 'AV CENTENARIO 3 ANILLO INTERNO', '10 x 5', 0.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 3, NULL, NULL, NULL),
+	(449, '132-LPZ', 'c1df8b50-c368-11e9-b760-155d81695715', 'Sur', 'Av. Kantutani, de Bajada Curva CARA A', '10 x 4', 7500.00, 1, 1, -16.5183, -68.1197, NULL, NULL, '1566319030.jpg', 1, 2, NULL, NULL, NULL),
+	(450, '85-SCZ', '32d99b10-2197-11ea-99d2-a761934222b4', 'NORTE', '4TO ANILLO Y CANAL ISUTO CARA A', '10 x 4', 5000.00, 0, 2, -17.7522, -63.1956, NULL, NULL, '1576674953.jpg', 2, 2, NULL, NULL, NULL),
+	(451, '86-SCZ', 'cee58200-2198-11ea-ada0-1f863a442190', 'NORTE', '4TO ANILLO Y CANAL ISUTO CARA B', '10 x 4', 4000.00, 0, 1, -17.7522, -63.1956, NULL, NULL, '1576675441.jpg', 2, 2, NULL, NULL, NULL),
+	(452, '41-SCR', NULL, 'Salida a Tarabuco', '(T) Av. Tupac Yupanqui, Parada y salida a Tarabuco ', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(453, '42-SCR', NULL, 'Terminal', '(T) Av. Ostria Gutierrez - Terminal de buses, Parquéo Casetas', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(454, '66-CBA', NULL, 'Cercado', 'Av Petrolera km 18', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 3, 3, NULL, NULL, NULL),
+	(455, '67-CBA', NULL, 'Aeropuerto', '(T) Aeropuerto Jorge Wilstermann - Frente al parqueo DER', '10 x 4', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(456, '68-CBA', NULL, 'Aeropuerto', '(T) Aeropuerto Internacional Jorge Wilstermann ingreso IZQ ', '10 x 4', 6500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(457, '133-LPZ', NULL, 'Sur', 'Calacoto C. 15 entre C.Bustamante y C.Patiño CA', '10 x 4', 8800.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(458, '134-LPZ', NULL, 'Mecapa', 'Mecapaca - Puente Lipari Cara A', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(459, '135-LPZ', NULL, 'Mecapa', 'Mecapaca - Puente Lipari Cara B', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(460, '69-CBA', NULL, 'Cchabamba', '(T A Orgaz) Puente de la Recoleta frente al Cine Center', '9 x 5', 6500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(461, '70-CBA', NULL, 'Cochabamba', 'Av. Ramón Rivero y Antesana', '4 x 8', 6500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 3, 2, NULL, NULL, NULL),
+	(462, '17-BEN', NULL, 'TRINIDAD', '(ED) CIPRIANO VARACE ESQ BOLIVAR 2', '9 x 3', 4000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 10, 1, NULL, NULL, NULL),
+	(463, '29-TRJ', NULL, 'Central', 'Rotonda de Morros Blancos frente a la gasolinera. Sointa cara A', '10 x 4', 7000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 8, 2, NULL, NULL, NULL),
+	(464, '87-SCZ', NULL, 'BANZER ', 'AV.BANZER 1 FRENTE CATERING CARA A', '10 x 4', 4600.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(465, '88-SCZ', NULL, 'NORTE', '(ED)CARR VIRU VIRU FRENTE AEROPUERTO ACF6 A', '9 x 3', 4000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(466, '89-SCZ', NULL, 'WARNES', '(ED)WARNES INGRESO A LA BELGICA', '9 x 3', 40000.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(467, '90-SCZ', NULL, 'ALTO SAN PEDRO', '(ED)3ER ANILLO ALTO SAN PEDRO', '9 x 3', 40000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(468, '91-SCZ', NULL, 'VILLA 1RO MAYO', '(ED) CURVA A LA VILLA 1RO DE MAYO A', '9 x 3', 40000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(469, '92-SCZ', NULL, 'ABAPO', '(ED) LLEGADA ABAPO', '9 x 3', 40000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(470, '93-SCZ', NULL, 'ROBORE', '(ED) PASANDO ESTACION DE TRENES ', '9 x 3', 40000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(471, '94-SCZ', NULL, 'ESTE', '(ED) ROCA CORONADO MERCADO SAN LUIS ', '10 x 4', 40000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(472, '95-SCZ', NULL, '2DO ANILLO', '(ED) MADRE INDIA B', '10 x 4', 40000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(473, '96-SCZ', NULL, 'CARRETERA A COTOCA', '(ED) PAMPA DE LA ISLA FRENTE HIPERMAXI B', '10 x 4', 40000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(474, '66-EA', NULL, 'Aeropuerto', '(T) En el Parqueo. Frente a la puerta de salida del Aeropuerto', '10 x 5', 7500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 4, 1, NULL, NULL, NULL),
+	(475, '97-SCZ', NULL, '2do ANILLO ', '(EH) 2do ANILLO Y AV BRASIL CARA B', '10 x 4', 0.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 2, 2, NULL, NULL, NULL),
+	(476, '54-POT', NULL, 'San Roque', 'Rotonda, frente al Puente San Roque Cara A', '10 x 4', 7000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(477, '55-POT', NULL, 'San Roque', 'Rotonda, frente al Puente San Roque Cara B', '10 x 4', 6800.00, 0, 2, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(478, '56-POT', NULL, 'Central', 'Av. Tinkuy esquina Av. Universitaria, riel del Tren Cara B', '9 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 6, 2, NULL, NULL, NULL),
+	(479, '136-LPZ', NULL, 'Gran Poder', 'Calle Sagarnaga Plaza de Gran Poder', '9.50 x 6', 6800.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 3, NULL, NULL, NULL),
+	(480, '137-LPZ', NULL, 'Sur', '(GT) Calacoto Calle 8 lado Costanera Cara A', '10 x 5', 9500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(481, '138-LPZ', NULL, 'Sur', '(GT) Calacoto Calle 8 lado Costanera Cara B', '10 x 5', 9500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(482, '139-LPZ', NULL, 'Sur', '(GT) Calacoto Calle 21', '8 x 8', 9500.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(483, '140-LPZ', NULL, 'Sur', '(GT) Av. Constanera altura puente Hector Ormachea ', '8 x 8', 9500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(484, '43-SCR', NULL, 'Aeropuerto', 'Camino al Aeropuerto Alcantari Cara B', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 7, 2, NULL, NULL, NULL),
+	(485, '44-SCR', NULL, 'Aeropuerto', '(T) Parqueo Aeropuerto Alcantari 1', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(486, '45-SCR', NULL, 'Aeropuerto', '(T) Parqueo Aeropuerto Alcantari 2', '12 x 4', 6800.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(487, '46-SCR', NULL, 'Aeropuerto', '(T) Parqueo Aeropuerto Alcantari 3', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 7, 1, NULL, NULL, NULL),
+	(488, '30-TRJ', NULL, 'Aeropuerto', '(T) Parqueo Aeropuerto 2', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 8, 1, NULL, NULL, NULL),
+	(489, '41-OR', NULL, 'Aeropuerto', 'Aeropuerto Internacional de Oruro Cara A', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 5, 2, NULL, NULL, NULL),
+	(490, '42-OR', NULL, 'Aeropuerto', 'Aeropuerto Internacional de Oruro Cara B', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 5, 2, NULL, NULL, NULL),
+	(491, '43-OR', NULL, 'Caracollo', 'Caracollo sobre la carretera Cara A', '10 x 4', 6500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 5, 2, NULL, NULL, NULL),
+	(492, '44-OR', NULL, 'Caracollo', 'Caracollo Carretera desvió a Oruro Cara B', '10 x 4', 6500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 5, 2, NULL, NULL, NULL),
+	(493, '141-LPZ', NULL, 'Sur - Sopocachi', ' (GT) Khantutani de subida a Sopocachi 12x6', '12 x 6', 12000.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(494, '142-LPZ', NULL, 'Sur - Sopocachi', '(GT) Khantutani de subida a Sopocachi 8x8', '8 x 8', 10000.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(495, '71-CBA', NULL, 'Central', '(T) Av. América casi Beiging', '10 x 4', 7500.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(496, '72-CBA', NULL, 'Noroeste', '(T)Av. Peru casi Parque Excombatientes', '10 x 4', 7500.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 3, 1, NULL, NULL, NULL),
+	(497, '143-LPZ', NULL, 'Rodriguez', 'Calle General Gonzales  - Mercado Rodrigues  Cara A', '10 x 4', 8750.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(498, '144-LPZ', NULL, 'Rodriguez', '(OJO) General Gonzales Mercado Rodríguez Cara A', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(499, '145-LPZ', NULL, 'Rodriguez', '(OJO) General Gonzales Mercado Rodríguez Cara B', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(500, '146-LPZ', NULL, 'San Jorge', '(OJO) AV. DEL POETA, ESTACIÓN TELEFÉRICO SAN JORGE Cara A', '10 x 5', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(501, '147-LPZ', NULL, 'San Jorge', '(OJO) AV. DEL POETA, ESTACIÓN TELEFÉRICO SAN JORGE Cara B', '10 x 5', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(502, '148-LPZ', NULL, 'Miraflores', '(OJO) Calle Argentina y Villalobos  (ATB) Cara A', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(503, '149-LPZ', NULL, 'Miraflores', '(OJO) Calle Argentina y Villalobos  (ATB) Cara B', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(504, '150-LPZ', NULL, 'Calacoto', 'Calacoto C. 18 - Frente a Hipermaxi Cara B', '10 x 4', 8800.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(505, '151-LPZ', NULL, 'Sopocachi', 'Sopocachi Parqueo frente a la Estación Teleférico Amarillo', '7 x 4', 6500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(506, '152-LPZ', NULL, 'La Cumbre', 'La Cumbre, salida hacia los Yungas Cara B', '10 x 4', 7000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(507, '153-LPZ', NULL, 'La Cumbre', 'La Cumbre, entrada a La Paz Cara A', '10 x 4', 7000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(508, '154-LPZ', NULL, 'Miraflores', '(OJO) Av. Busch frente al Teleférico Blanco Cara A', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(509, '155-LPZ', NULL, 'Miraflores', '(OJO) Av. Busch. Estación Teleférico Blanco Cara A', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(510, '156-LPZ', NULL, 'Sur', '(GT) Av. Costanera - Cooperativa Litoral', '10 x 8', 10000.00, 1, 2, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(511, '157-LPZ', NULL, 'Sur', '(GT) Puente de las Americas Esq. Capitan Ravelo', '5 x 10', 8000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(512, '158-LPZ', NULL, 'Sur', '(GT) Av Roma frente a Tote\'s Cara A Vista Av. Roma', '10 x 6', 8000.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(513, '159-LPZ', NULL, 'Sur', '(GT) Av Roma frente a Tote\'s Cara B Vista Av. Costanera', '10 x 6', 8000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(514, '160-LPZ', NULL, 'Terminal', 'Av. Uruguay, Ingreso/Salida Terminal de buses La paz Cara B', '10 x 4', 7000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(515, '161-LPZ', NULL, 'Miraflores', '(OJO) PLAZA VILLARROEL Y AV. TEJADA SORZANO  Cara A', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(516, '162-LPZ', NULL, 'Miraflores', '(OJO) PLAZA VILLARROEL Y AV. TEJADA SORZANO  Cara B', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(517, '163-LPZ', NULL, 'Miraflores', '(OJO) PLAZA VILLARROEL FRENTE A LA PARADA DEL TELEFERICO NARANJA  Cara A', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(518, '164-LPZ', NULL, 'Miraflores', '(OJO) PLAZA VILLARROEL FRENTE A LA PARADA DEL TELEFERICO NARANJA  Cara B', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(519, '165-LPZ', NULL, 'Miraflores', '(OJO) Av. Busch frente al Teleférico Blanco Cara B', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(520, '166-LPZ', NULL, 'Terminal', '(OJO) CALLE URUGUAY ESQ. ARMENTIA TERMINAL DE BUSES VISTA DE SUBIDA A', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(521, '167-LPZ', NULL, 'Terminal', '(OJO) CALLE URUGUAY ESQ. ARMENTIA TERMINAL DE BUSES VISTA DE BAJADA B', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(522, '168-LPZ', NULL, 'Periférica', '(OJO) AV. PERIFÉRICA - TELEFÉRICO NARANJA Cara A', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(523, '169-LPZ', NULL, 'Periférica', '(OJO) AV. PERIFERICA - TELEFERICO NARANJA Cara B', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(524, '170-LPZ', NULL, 'Periférica', 'AV. PERU ESQ. REPUBLICA ESTACION CENTRAL NARANJA Cara A', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(525, '171-LPZ', NULL, 'Periférica', 'AV. PERU ESQ. REPUBLICA ESTACION CENTRAL NARANJA Cara B', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(526, '98-SCZ', NULL, '5to anillo ', '5to Anillo Cambodromo ', '10 x 4', 3900.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(527, '99-SCZ', NULL, '2do Anillo', 'Isabel La Católica y Yotau (RAMADA)', '7 x 5', 4500.00, 0, 2, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, NULL, NULL),
+	(528, '172-LPZ', NULL, 'Terminal', 'Av. Uruguay, Ingreso/Salida Terminal de buses La paz Cara B', '10 x 4', 7000.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(529, '173-LPZ', NULL, 'Sur', '(GT) AV. ROMA ALTURA TALUD Cara A', '8 x 8', 9500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(530, '174-LPZ', NULL, 'Sur', '(GT) AV. ROMA ALTURA TALUD Cara B', '8 x 8', 9500.00, 1, 0, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(531, '175-LPZ', NULL, 'Sur', '(GT) Av. Costanera - Cooperativa Litoral 5X8', '5 x 8', 9000.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL, NULL, NULL),
+	(532, '176-LPZ', NULL, 'Miraflores', '(OJO) Av. Busch. Estación Teleférico Blanco Cara B', '10 x 4', 8750.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL),
+	(533, '18-BEN', NULL, 'Terminal', 'San Borja - Ingreso Terminal', '9 x 3', 5000.00, 0, 0, NULL, NULL, NULL, NULL, NULL, 10, 1, NULL, NULL, NULL),
+	(534, '19-BEN', NULL, 'Trinidad ', 'Trinidad Ingreso aeropuerto', '10 x 4', 5000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 10, 1, '2021-06-15 14:29:15', '2021-06-15 14:29:16', NULL),
+	(535, '177-LPZ', '0553e1e3-b6df-47bc-8c00-650254c08203', 'ewwewewe', 'wewewe', '10 x 4', 2000.00, 0, 1, NULL, NULL, NULL, NULL, NULL, 1, 1, '2021-06-15 23:51:40', '2021-06-15 23:51:40', NULL),
+	(536, '100-SCZ', '02665fe6-04c8-4217-8ed7-a9471ffbdf63', 'La Ramada', 'Isabela Catolica', '8 x 4', 1500.00, 1, 1, NULL, NULL, NULL, NULL, NULL, 2, 3, '2021-06-15 23:53:05', '2021-07-12 14:03:30', NULL),
+	(537, '73-CBA', '7174bd39-88e5-400f-be26-e450e4141e00', 'aaaaaaa1', 'bbbbbbb1', '10 x 6', 400.00, 1, 0, NULL, NULL, '162384809560c9f49f39467.jpeg', '162384811360c9f4b1f1218.jpeg', NULL, 3, 3, '2021-06-16 03:39:07', '2021-06-16 14:03:09', NULL);
 /*!40000 ALTER TABLE `billboards` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.billboard_types
@@ -161,6 +722,26 @@ INSERT INTO `billboard_types` (`id`, `description`, `created_at`, `updated_at`, 
 	(2, 'Unipolar', '2021-04-29 11:16:21', '2021-04-29 11:16:22', NULL),
 	(3, 'Mural', '2021-04-29 11:16:31', '2021-04-29 11:16:32', NULL);
 /*!40000 ALTER TABLE `billboard_types` ENABLE KEYS */;
+
+-- Volcando estructura para tabla imagen.campaigns
+CREATE TABLE IF NOT EXISTS `campaigns` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `date_start` date NOT NULL,
+  `date_end` date NOT NULL,
+  `note` mediumtext,
+  `rental_id` int(10) unsigned NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `campaigns_rental_id_foreign` (`rental_id`),
+  CONSTRAINT `campaigns_rental_id_foreign` FOREIGN KEY (`rental_id`) REFERENCES `rentals` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Volcando datos para la tabla imagen.campaigns: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `campaigns` DISABLE KEYS */;
+/*!40000 ALTER TABLE `campaigns` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.categories
 CREATE TABLE IF NOT EXISTS `categories` (
@@ -190,20 +771,22 @@ CREATE TABLE IF NOT EXISTS `cities` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla imagen.cities: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.cities: ~11 rows (aproximadamente)
 /*!40000 ALTER TABLE `cities` DISABLE KEYS */;
 INSERT INTO `cities` (`id`, `name`, `code_city`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 'La Paz', 'LPZ', NULL, '2020-02-04 17:51:03', '2020-02-04 17:51:04'),
 	(2, 'Santa Cruz de la Sierra', 'SCZ', NULL, '2020-02-04 17:51:22', '2020-02-04 17:51:23'),
 	(3, 'Cochabamba', 'CBBA', NULL, '2020-02-04 17:51:31', '2020-02-04 17:51:32'),
-	(4, 'Oruro', 'ORU', NULL, '2020-02-04 17:52:45', '2020-02-04 17:52:46'),
-	(5, 'Potosí', 'PSI', NULL, '2020-02-04 17:52:56', '2020-02-04 17:52:57'),
-	(6, 'Tarija', 'TJA', NULL, '2020-02-04 17:53:08', '2020-02-04 17:53:09'),
-	(7, 'Chuquisaca', 'CHQ', NULL, '2020-02-04 17:53:16', '2020-02-04 17:53:17'),
-	(8, 'Beni', 'BNI', NULL, '2020-02-04 17:53:23', '2020-02-04 17:53:24'),
-	(9, 'Pando', 'PND', NULL, '2020-02-04 17:53:30', '2020-02-04 17:53:32');
+	(4, 'El Alto', 'EA', NULL, '2020-02-04 17:52:45', '2020-02-04 17:52:46'),
+	(5, 'Oruro', 'OR', NULL, '2020-02-04 17:52:56', '2020-02-04 17:52:57'),
+	(6, 'Potosí', 'POT', NULL, '2020-02-04 17:53:08', '2020-02-04 17:53:09'),
+	(7, 'Sucre', 'SCR', NULL, '2020-02-04 17:53:16', '2020-02-04 17:53:17'),
+	(8, 'Tarija', 'TRJ', NULL, '2020-02-04 17:53:23', '2020-02-04 17:53:24'),
+	(9, 'Pando', 'PND', NULL, '2020-02-04 17:53:30', '2020-02-04 17:53:32'),
+	(10, 'Beni', 'BEN', NULL, '2021-06-14 16:07:46', '2021-06-14 16:07:47'),
+	(11, 'Chuquisaca', 'CHQ', NULL, '2021-06-16 00:16:57', '2021-06-16 00:16:57');
 /*!40000 ALTER TABLE `cities` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.code_cities
@@ -219,8 +802,8 @@ CREATE TABLE IF NOT EXISTS `code_cities` (
 -- Volcando datos para la tabla imagen.code_cities: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `code_cities` DISABLE KEYS */;
 INSERT INTO `code_cities` (`id`, `number_quotation`, `city_id`) VALUES
-	(1, 160, 2),
-	(2, 10, 1);
+	(1, 164, 2),
+	(2, 12, 1);
 /*!40000 ALTER TABLE `code_cities` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.costs
@@ -809,9 +1392,9 @@ CREATE TABLE IF NOT EXISTS `designs` (
   PRIMARY KEY (`id`),
   KEY `designs_product_quotation_id_foreign` (`product_quotation_id`),
   CONSTRAINT `designs_product_quotation_id_foreign` FOREIGN KEY (`product_quotation_id`) REFERENCES `product_quotation` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=254 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.designs: ~222 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.designs: ~224 rows (aproximadamente)
 /*!40000 ALTER TABLE `designs` DISABLE KEYS */;
 INSERT INTO `designs` (`id`, `filename`, `machine`, `quality`, `material`, `cutting_dimension`, `print_dimension`, `finished`, `test_print`, `quote_approved_date`, `design_approved_date`, `reference`, `path`, `support_path`, `set_image_support`, `note`, `product_quotation_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(12, 'Banner Cumpleaños - 1,5x2m', 'Galaxy', '1440', 'Lona 13 Onzas', NULL, '1,5x2m', 'Tipo Banner con Tubin', NULL, '2020-09-11', '2020-09-18', NULL, '16004408175f64c9f10be9d.png', NULL, 0, NULL, 30, NULL, '2020-09-18 10:53:37', '2020-09-18 10:53:37'),
@@ -1035,7 +1618,15 @@ INSERT INTO `designs` (`id`, `filename`, `machine`, `quality`, `material`, `cutt
 	(241, 'xfgdfgdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-06', '2021-04-06', NULL, '1617741305606cc5f910727.jpeg', '1617830780606e237c3a613.jpeg', 1, NULL, 653, NULL, '2021-04-06 20:35:05', '2021-04-07 21:26:20'),
 	(243, 'seresfdfsdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-15', '2021-04-14', NULL, '16184298536077479dae74a.jpeg', NULL, 0, NULL, 655, NULL, '2021-04-14 19:50:53', '2021-04-14 19:50:53'),
 	(244, 'asdadasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-15', '2021-04-14', NULL, '161843177560774f1fdf6e7.jpeg', NULL, 0, NULL, 656, NULL, '2021-04-14 20:22:55', '2021-04-14 20:22:55'),
-	(245, 'test impresion', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-26', '2021-04-26', NULL, '1619473811608735938ae0e.png', NULL, 0, NULL, 657, NULL, '2021-04-26 21:50:13', '2021-04-26 21:50:13');
+	(245, 'test impresion', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-26', '2021-04-26', NULL, '1619473811608735938ae0e.png', NULL, 0, NULL, 657, NULL, '2021-04-26 21:50:13', '2021-04-26 21:50:13'),
+	(246, 'ededede', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-11', '2021-06-11', NULL, '162342081260c36f8c5d57d.jpeg', NULL, 0, NULL, 660, NULL, '2021-06-11 14:13:32', '2021-06-11 14:13:32'),
+	(247, 'sssdsdsd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-11', '2021-06-11', NULL, '162342091460c36ff2d3f63.jpeg', NULL, 0, NULL, 659, NULL, '2021-06-11 14:15:15', '2021-06-11 14:15:15'),
+	(248, 'adhesivo.jpg', NULL, '1440 dpi', 'lona, adhesivo', '10 x 4', '10 x 4', 'con ojales, y antihongos', 'aprovado', '2021-06-24', '2021-06-24', 'maquina corta lona', '162456834160d4f215bc2de.png', NULL, 0, NULL, 661, NULL, '2021-06-24 20:59:05', '2021-06-25 18:14:33'),
+	(249, 'dsfsdfsdfs', NULL, 'sdfsdfsdfsdfsdfsd', 'sdfsdfsdf', 'sdfsdfsd', 'fsdffggdfg', 'dfgdfgdg', 'ghjghjg', '2021-06-26', '2021-06-25', 'hgjghjgh', '162464491860d61d3684e6e.png', NULL, 0, NULL, 662, NULL, '2021-06-25 18:15:19', '2021-06-25 18:15:19'),
+	(250, 'sdfsfsfsdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-07-23', '2021-07-02', NULL, '162524383160df40b76ad22.jpeg', NULL, 0, NULL, 649, NULL, '2021-07-02 16:37:12', '2021-07-02 16:37:12'),
+	(251, 'adhesivo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-07-14', '2021-07-14', NULL, '162629284760ef426f72261.png', NULL, 0, NULL, 663, NULL, '2021-07-14 20:00:48', '2021-07-14 20:00:48'),
+	(252, 'adhesivo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-07-28', '2021-07-28', NULL, '16275025636101b7e3add69.png', NULL, 0, NULL, 664, NULL, '2021-07-28 20:02:45', '2021-07-28 20:02:45'),
+	(253, 'adhesivo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-07-30', '2021-07-30', NULL, '162765481461040a9e4df40.jpeg', NULL, 0, NULL, 665, NULL, '2021-07-30 14:20:15', '2021-07-30 14:20:15');
 /*!40000 ALTER TABLE `designs` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.design_machine
@@ -1048,9 +1639,9 @@ CREATE TABLE IF NOT EXISTS `design_machine` (
   KEY `design_machine_machine_id_foreign` (`machine_id`),
   CONSTRAINT `design_machine_design_id_foreign` FOREIGN KEY (`design_id`) REFERENCES `designs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `design_machine_machine_id_foreign` FOREIGN KEY (`machine_id`) REFERENCES `machines` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.design_machine: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.design_machine: ~15 rows (aproximadamente)
 /*!40000 ALTER TABLE `design_machine` DISABLE KEYS */;
 INSERT INTO `design_machine` (`id`, `design_id`, `machine_id`) VALUES
 	(1, 241, 1),
@@ -1060,7 +1651,18 @@ INSERT INTO `design_machine` (`id`, `design_id`, `machine_id`) VALUES
 	(9, 238, 28),
 	(12, 243, 2),
 	(13, 244, 4),
-	(14, 245, 1);
+	(14, 245, 1),
+	(15, 246, 2),
+	(16, 246, 3),
+	(17, 247, 4),
+	(18, 248, 4),
+	(19, 249, 27),
+	(20, 249, 4),
+	(21, 249, 2),
+	(22, 250, 4),
+	(23, 251, 4),
+	(24, 252, 4),
+	(25, 253, 3);
 /*!40000 ALTER TABLE `design_machine` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.employees
@@ -1107,9 +1709,9 @@ CREATE TABLE IF NOT EXISTS `employee_work_order` (
   KEY `work_order_id_foreign` (`work_order_id`),
   CONSTRAINT `employee_id_foreign` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `work_order_id_foreign` FOREIGN KEY (`work_order_id`) REFERENCES `work_orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.employee_work_order: ~118 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.employee_work_order: ~121 rows (aproximadamente)
 /*!40000 ALTER TABLE `employee_work_order` DISABLE KEYS */;
 INSERT INTO `employee_work_order` (`id`, `work_order_id`, `employee_id`) VALUES
 	(1, 1, 1),
@@ -1229,7 +1831,20 @@ INSERT INTO `employee_work_order` (`id`, `work_order_id`, `employee_id`) VALUES
 	(119, 113, 6),
 	(120, 114, 8),
 	(121, 114, 5),
-	(122, 115, 8);
+	(122, 115, 8),
+	(123, 116, 8),
+	(124, 116, 4),
+	(125, 117, 6),
+	(126, 118, 8),
+	(127, 118, 9),
+	(128, 119, 7),
+	(129, 119, 2),
+	(130, 120, 7),
+	(131, 121, 9),
+	(132, 122, 5),
+	(133, 122, 1),
+	(134, 123, 5),
+	(135, 123, 4);
 /*!40000 ALTER TABLE `employee_work_order` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.entries
@@ -1434,9 +2049,9 @@ CREATE TABLE IF NOT EXISTS `invoices` (
   CONSTRAINT `license_id_foreign` FOREIGN KEY (`license_id`) REFERENCES `licenses` (`id`),
   CONSTRAINT `quotation_id_foreign` FOREIGN KEY (`quotation_id`) REFERENCES `quotations` (`id`),
   CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.invoices: ~54 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.invoices: ~60 rows (aproximadamente)
 /*!40000 ALTER TABLE `invoices` DISABLE KEYS */;
 INSERT INTO `invoices` (`id`, `date`, `number`, `control_code`, `total`, `nit_name`, `nit`, `title`, `footer`, `oc`, `hea`, `details`, `summary`, `cancelled`, `state_id`, `license_id`, `customer_id`, `user_id`, `quotation_id`, `type`, `closing_date`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, '2020-12-10 11:18:28', '1', '4F-4D-11-04', 8120.00, NULL, '1023281020', 'Alquiler Publicitario, ubicado en la ciudad de', 'Correspondiente de 18/11/20 al 17/12/20', NULL, NULL, NULL, NULL, 0, 1, 2, 69, 2, 98, 'FACTURA', NULL, NULL, '2020-12-10 07:18:28', '2020-12-10 07:18:28'),
@@ -1479,7 +2094,7 @@ INSERT INTO `invoices` (`id`, `date`, `number`, `control_code`, `total`, `nit_na
 	(38, '2021-03-02 11:22:25', '1', '3C-50-43-C2', 140.00, NULL, '77078147', NULL, NULL, NULL, NULL, 'Producto: Coca-Cola|Campaña: 2RP SUCRE|Nº orden embol: 82002061|Periodo de pauta: Febrero 2021', NULL, 1, 1, 4, 57, 4, 135, 'FACTURA', '2021-03-18', NULL, '2021-03-02 11:22:25', '2021-03-18 10:24:35'),
 	(39, '2021-03-02 11:23:02', '2', 'EA-E8-0A-7C-0E', 1091.80, NULL, '56248712', NULL, 'Marca: Fanta', NULL, NULL, 'Campaña: Colorful People|Nº orden Embol: 82002061|Periodo de pauta: Febrero 2021', 'Por la impresion de 3 vallas de 10x4 e instalacion', 0, 1, 3, 22, 4, 119, 'FACTURA', NULL, NULL, '2021-03-02 11:23:02', '2021-03-02 11:23:02'),
 	(40, '2021-03-02 11:29:45', '3', 'D4-CB-7C-9E-E4', 200.00, NULL, '564563454', 'Impresión de adhesivo', 'Marca: Coca-Cola', NULL, NULL, 'Campaña: 2RP SUCRE', NULL, 0, 1, 3, 77, 4, 121, 'FACTURA', NULL, NULL, '2021-03-02 11:29:45', '2021-03-15 09:29:51'),
-	(41, '2021-03-17 17:05:14', '4', '2A-D6-66-8A-33', 450.00, NULL, '397209021', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 3, 84, 2, 165, 'FACTURA', '2021-03-18', NULL, '2021-03-17 17:05:14', '2021-03-18 10:24:10'),
+	(41, '2021-06-17 17:05:14', '4', '2A-D6-66-8A-33', 450.00, NULL, '397209021', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 3, 84, 2, 165, 'FACTURA', '2021-03-18', NULL, '2021-03-17 17:05:14', '2021-03-18 10:24:10'),
 	(42, '2021-03-18 10:21:37', '5', 'FC-9D-53-1D-5C', 2200.00, NULL, '1011931025', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 23, 11, 170, 'FACTURA', NULL, NULL, '2021-03-18 10:21:37', '2021-03-18 10:21:37'),
 	(43, '2021-03-18 11:21:34', '6', '66-87-76-9E', 979.00, NULL, '310306022', 'para la ciudad: en santa cruz', NULL, NULL, NULL, NULL, 'impresion de 4 lonas con diferentes medidas', 0, 1, 3, 21, 11, 90, 'FACTURA', NULL, NULL, '2021-03-18 11:21:34', '2021-03-24 16:15:09'),
 	(44, '2021-03-18 11:49:44', '2', '7D-8A-40-88', 6200.00, NULL, '1016253021', 'En la ciudad de Santa Cruz', NULL, NULL, NULL, NULL, 'Por la impresion de 3 vallas de 10x4 e instalacion', 0, 1, 4, 21, 4, 88, 'FACTURA', NULL, NULL, '2021-03-18 11:49:44', '2021-03-18 11:49:44'),
@@ -1491,8 +2106,15 @@ INSERT INTO `invoices` (`id`, `date`, `number`, `control_code`, `total`, `nit_na
 	(50, '2021-04-19 11:44:29', '11', '4A-D5-84-B9-20', 979.00, NULL, '310306022', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 21, 4, 86, 'FACTURA', NULL, NULL, '2021-04-19 11:44:29', '2021-04-19 11:44:29'),
 	(51, '2021-04-20 11:39:36', '12', '44-B9-F3-8A-DE', 1111.11, NULL, '8914345', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 32, 4, 52, 'FACTURA', NULL, NULL, '2021-04-20 11:39:36', '2021-04-20 11:39:36'),
 	(52, '2021-04-20 11:43:50', '13', 'BB-9B-E8-09-D5', 101110.10, NULL, '5838764', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 8, 4, 1, 'FACTURA', NULL, NULL, '2021-04-20 11:43:50', '2021-04-20 11:43:50'),
-	(53, '2021-04-26 14:04:42', '14', '8D-61-CA-5D-F2', 1305.00, 'FERNANDO BANEGAS', '8914345', '', NULL, NULL, NULL, 'Marca: Sprite|Campaña: Sprite Clear|Nº orden Embol: 82002061|Periodo de Pauta: Abril 2021', NULL, 0, 1, 3, 14, 4, 49, 'FACTURA', NULL, NULL, '2021-04-26 17:41:02', '2021-05-05 14:04:42'),
-	(54, '2021-05-07 10:55:40', '15', 'B3-48-3E-DD-87', 1791.20, 'Fernando Banegas', '8914345', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 16, 4, 12, 'FACTURA', NULL, NULL, '2021-05-07 10:55:40', '2021-05-07 10:55:40');
+	(53, '2021-04-26 10:30:04', '14', '8D-61-CA-5D-F2', 1305.00, 'FERNANDO BANEGAS', '8914345', '', NULL, NULL, NULL, 'Marca: Sprite|Campaña: Sprite Clear|Nº orden Embol: 82002061|Periodo de Pauta: Abril 2021', 'asdasdasdasdasdasdasd', 0, 1, 3, 14, 4, 49, 'FACTURA', NULL, NULL, '2021-04-26 17:41:02', '2021-07-07 10:30:04'),
+	(54, '2021-05-07 10:55:40', '15', 'B3-48-3E-DD-87', 1791.20, 'Fernando Banegas', '8914345', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 16, 4, 12, 'FACTURA', NULL, NULL, '2021-05-07 10:55:40', '2021-05-07 10:55:40'),
+	(55, '2021-05-20 13:26:10', '16', '42-63-AC-B4', 672.00, NULL, '999999', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 35, 4, 48, 'FACTURA', NULL, NULL, '2021-05-20 13:26:10', '2021-05-20 13:26:10'),
+	(56, '2021-06-02 17:04:05', '17', '9A-8D-B7-49-FC', 738.10, NULL, '310306022', 'Impresión de lona LPZ - Oruro', 'Periodo de pauta: Mayo 2021', NULL, NULL, 'Marca: Coca Cola|Nº Orden Embol: 82002061|Periodo de pauta: Mayo 2021', NULL, 0, 1, 3, 21, 4, 47, 'FACTURA', NULL, NULL, '2021-06-02 17:04:05', '2021-06-02 17:04:05'),
+	(57, '2021-06-11 22:20:16', '18', 'E7-63-3D-0A-CF', 535.50, 'Manuel Banegas', '8914345', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 15, 4, 11, 'FACTURA', NULL, NULL, '2021-06-10 22:20:16', '2021-06-10 22:20:16'),
+	(60, '2021-06-11 12:43:22', '21', '69-60-0C-D8', 535.50, 'Pablo Antezana', '68774551', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 15, 4, 11, 'FACTURA', NULL, NULL, '2021-06-11 00:30:42', '2021-07-23 12:43:22'),
+	(61, '2021-06-11 13:16:15', '22', '16-34-A0-C6', 535.50, 'Toto Banegas', '763467890', '', NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 15, 4, 11, 'FACTURA', NULL, NULL, '2021-06-11 00:31:30', '2021-07-23 13:16:15'),
+	(62, '2021-06-11 12:24:56', '23', '9E-6E-EF-C5-E2', 485.00, 'ANGAPET S.R.L', '397209021', '', NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 84, 4, 178, 'FACTURA', NULL, NULL, '2021-06-11 10:31:16', '2021-06-11 12:24:56'),
+	(63, '2021-07-05 12:38:26', '24', '81-8A-71-4F-48', 1140.55, 'ANGAPET S.R.L', '397209021', '', NULL, NULL, NULL, NULL, NULL, 1, 1, 3, 84, 4, 178, 'FACTURA', '2021-07-07', NULL, '2021-07-05 17:30:44', '2021-07-23 12:38:26');
 /*!40000 ALTER TABLE `invoices` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.invoice_product
@@ -1509,9 +2131,9 @@ CREATE TABLE IF NOT EXISTS `invoice_product` (
   KEY `invoice_products_product_id_foreign` (`product_id`),
   CONSTRAINT `invoice_product_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `invoice_product_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.invoice_product: ~116 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.invoice_product: ~129 rows (aproximadamente)
 /*!40000 ALTER TABLE `invoice_product` DISABLE KEYS */;
 INSERT INTO `invoice_product` (`id`, `invoice_id`, `product_id`, `quantity`, `description`, `price`, `subtotal`) VALUES
 	(1, 1, 31, 1, 'Santa Cruz: Av. Cristo Redentor, entre 5to y 6to anillo cara "A" y "B".', 8120.00, 8120.00),
@@ -1629,7 +2251,34 @@ INSERT INTO `invoice_product` (`id`, `invoice_id`, `product_id`, `quantity`, `de
 	(113, 53, 2, 1, 'Caracteristica: impresion de liona a 1050 dpi,s con instalación en valla. dirección isabel la catolica', 1305.00, 1305.00),
 	(114, 54, 6, 1, 'Instalación de adhesivo microperforado en blindex', 407.20, 407.20),
 	(115, 54, 6, 1, 'Instalación de adhesivo microperforado en blindex', 652.80, 652.80),
-	(116, 54, 6, 1, 'Instalación de adhesivo microperforado en blindex', 731.20, 731.20);
+	(116, 54, 6, 1, 'Instalación de adhesivo microperforado en blindex', 731.20, 731.20),
+	(117, 55, 2, 1, 'Caracteristicas: impresión y cambio de lona  en bastidor existente', 672.00, 672.00),
+	(118, 56, 2, 1, 'ESTRUCTURA DE FRENTE', 60.50, 60.50),
+	(119, 56, 2, 2, 'ESTRUCTURA LATERAL SUPERIOR', 338.80, 677.60),
+	(120, 57, 2, 1, 'Impresión de lona Full color , lado derecho', 122.85, 122.85),
+	(121, 57, 2, 1, 'Impresión de lona Full color , lado izquierdo', 178.50, 178.50),
+	(122, 57, 2, 1, 'Impresión de lona Full color ,  atras', 234.15, 234.15),
+	(129, 60, 2, 1, 'Impresión de lona Full color ,  atras', 122.85, 122.85),
+	(130, 60, 2, 1, 'Impresión de lona Full color ,  atras', 178.50, 178.50),
+	(131, 60, 2, 1, 'Impresión de lona Full color ,  atras', 234.15, 234.15),
+	(132, 61, 2, 1, 'Impresión de lona Full color ,  atras', 122.85, 122.85),
+	(133, 61, 2, 1, 'Impresión de lona Full color ,  atras', 178.50, 178.50),
+	(134, 61, 2, 1, 'Impresión de lona Full color ,  atras', 234.15, 234.15),
+	(135, 62, 13, 1, 'jujujujujuj', 485.00, 485.00),
+	(136, 63, 13, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 485.00, 485.00),
+	(137, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 50.00, 50.00),
+	(138, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 50.00, 50.00),
+	(139, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 50.00, 50.00),
+	(140, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 50.00, 50.00),
+	(141, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 50.00, 50.00),
+	(142, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 50.00, 50.00),
+	(143, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 50.00, 50.00),
+	(144, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 50.00, 50.00),
+	(145, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 50.00, 50.00),
+	(146, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 50.00, 50.00),
+	(147, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 50.00, 50.00),
+	(148, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 55.55, 55.55),
+	(149, 63, 5, 1, 'Material: SUCURSAL ORURO Adhesivo blanco mate con protección UV anti hongos Calidad: 1440 Dpi\'s Acabado: Adhesivo ploteado según diseño ARTE: TRABAJO EN EQUIPO', 50.00, 50.00);
 /*!40000 ALTER TABLE `invoice_product` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.licenses
@@ -1657,7 +2306,7 @@ CREATE TABLE IF NOT EXISTS `licenses` (
 INSERT INTO `licenses` (`id`, `nit`, `authorization`, `key`, `starting_number`, `deadline`, `activity`, `legend`, `status_date`, `office_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 164692025, 361401000148061, '28+Z]V5tswPg9i9b#FpLw+B9rA_PT*ZEKwhE5vA@V%VE[_U6G@Km98BLqV6K+HR8', 37, '2021-02-24 23:59:59', 'Publicidad', 'Ley Nº 453: Las publicaciones, mensajes e imágenes no deben deshonrar y atentar contra la dignidad e imagen de la mujer.', 0, 1, NULL, '2020-11-23 20:00:00', '2020-11-23 20:00:00'),
 	(2, 164692025, 361401000148057, 'kS@muW6frq6]6X$={Dv[PGL*(C{H_H@@*E6\\bL9[3cb)quI9PBtKuz*7+7EPD{j-', 2, '2021-02-24 23:59:59', 'Publicidad', 'Ley Nº 453: Las publicaciones, mensajes e imágenes no deben deshonrar y atentar contra la dignidad e imagen de la mujer.', 0, 2, NULL, '2020-11-23 20:00:00', '2020-11-23 20:00:00'),
-	(3, 164692025, 457401600000321, '(B{$$pp9i@-[%W48e]B4t2DFCZ+fKMM4J%sLK#I\\2CyEk\\Z=8=WXHGbVtTttXGQW', 16, '2021-08-28 23:59:59', 'Publicidad', 'Ley N° 453: El proveedor debe exhibir certificaciones de habilitación o documentos que acrediten las capacidades u ofertas de servicios especializados.', 1, 1, NULL, '2021-03-01 16:41:07', '2021-03-01 16:41:07'),
+	(3, 164692025, 457401600000321, '(B{$$pp9i@-[%W48e]B4t2DFCZ+fKMM4J%sLK#I\\2CyEk\\Z=8=WXHGbVtTttXGQW', 25, '2021-08-28 23:59:59', 'Publicidad', 'Ley N° 453: El proveedor debe exhibir certificaciones de habilitación o documentos que acrediten las capacidades u ofertas de servicios especializados.', 1, 1, NULL, '2021-03-01 16:41:07', '2021-03-01 16:41:07'),
 	(4, 164692025, 359401600000460, 'FR5g)BD=%ee%e(uAeMKeMU9\\L[7QMUB@)GLRz=8L(Iz)Z@f[4QS$JursIYBSswh6', 4, '2021-08-28 23:59:59', 'Publicidad', 'Ley N° 453: El proveedor debe exhibir certificaciones de habilitación o documentos que acrediten las capacidades u ofertas de servicios especializados.', 1, 2, NULL, '2021-03-02 11:06:31', '2021-03-02 11:06:33');
 /*!40000 ALTER TABLE `licenses` ENABLE KEYS */;
 
@@ -1829,6 +2478,7 @@ CREATE TABLE IF NOT EXISTS `notes` (
   `nit` varchar(16) DEFAULT NULL,
   `cancelled` tinyint(1) NOT NULL DEFAULT '0',
   `summary` text,
+  `accounts` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `voucher_id` int(10) unsigned NOT NULL,
   `customer_id` int(10) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
@@ -1849,24 +2499,28 @@ CREATE TABLE IF NOT EXISTS `notes` (
   CONSTRAINT `notes_quotation_id_foreign` FOREIGN KEY (`quotation_id`) REFERENCES `quotations` (`id`),
   CONSTRAINT `notes_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `notes_voucher_id_foreign` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.notes: ~13 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.notes: ~15 rows (aproximadamente)
 /*!40000 ALTER TABLE `notes` DISABLE KEYS */;
-INSERT INTO `notes` (`id`, `number`, `date`, `total`, `discount`, `nit`, `cancelled`, `summary`, `voucher_id`, `customer_id`, `user_id`, `quotation_id`, `type`, `closing_date`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, '1', '2021-01-05 12:23:03', 75.00, 0.00, '348410028', 1, NULL, 1, 65, 2, 87, 'N.REMISION', '2021-01-05', '2021-01-05 08:23:03', '2021-01-05 12:43:34', NULL),
-	(2, '2', '2021-01-05 12:30:26', 255.00, 0.00, '000000000', 1, NULL, 1, 40, 2, 62, 'N.REMISION', '2021-01-05', '2021-01-05 08:30:26', '2021-01-05 12:41:23', NULL),
-	(3, '3', '2021-02-05 12:42:03', 250.00, 0.00, '1111111', 1, NULL, 1, 34, 2, 45, 'N.REMISION', '2021-01-05', '2021-01-05 08:42:03', '2021-01-05 12:39:34', NULL),
-	(4, '4', '2021-01-05 12:44:58', 3698.20, 0.00, 'GO CREAM', 1, NULL, 1, 31, 6, 40, 'N.REMISION', '2021-01-05', '2021-01-05 08:44:58', '2021-01-05 12:35:04', NULL),
-	(5, '5', '2021-01-05 16:14:25', 160.00, 0.00, '5838764', 1, NULL, 1, 57, 6, 77, 'N.REMISION', '2021-01-05', '2021-01-05 12:14:25', '2021-01-05 12:32:45', NULL),
-	(6, '6', '2021-01-06 09:50:44', 385.00, 0.00, '00000047', 0, NULL, 1, 59, 4, 79, 'N.REMISION', '2021-01-06', '2021-01-06 05:50:44', '2021-01-06 07:12:29', NULL),
-	(7, '7', '2021-02-25 15:54:50', 1200.00, 1120.00, '348410028', 0, NULL, 1, 65, 4, 164, 'N.REMISION', NULL, '2021-02-25 15:54:50', '2021-02-25 15:54:50', NULL),
-	(8, '8', '2021-02-25 16:20:32', 3800.00, 1250.00, '8914345', 0, NULL, 1, 64, 4, 162, 'N.REMISION', NULL, '2021-02-25 16:20:32', '2021-02-25 16:20:32', NULL),
-	(9, '9', '2021-02-25 17:09:34', 3500.00, 1250.00, '72651903', 0, NULL, 1, 15, 4, 163, 'N.REMISION', NULL, '2021-02-25 17:09:34', '2021-02-25 17:09:34', NULL),
-	(10, '10', '2021-03-17 17:05:45', 2300.00, 200.00, '1023281020', 1, 'jajaja', 1, 69, 2, 166, 'N.REMISION', NULL, '2021-03-17 17:05:45', '2021-03-24 12:07:45', NULL),
-	(11, '11', '2021-03-18 10:21:46', 2200.00, 0.00, '133991023', 0, 'Prueba para ver el resumen de glosa', 1, 61, 11, 156, 'N.REMISION', NULL, '2021-03-18 10:21:46', '2021-03-23 17:07:24', NULL),
-	(12, '12', '2021-03-24 11:07:45', 300.00, 18.00, '104692025', 0, NULL, 1, 14, 4, 9, 'N.REMISION', NULL, '2021-03-24 11:07:45', '2021-03-24 11:07:45', NULL),
-	(13, '13', '2021-04-24 16:38:58', 149.45, 0.00, '70857933', 0, 'prueba de resumen para nota de ventas', 1, 11, 4, 5, 'N.REMISION', NULL, '2021-03-24 16:38:58', '2021-05-04 09:58:54', NULL);
+INSERT INTO `notes` (`id`, `number`, `date`, `total`, `discount`, `nit`, `cancelled`, `summary`, `accounts`, `voucher_id`, `customer_id`, `user_id`, `quotation_id`, `type`, `closing_date`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, '1', '2021-01-05 12:23:03', 75.00, 0.00, '348410028', 1, NULL, 1, 1, 65, 2, 87, 'N.REMISION', '2021-01-05', '2021-01-05 08:23:03', '2021-01-05 12:43:34', NULL),
+	(2, '2', '2021-01-05 12:30:26', 255.00, 0.00, '000000000', 1, NULL, 1, 1, 40, 2, 62, 'N.REMISION', '2021-01-05', '2021-01-05 08:30:26', '2021-01-05 12:41:23', NULL),
+	(3, '3', '2021-02-05 12:42:03', 250.00, 0.00, '1111111', 1, NULL, 1, 1, 34, 2, 45, 'N.REMISION', '2021-01-05', '2021-01-05 08:42:03', '2021-01-05 12:39:34', NULL),
+	(4, '4', '2021-01-05 12:44:58', 3698.20, 0.00, 'GO CREAM', 1, NULL, 1, 1, 31, 6, 40, 'N.REMISION', '2021-01-05', '2021-01-05 08:44:58', '2021-01-05 12:35:04', NULL),
+	(5, '5', '2021-01-05 16:14:25', 160.00, 0.00, '5838764', 1, NULL, 1, 1, 57, 6, 77, 'N.REMISION', '2021-01-05', '2021-01-05 12:14:25', '2021-01-05 12:32:45', NULL),
+	(6, '6', '2021-01-06 09:50:44', 385.00, 0.00, '00000047', 0, NULL, 1, 1, 59, 4, 79, 'N.REMISION', '2021-01-06', '2021-01-06 05:50:44', '2021-01-06 07:12:29', NULL),
+	(7, '7', '2021-02-25 15:54:50', 1200.00, 1120.00, '348410028', 0, NULL, 1, 1, 65, 4, 164, 'N.REMISION', NULL, '2021-02-25 15:54:50', '2021-02-25 15:54:50', NULL),
+	(8, '8', '2021-02-25 16:20:32', 3800.00, 1250.00, '8914345', 0, NULL, 1, 1, 64, 4, 162, 'N.REMISION', NULL, '2021-02-25 16:20:32', '2021-07-07 09:51:16', NULL),
+	(9, '9', '2021-02-25 17:09:34', 3500.00, 1250.00, '72651903', 0, NULL, 1, 1, 15, 4, 163, 'N.REMISION', NULL, '2021-02-25 17:09:34', '2021-02-25 17:09:34', NULL),
+	(10, '10', '2021-03-17 17:05:45', 2300.00, 200.00, '1023281020', 1, 'jajaja', 1, 1, 69, 2, 166, 'N.REMISION', NULL, '2021-03-17 17:05:45', '2021-03-24 12:07:45', NULL),
+	(11, '11', '2021-03-18 10:21:46', 2200.00, 0.00, '133991023', 0, 'Prueba para ver el resumen de glosa', 1, 1, 61, 11, 156, 'N.REMISION', NULL, '2021-03-18 10:21:46', '2021-03-23 17:07:24', NULL),
+	(12, '12', '2021-03-24 11:07:45', 300.00, 18.00, '104692025', 0, NULL, 1, 1, 14, 4, 9, 'N.REMISION', NULL, '2021-03-24 11:07:45', '2021-03-24 11:07:45', NULL),
+	(13, '13', '2021-04-24 16:38:58', 149.45, 0.00, '70857933', 0, 'prueba de resumen para nota de ventas', 1, 1, 11, 4, 5, 'N.REMISION', NULL, '2021-03-24 16:38:58', '2021-05-04 09:58:54', NULL),
+	(14, '15', '2021-06-11 00:40:07', 280.60, 0.00, '104692025', 0, 'sdfsfsdfsdfsdfsdfsdfsdf', 1, 1, 14, 4, 10, 'N.REMISION', NULL, '2021-06-11 00:40:07', '2021-07-07 10:19:16', NULL),
+	(15, '16', '2021-06-11 10:20:26', 50.00, 8.00, '70150445472', 0, NULL, 0, 1, 30, 4, 177, 'N.REMISION', NULL, '2021-06-11 10:20:26', '2021-07-14 15:55:15', NULL),
+	(16, '17', '2021-07-14 12:37:45', 6127.50, 0.00, '397209021', 0, NULL, 0, 1, 84, 4, 179, 'N.REMISION', NULL, '2021-07-14 12:37:45', '2021-07-14 15:18:39', NULL),
+	(17, '18', '2021-07-14 16:01:51', 3800.00, 0.00, '397209021', 0, NULL, 1, 1, 84, 4, 180, 'N.REMISION', NULL, '2021-07-14 16:01:51', '2021-07-14 17:08:35', NULL);
 /*!40000 ALTER TABLE `notes` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.note_product
@@ -1883,9 +2537,9 @@ CREATE TABLE IF NOT EXISTS `note_product` (
   KEY `note_product_product_id_foreign` (`product_id`),
   CONSTRAINT `note_product_note_id_foreign` FOREIGN KEY (`note_id`) REFERENCES `notes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `note_product_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.note_product: ~29 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.note_product: ~31 rows (aproximadamente)
 /*!40000 ALTER TABLE `note_product` DISABLE KEYS */;
 INSERT INTO `note_product` (`id`, `note_id`, `product_id`, `quantity`, `description`, `price`, `subtotal`) VALUES
 	(1, 1, 13, 2, 'Caracteristica:  señaletica  foam de 3 mm revestido en adhesivo impreso  full color', 30.00, 60.00),
@@ -1916,7 +2570,12 @@ INSERT INTO `note_product` (`id`, `note_id`, `product_id`, `quantity`, `descript
 	(46, 13, 22, 1, 'IMPRESIÓN ARTE PANIAGUA', 36.60, 36.60),
 	(47, 13, 22, 1, 'IMPRESIÓN SOLO FRANJA COLOR INSTITUCIONAL', 33.55, 33.55),
 	(48, 13, 22, 1, 'IMPRESIÓN SOLO FRANJA COLOR INSTITUCIONAL', 39.65, 39.65),
-	(49, 13, 22, 1, 'cscscsc', 39.65, 39.65);
+	(49, 13, 22, 1, 'cscscsc', 39.65, 39.65),
+	(50, 14, 22, 1, 'Adhesivo brillo  refilado y  solo se debe entregar al cliente', 280.60, 280.60),
+	(51, 15, 2, 1, 'eedededefffff', 58.00, 58.00),
+	(52, 16, 7, 1, 'test de concepto numero 1', 3800.00, 3800.00),
+	(53, 16, 4, 1, 'test de concepto numero 2', 2327.50, 2327.50),
+	(54, 17, 5, 1, 'concepto', 3800.00, 3800.00);
 /*!40000 ALTER TABLE `note_product` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.oauth_access_tokens
@@ -1934,7 +2593,7 @@ CREATE TABLE IF NOT EXISTS `oauth_access_tokens` (
   KEY `oauth_access_tokens_user_id_index` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla imagen.oauth_access_tokens: ~523 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.oauth_access_tokens: ~539 rows (aproximadamente)
 /*!40000 ALTER TABLE `oauth_access_tokens` DISABLE KEYS */;
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
 	('0057c98bd7c4e7c4a21eb70b29be9e41e4314d373f4eea771dd319e8195d4a7c78ffef62c537af4d', 1, 2, NULL, '[]', 1, '2020-02-19 16:15:41', '2020-02-19 16:15:41', '2021-02-19 20:15:41'),
@@ -1946,10 +2605,13 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('030404b21519b213fd3e54e67b1bdf1eee3772e4c5954b9da6c3fe23ee6347239a732dd8f00696d7', 4, 2, NULL, '[]', 0, '2021-01-29 14:18:25', '2021-01-29 14:18:25', '2022-01-29 14:18:25'),
 	('034c72d7bed5f44dc0b35f1456dd56afbb3762812e3e4a846cd1ec487bbb806c8eb0ef9e7988b9f3', 1, 2, NULL, '[]', 1, '2020-06-12 11:50:11', '2020-06-12 11:50:11', '2021-06-12 15:50:11'),
 	('03d3c9d5ec24e40fd83da4018c9b62641f6cbc0ce5177c59fca990df26b468e857c92870f078c7c9', 10, 2, NULL, '[]', 0, '2020-12-15 13:06:20', '2020-12-15 13:06:20', '2021-12-15 17:06:20'),
+	('03f545ced18149a12006a131fe831e39cf55f26e59d240390d17092873d1515a0f3b096a066a5c84', 4, 2, NULL, '[]', 1, '2021-05-30 14:43:54', '2021-05-30 14:43:54', '2022-05-30 14:43:54'),
 	('0401f27e0369a349e1437125b7af1d2d09490f80af9343c689332880f78ffdb60d25b15b21453e25', 1, 2, NULL, '[]', 0, '2020-06-17 15:45:49', '2020-06-17 15:45:49', '2020-06-17 19:46:49'),
 	('043f9e5d86a8cef088bb281adb9d51c4d5b835cc7079adcab562f17cd8ffa16d421486130e8f4811', 4, 2, NULL, '[]', 0, '2021-02-01 15:41:35', '2021-02-01 15:41:35', '2022-02-01 15:41:35'),
 	('04a2fb547f08d77f3ab7c3f3fffe075a4c6e6d4e457255c1ab4d65ad1b149b118953754f1676fc2a', 1, 2, NULL, '[]', 1, '2020-09-07 10:38:06', '2020-09-07 10:38:06', '2021-09-07 14:38:06'),
 	('04d255e7b5c60dc803af8b412f6cf09d16e96193516aabbcd86bfaef288971e7204df1dd0b8145f1', 4, 2, NULL, '[]', 0, '2021-02-03 21:34:44', '2021-02-03 21:34:44', '2022-02-03 21:34:44'),
+	('059e24bee53c8eb4a3f361c9ade0403bcc210ae77197dbade43e253f4ef6d10b8594864145c51007', 3, 2, NULL, '[]', 0, '2021-07-28 19:22:36', '2021-07-28 19:22:36', '2022-07-28 19:22:36'),
+	('06a13704d8ec142d73edb7ee512e443058530e5ea0a50aab32f9e4cd56e0c8fa9879dd1ce6cb41ac', 4, 2, NULL, '[]', 0, '2021-05-26 01:04:19', '2021-05-26 01:04:19', '2022-05-26 01:04:19'),
 	('06f68c0af95c1859a7cacfd1e5986554e375f3be79f7dd3398e89406d66ade7b999fca79c5ffc054', 3, 2, NULL, '[]', 1, '2021-02-03 21:28:35', '2021-02-03 21:28:35', '2022-02-03 21:28:35'),
 	('0771b15b165c807b5b013a0f5b5edc3e1b8f7844e6b7332a67dc6f931a2044e6e6f025813be10f1f', 5, 2, NULL, '[]', 1, '2020-12-07 12:23:51', '2020-12-07 12:23:51', '2021-12-07 16:23:51'),
 	('082f91e0d2ffa6b4c9969b5ace252db0aeccc4e45bf06e6e5761676b2c253547f3de54689bf7debc', 4, 2, NULL, '[]', 1, '2021-02-02 13:39:14', '2021-02-02 13:39:14', '2022-02-02 13:39:14'),
@@ -1980,6 +2642,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('11476e28868c2f6d2b544e1ea467ea3450ad9fbadb764862a1d2cf8f294ab79429c4090349305a0f', 4, 2, NULL, '[]', 1, '2021-03-18 18:43:59', '2021-03-18 18:43:59', '2022-03-18 18:43:59'),
 	('1218aefe63cc2e37186fac8f972a8fb7e4f72cd0297a176f90586e542fa84c5e9726bd718aa1de13', 3, 2, NULL, '[]', 1, '2021-02-02 18:29:17', '2021-02-02 18:29:17', '2022-02-02 18:29:17'),
 	('123fbedf294bdbb58d8796b7367b5e24107867ab8154913e635639b458d9f367b62a4b0141f4df5a', 2, 2, NULL, '[]', 1, '2020-11-27 10:06:31', '2020-11-27 10:06:31', '2021-11-27 14:06:31'),
+	('1277fdca208760e3aa21ddb235bce21c19d47a8e322f0d925d1de72b6ed5db139d987527874f0524', 4, 2, NULL, '[]', 0, '2021-05-20 17:25:03', '2021-05-20 17:25:03', '2022-05-20 17:25:03'),
 	('128294223492ae90097be6906eec2bd4d697eef12867e168f0ae6320dd29718bacb5ceff4efba3ea', 1, 2, NULL, '[]', 0, '2020-02-19 16:11:13', '2020-02-19 16:11:13', '2021-02-19 20:11:13'),
 	('12bc7c60fcf774d4685693ffb1ff4d2ac3cff7b2c587b34480d5e80ac240a759978c5ce16f8fbc9d', 1, 2, NULL, '[]', 1, '2020-06-11 01:02:39', '2020-06-11 01:02:39', '2021-06-11 05:02:39'),
 	('1365ead4334a524841a3e9979bebb64a9e0e1641ac6719940d7f85d4ecdbe3f62260e04bc5738e9b', 11, 2, NULL, '[]', 1, '2020-11-27 09:28:32', '2020-11-27 09:28:32', '2021-11-27 13:28:32'),
@@ -2032,6 +2695,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('2c46d2b7ddc45218734c39801fbd24a757af66b8903f74d570b471a6884bbbda831f6930e1a93d60', 3, 2, NULL, '[]', 1, '2021-03-17 19:35:18', '2021-03-17 19:35:18', '2022-03-17 19:35:18'),
 	('2c7524091ba57deb3bf8000cabb009501661ae760cdabaa4dce501643a603df51416c1ca5c2aa1e5', 4, 2, NULL, '[]', 1, '2021-04-29 15:25:41', '2021-04-29 15:25:41', '2022-04-29 15:25:41'),
 	('2cc33e836ce2dc0f206e73f0e517b7f2a8a206aabcc7c63173978b6ff8f9446a0246826df33bd209', 11, 2, NULL, '[]', 1, '2021-03-18 18:43:48', '2021-03-18 18:43:48', '2022-03-18 18:43:48'),
+	('2dd389793f04da1cdb6d51a82c1cb572dc28c2a99e18f1718592b1795b2cd3467ac84774b83bc92e', 4, 2, NULL, '[]', 1, '2021-07-28 19:22:23', '2021-07-28 19:22:23', '2022-07-28 19:22:23'),
 	('2e06c0d61868cc7a4c1c4f0cdc75fb34d286ac35f1a9c305839eb37355185f408dc197b08532f362', 1, 2, NULL, '[]', 1, '2021-01-26 15:50:14', '2021-01-26 15:50:14', '2022-01-26 15:50:14'),
 	('2e182d510cff6b39671beab2e65f4a27da037c860c8584bcdd3a4d18ac84f6c91ba79cfeb14b5127', 1, 2, NULL, '[]', 1, '2020-05-14 15:17:27', '2020-05-14 15:17:27', '2021-05-14 19:17:27'),
 	('2ec40aab1fd88bc5c7faa227a794c02df00ce157160fcc0e6f207ba8e6316f790764060d7afb4fdb', 4, 2, NULL, '[]', 1, '2020-11-27 11:35:15', '2020-11-27 11:35:15', '2021-11-27 15:35:15'),
@@ -2068,6 +2732,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('3c51740c257d4c8069a50230c0a96e4289dbe27b282592c01b9e7f64a05b1e27fca3217346b836ae', 4, 2, NULL, '[]', 0, '2021-01-21 21:04:20', '2021-01-21 21:04:20', '2022-01-21 21:04:20'),
 	('3c77c8e13b85f37bcf1ae6e88961e228a597e65947a0f76b499e9dd4e6ab7282eded7ef2080f4bc6', 4, 2, NULL, '[]', 1, '2020-11-04 14:02:58', '2020-11-04 14:02:58', '2021-11-04 18:02:58'),
 	('3c7cf9ae6844f0b0bad031ef9d18cbf71f38cd37b2bd5180c2240e4742bf4c8dfd6d3639ca3c4d35', 4, 2, NULL, '[]', 0, '2020-12-30 14:30:43', '2020-12-30 14:30:43', '2021-12-30 18:30:43'),
+	('3cd26125d7a081b9faeed5c5461d75e764f594368d260eda4b56351240aac8177918c9c01aaa4de1', 18, 2, NULL, '[]', 1, '2021-07-28 20:03:52', '2021-07-28 20:03:52', '2022-07-28 20:03:52'),
 	('3db1f139cfebaa2f448a7d3f4af5e418b28d0ab18ff9cc0eae898f59b3f56eb2edd53cbfe27449ab', 3, 2, NULL, '[]', 1, '2021-02-05 20:16:21', '2021-02-05 20:16:21', '2022-02-05 20:16:21'),
 	('3e0832a081f95493e2f6ffcd0f5f00ecb2df538de2201737839bcf43909fd814b45de4b404f54769', 1, 2, NULL, '[]', 0, '2020-11-18 12:30:05', '2020-11-18 12:30:05', '2021-11-18 16:30:05'),
 	('3e6fc69a5f6dac13d7882fef7fe966182a98f7f9ea68be315cda00a368f0251dcd2e6850d697d80a', 4, 2, NULL, '[]', 1, '2021-02-02 14:54:14', '2021-02-02 14:54:14', '2022-02-02 14:54:14'),
@@ -2081,11 +2746,15 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('428f1768190b35dfb9dfb66cdca888c01b6791df359a79f92047faeb2c890f4a5055e3d65f2bfdba', 1, 2, NULL, '[]', 0, '2020-05-15 10:47:04', '2020-05-15 10:47:04', '2021-05-15 14:47:04'),
 	('42d3f975a19a7d5efac3f7b5114a1491b86086d08037031e04ffd4bfdd01d6751996b49fa157b7e7', 1, 2, NULL, '[]', 1, '2020-05-26 10:54:57', '2020-05-26 10:54:57', '2021-05-26 14:54:57'),
 	('43d88aa7c209c368018664056006cbcec58ccc39ae035235cc2a6a5b128e6e5446502e2a634830f3', 2, 2, NULL, '[]', 1, '2021-02-05 14:54:22', '2021-02-05 14:54:22', '2022-02-05 14:54:22'),
+	('44022cccc7f065ef0bb85a513ac5f94df0382e44b1d9afb79d078225fe133c14c6f2bfeade1e581f', 3, 2, NULL, '[]', 0, '2021-07-28 19:19:56', '2021-07-28 19:19:56', '2022-07-28 19:19:56'),
 	('447bec6fbb5094f1901959fec195c41716e13f01b651e76e30b61cb9b31a2323df6eeab259874bc4', 5, 2, NULL, '[]', 0, '2020-12-14 10:13:56', '2020-12-14 10:13:56', '2021-12-14 14:13:56'),
 	('4493caebc9f6594cd705b45f778bc95df0e6ea2145ff408e88760f25a4f1164d924733fab722d388', 9, 2, NULL, '[]', 0, '2021-01-18 14:42:09', '2021-01-18 14:42:09', '2022-01-18 18:42:09'),
 	('4535b8e16d4ee6abf36c98821451a1ae7d695ec8b3af7626d0e5d2855cb6941deb5081847cce32dd', 5, 2, NULL, '[]', 1, '2020-12-01 02:14:37', '2020-12-01 02:14:37', '2021-12-01 06:14:37'),
+	('4584fcfa2bb85bff4d1b430d497f1a728e430f391dd88d65122026f3e68f820aa4e861c094643bae', 9, 2, NULL, '[]', 1, '2021-07-28 20:48:56', '2021-07-28 20:48:56', '2022-07-28 20:48:56'),
 	('4711441955c41a0f5e7ca80379ee5bb2cfd92842d3700ebe31de2a34001c044be5b47666e44a550d', 1, 2, NULL, '[]', 1, '2020-05-26 10:58:40', '2020-05-26 10:58:40', '2021-05-26 14:58:40'),
 	('47f3d62e2a227b37f181b6a882f76028ca4909944144033d9a9554f592cbb59ae67bfa0d365cb555', 7, 2, NULL, '[]', 1, '2020-10-28 14:42:36', '2020-10-28 14:42:36', '2021-10-28 18:42:36'),
+	('48def8e35786340b946c7c9d16f1ca11af236d5921f18ab19eb80d1fdaf0046f060838fec4e30559', 4, 2, NULL, '[]', 0, '2021-07-08 16:30:50', '2021-07-08 16:30:50', '2022-07-08 16:30:50'),
+	('4925f9ce9ccca7e16530b13a59d1355f7326842be04b84b9613f84b99fe02e7530fca193049a42de', 18, 2, NULL, '[]', 1, '2021-07-30 14:20:54', '2021-07-30 14:20:54', '2022-07-30 14:20:54'),
 	('4951bf9eaadd6b50196fc0818c603ca8bf23cc69476b602f3a2e3880b0365ef1feba507b67425bad', 1, 2, NULL, '[]', 0, '2020-02-17 18:30:28', '2020-02-17 18:30:28', '2021-02-17 22:30:28'),
 	('49d19062908c9d8290ee9a5e39a2dc087c184ef5c14ebc3b1fb71a05da57334546de518f7291b2fe', 1, 2, NULL, '[]', 1, '2020-04-23 12:33:55', '2020-04-23 12:33:55', '2021-04-23 16:33:55'),
 	('4a0e3b988ce627b2f2a899c36a5ebe6d5f28cae477e20eeb81e56b8a2608a39f6dd8bffacb4ec346', 6, 2, NULL, '[]', 1, '2021-02-01 21:27:48', '2021-02-01 21:27:48', '2022-02-01 21:27:48'),
@@ -2099,6 +2768,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('4bdd36959732b002a27a4b20fd84431fdde88965e7329b1e3982c402b9f8ad4603de52f284ec9685', 4, 2, NULL, '[]', 1, '2021-02-01 20:37:58', '2021-02-01 20:37:58', '2022-02-01 20:37:58'),
 	('4c14e0935bd117ee8de96916e484c2cbf3e931dd173bc286f5cb0dec9620f27d1e78d11c92305e3e', 4, 2, NULL, '[]', 0, '2021-02-01 15:41:00', '2021-02-01 15:41:00', '2022-02-01 15:41:00'),
 	('4dc30e587551f10bcfc3960bc278a7e02d12a30d61b98b5a97f1b8707a4647c8747063fb5b30c17e', 2, 2, NULL, '[]', 1, '2020-06-13 10:13:15', '2020-06-13 10:13:15', '2021-06-13 14:13:15'),
+	('4e0db3f2f6da3b7790790967eab18db1e5784825bc383f70ae3e7fd6bf6ab3e5d705e922ce349fb0', 9, 2, NULL, '[]', 1, '2021-07-28 19:25:16', '2021-07-28 19:25:16', '2022-07-28 19:25:16'),
 	('4f74b5994a687e8e6cfc408ebdb1fb4cf1a4457dd80950e65bb353b5d7c289dea967429a168d60e5', 4, 2, NULL, '[]', 0, '2020-11-24 20:54:52', '2020-11-24 20:54:52', '2021-11-25 00:54:52'),
 	('4f7acf1269c84b69c8bdaaeb93746a703a6409f88bad99f6371de66db11e3fd7b69fc039a645592a', 4, 2, NULL, '[]', 1, '2020-12-03 15:45:57', '2020-12-03 15:45:57', '2021-12-03 19:45:57'),
 	('4fd7f7fe0d1f349d6b532fc1044977a8c5d4b0ee8497cacd8853e26a2b3dc0e5a7cc89d071924c9b', 9, 2, NULL, '[]', 0, '2020-12-03 10:05:50', '2020-12-03 10:05:50', '2021-12-03 14:05:50'),
@@ -2107,6 +2777,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('5070783cee8ab4ea9865d626b112eef407f8b60912df0686baafd9e8b22085c1d7cf7af9ec11edbc', 4, 2, NULL, '[]', 1, '2021-02-05 17:43:57', '2021-02-05 17:43:57', '2022-02-05 17:43:57'),
 	('50cdcd66007720a29c14b36c26cd2a2b58fb021f81d3ed15f52651a18075ef0eb87d907e0089dc18', 5, 2, NULL, '[]', 1, '2020-12-07 10:02:41', '2020-12-07 10:02:41', '2021-12-07 14:02:41'),
 	('53871f0aa6ff6228c305281128fbe87cdafc3d9f463531babf06c40f75edf5b4abf22ab9faa3b407', 10, 2, NULL, '[]', 0, '2020-11-04 16:30:21', '2020-11-04 16:30:21', '2021-11-04 20:30:21'),
+	('5393c6d8bb812c67f5715129adf0816d8b4f0c539f9590f3f33ee8185a50543887071039bbd17c43', 2, 2, NULL, '[]', 0, '2021-06-11 02:33:34', '2021-06-11 02:33:34', '2022-06-11 02:33:34'),
 	('539f02fad9e409e3684baaa35e8bf6adf77e54e9076c0779e5eddd90b0f55a458ddebe8ae42a0209', 2, 2, NULL, '[]', 1, '2020-06-10 16:48:22', '2020-06-10 16:48:22', '2021-06-10 20:48:22'),
 	('53dfdefa2e0fe15b2d3007c93eca73cd654908fe3c6559d5624cd72d4dd71cfbd9f62d1000c95519', 1, 2, NULL, '[]', 0, '2020-05-13 20:25:21', '2020-05-13 20:25:21', '2021-05-14 00:25:21'),
 	('53e1907449fedaa2fe82ba8c047d208608fcddaf2912af159e71dd86f569b1486ad204841d94abc1', 2, 2, NULL, '[]', 1, '2020-06-13 21:53:12', '2020-06-13 21:53:12', '2021-06-14 01:53:12'),
@@ -2126,16 +2797,22 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('57b1f01869068380f45cbb7ae93edbd0d96c73fb37794206f3b94930c2785726b621005e4ab7203f', 4, 2, NULL, '[]', 1, '2021-02-02 21:17:15', '2021-02-02 21:17:15', '2022-02-02 21:17:15'),
 	('5881c5c2d53e46582c45d60d1b4925c362db27a0508c14aa193aa8629f2ea56ee6194ae8ec2d08ac', 4, 2, NULL, '[]', 1, '2021-02-02 21:02:41', '2021-02-02 21:02:41', '2022-02-02 21:02:41'),
 	('59635b250d0532e5a2b27bd7c61528a34bdc64ea18d278a099e892a6cd334141328db2c643de214f', 4, 2, NULL, '[]', 1, '2021-04-26 21:48:20', '2021-04-26 21:48:20', '2022-04-26 21:48:20'),
+	('59ce25e10fd799cb3175114f48fcb74b931e62e1100767af7512456d61692cef929620373fe0cf3b', 3, 2, NULL, '[]', 1, '2021-07-28 19:24:21', '2021-07-28 19:24:21', '2022-07-28 19:24:21'),
 	('5a128ad0603e5a5ec35c5e1319a6cbfa360dd4dc1b920eb0cdeeac414ecfdef9883bfcd117a19a9c', 3, 2, NULL, '[]', 1, '2021-02-02 21:24:06', '2021-02-02 21:24:06', '2022-02-02 21:24:06'),
+	('5a62386b3f917779bd55b68f9a4b49841cc0fbba26c922b61516c68d9f282045b462fa3b8fea0c0c', 18, 2, NULL, '[]', 1, '2021-07-08 16:23:37', '2021-07-08 16:23:37', '2022-07-08 16:23:37'),
 	('5a63a1483c323e8ca87e789bca0970bd0783df78e0436aac05e79a38d8bb38f1ccfeb9b8ebc0d6e8', 4, 2, NULL, '[]', 1, '2021-02-02 18:36:10', '2021-02-02 18:36:10', '2022-02-02 18:36:10'),
 	('5a6ac411d6e1454632cae04fb484dad99f48f351f46ae060cd0e77e6126ef198c8079bc623573881', 2, 2, NULL, '[]', 1, '2020-12-31 11:10:08', '2020-12-31 11:10:08', '2021-12-31 15:10:08'),
+	('5b596e67d8c00820d99604f1e62540a9c86d351c79ccd9c52385897d23d58b680e09742c3ab3b859', 4, 2, NULL, '[]', 0, '2021-06-30 21:54:30', '2021-06-30 21:54:30', '2022-06-30 21:54:30'),
+	('5b8888852fa2d81a6b3fb3b8f4d0182b278ed1988ad1e383c3e49dd5ff1149ff3b2a8543bdf6788d', 4, 2, NULL, '[]', 1, '2021-07-06 22:25:49', '2021-07-06 22:25:49', '2022-07-06 22:25:49'),
 	('5bd8bf19ca9684315aa832e1790a4605ce7e74f69f44eb7578bb9998c5d8cc91aec8c73f2abf4c1e', 4, 2, NULL, '[]', 1, '2021-04-26 21:34:18', '2021-04-26 21:34:18', '2022-04-26 21:34:18'),
 	('5c161de06a80bc3d343ee7b6e6541db7c223486b989c2bcec212bc223f07a17263ea6604678a8910', 1, 2, NULL, '[]', 0, '2020-09-18 11:13:21', '2020-09-18 11:13:21', '2021-09-18 15:13:21'),
+	('5c2ffd3dbfe60336793ab3bc3e08d5389c3794eb303dcd5f739fdb65805e495a4470f4e638f085cc', 4, 2, NULL, '[]', 0, '2021-06-15 18:04:41', '2021-06-15 18:04:41', '2022-06-15 18:04:41'),
 	('5c92574a3295879c864957d42ce056fd1fc57d89b01708062381c9163703053657d1662d0ff3e5a4', 1, 2, NULL, '[]', 1, '2020-09-16 00:09:13', '2020-09-16 00:09:13', '2021-09-16 04:09:13'),
 	('5cacf7ba2883aa1a772fbd8c0874cd4fd1de40c9e395d4dcddd875829b6a8ff89b03360c29e97c35', 3, 2, NULL, '[]', 1, '2021-01-26 15:50:58', '2021-01-26 15:50:58', '2022-01-26 15:50:58'),
 	('5d284490adeeefc74322c54b552398179bd7d2bc46277eb32fc8260b862ce03b0b56289467ecaa31', 6, 2, NULL, '[]', 1, '2021-02-02 13:46:15', '2021-02-02 13:46:15', '2022-02-02 13:46:15'),
 	('5d3553726fd405a7aa5a0e99572166e05b5d328e98d002873231c4feceed11341321d42bef872eec', 11, 2, NULL, '[]', 1, '2020-12-03 14:26:01', '2020-12-03 14:26:01', '2021-12-03 18:26:01'),
 	('5d64981743cc628b5e8e159c6cc230043f5ef02c7253a890daac3ef6fa4ed909841c8b0f6a4caabc', 1, 2, NULL, '[]', 0, '2020-02-19 16:15:12', '2020-02-19 16:15:12', '2021-02-19 20:15:12'),
+	('5d6cc7f1d12e46491c32cf36913a8794cbbbea3f89757ca2c9f110dc28435a715bfd261fad6928de', 4, 2, NULL, '[]', 0, '2021-05-20 17:25:35', '2021-05-20 17:25:35', '2022-05-20 17:25:35'),
 	('5de3cfe2841747bd02e5b4a9e36f5f014df6114d26c6a66007f4a1e006f44bfa70265bd656748a08', 9, 2, NULL, '[]', 0, '2020-12-15 15:51:33', '2020-12-15 15:51:33', '2021-12-15 19:51:33'),
 	('5e7c302c6ef451cfd391dd491c6e10cacb21e456e92e6f597e514e43c22b0683beebf88585a8d6d3', 4, 2, NULL, '[]', 1, '2020-09-30 10:18:31', '2020-09-30 10:18:31', '2021-09-30 14:18:31'),
 	('5e92b2069017b06bbf093ef7ccc812523980d0236b7a9d4b2cf44a3f8a5eba3daaad0802d37d322c', 4, 2, NULL, '[]', 0, '2021-01-29 14:31:13', '2021-01-29 14:31:13', '2022-01-29 14:31:13'),
@@ -2155,6 +2832,8 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('650b131237bbba52783c70c66a32c1fa1172d777723dd98d0ff02b18bcaddb3f149e0bff773d36b1', 13, 2, NULL, '[]', 0, '2020-12-09 10:14:39', '2020-12-09 10:14:39', '2021-12-09 14:14:39'),
 	('6561afd74a6b0e63f29be4f18630898c641e9a82867735632ed88bb8bc663412d1b95c831ab89f58', 10, 2, NULL, '[]', 0, '2021-01-11 16:49:36', '2021-01-11 16:49:36', '2022-01-11 20:49:36'),
 	('65e446ff2c3f1584cc9a9eae0c725bd243ca95a489ecb48a04b6cb1e1ee8d03c046a60e9bfcbbea1', 1, 2, NULL, '[]', 0, '2020-09-04 11:59:08', '2020-09-04 11:59:08', '2021-09-04 15:59:08'),
+	('661db1c3b9fbaca05a4ab272f6bb5ea5df9dab133fd84197f98d5f0cad27a9289a5041408f850c46', 18, 2, NULL, '[]', 1, '2021-07-08 15:27:10', '2021-07-08 15:27:10', '2022-07-08 15:27:10'),
+	('66499fd5b67445ce2cb579a2389d20797f66420947e0d2e784e04e093aafa25bc03c64259927cde2', 4, 2, NULL, '[]', 1, '2021-07-28 19:22:53', '2021-07-28 19:22:53', '2022-07-28 19:22:53'),
 	('66cff84106c979e719582bd2a4fb206c1adb989b6f958ad7fdd998045d473bef1612dac76545a083', 4, 2, NULL, '[]', 1, '2020-12-04 09:14:09', '2020-12-04 09:14:09', '2021-12-04 13:14:09'),
 	('6756dab5a74fdb7ded31232d8e1b7f380a8eaa1f974c1a8f52bc567923b01844853ba8f0fc36ac38', 4, 2, NULL, '[]', 1, '2021-03-17 21:45:33', '2021-03-17 21:45:33', '2022-03-17 21:45:33'),
 	('678288b964affdaba88d758cadf8e86fe2248674f1ae1440a87a07d2377c2f598135274509894d91', 1, 2, NULL, '[]', 0, '2020-02-17 12:06:56', '2020-02-17 12:06:56', '2021-02-17 16:06:56'),
@@ -2167,6 +2846,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('6917112cb11bf7b134e5b2518d304d444c00a778bc7645aa65aee0fa6b1576869c24b4876ab890e8', 5, 2, NULL, '[]', 0, '2021-01-19 12:02:44', '2021-01-19 12:02:44', '2022-01-19 16:02:44'),
 	('69ad51e733b70012bc5aa8ee5b20bbc06dc2323afea97be3d174eae691a265395b81296b9a6dd3da', 11, 2, NULL, '[]', 1, '2021-03-05 13:25:51', '2021-03-05 13:25:51', '2022-03-05 13:25:51'),
 	('6adad47bdde48dfd7a61796c60242593289aee10d28159ecffd1a5143a8163fd18bf8c2b584b05f5', 4, 2, NULL, '[]', 1, '2021-01-25 21:11:41', '2021-01-25 21:11:41', '2022-01-25 21:11:41'),
+	('6b2e3bbef225cd8a5d9a6974c652d9995bb947ff3583b9e4cb7ddf17223360bd355fabb03c6b8589', 4, 2, NULL, '[]', 0, '2021-05-25 15:21:48', '2021-05-25 15:21:48', '2022-05-25 15:21:48'),
 	('6c05473d313a64f1f0b4d2d724eb07f76ed66bcd32cffb94b626a17001cfae9ee9a54ec18b8b32b4', 5, 2, NULL, '[]', 0, '2020-12-07 12:21:22', '2020-12-07 12:21:22', '2021-12-07 16:21:22'),
 	('6c29bc2e88b3cba05260f39463cb2a9d2132effee2cb4b4e8ec8c75d6baf25400b031b44b8b7f426', 1, 2, NULL, '[]', 0, '2020-11-17 10:28:37', '2020-11-17 10:28:37', '2021-11-17 14:28:37'),
 	('6c35a89be51830b947eb2de949bde2369ed6f87b71db8ac7eb9a669844416a87ce04cfa246b84d88', 1, 2, NULL, '[]', 1, '2020-05-26 15:21:11', '2020-05-26 15:21:11', '2021-05-26 19:21:11'),
@@ -2179,6 +2859,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('6e0f30c512bd489b7c5c52e0e22874b9f6719934b32d974365530b996a91d5ca136b1247ee4d3c4a', 5, 2, NULL, '[]', 0, '2020-10-28 10:08:41', '2020-10-28 10:08:41', '2021-10-28 14:08:41'),
 	('6e38b9e5f5f4c72cdaf3ec394cfed3616015f0524db50e278bc4e9db8d9e74079993d5d6173df3fd', 7, 2, NULL, '[]', 1, '2021-02-03 13:51:05', '2021-02-03 13:51:05', '2022-02-03 13:51:05'),
 	('6e6f946a99641998e857d67b45cebc4b66f1f97a474713bb552ed9ba4025b89994f8aeaa347bb51f', 3, 2, NULL, '[]', 1, '2021-02-05 19:33:28', '2021-02-05 19:33:28', '2022-02-05 19:33:28'),
+	('6ecd28d60ec159abaa737d8a95a647ef160027188a3488656164aa658ae35977f3602554ed653bb5', 6, 2, NULL, '[]', 1, '2021-07-30 14:17:55', '2021-07-30 14:17:55', '2022-07-30 14:17:55'),
 	('6ece7bbbaf00d39506f6c033f1b1ae6e3d978fb61405fdb68179ba68cbf81394ef23d8b61266e19f', 4, 2, NULL, '[]', 1, '2020-12-02 09:23:17', '2020-12-02 09:23:17', '2021-12-02 13:23:17'),
 	('6f71574221914fe925022789f15afa33d277712d734eef8d516b8cb0a42a901e0bea17da7e0724a2', 4, 2, NULL, '[]', 0, '2021-03-08 18:28:25', '2021-03-08 18:28:25', '2022-03-08 18:28:25'),
 	('702e40d81ebea02f97d7e1b109142c589d95453a9bdbc41369f34bc2ef0fd5b82be0fd47dacb7e88', 1, 2, NULL, '[]', 0, '2020-09-30 11:01:10', '2020-09-30 11:01:10', '2021-09-30 15:01:10'),
@@ -2190,10 +2871,12 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('736800fdb4ebff9c5c22f012663eba0664acbb261eaa33559a4e71c9bf32efda1f902ad7d7f59cad', 2, 2, NULL, '[]', 0, '2020-12-15 13:10:19', '2020-12-15 13:10:19', '2021-12-15 17:10:19'),
 	('736faed4a1931123e71712aa5fcec5e14187320833f1e228ac9abde4a6461524b749367de4de3b0c', 4, 2, NULL, '[]', 1, '2021-03-05 13:27:36', '2021-03-05 13:27:36', '2022-03-05 13:27:36'),
 	('73e608aeda1bb119136a397b5d3fd92daa44688db0f0b320e3b8d85c573afe1119be0cefd5cb6239', 11, 2, NULL, '[]', 1, '2021-03-18 15:51:42', '2021-03-18 15:51:42', '2022-03-18 15:51:42'),
+	('7406f67a36c2166bbfe15ad4365a6184ac733de75993b7a6eec9710542a476b7afd2194850b948ec', 4, 2, NULL, '[]', 0, '2021-07-30 16:44:15', '2021-07-30 16:44:15', '2022-07-30 16:44:15'),
 	('7418a82a22f0d719da744663f929715157ce93a32a1dddc92381fd842b01088d1f2608a6cd25c24f', 10, 2, NULL, '[]', 1, '2020-07-07 15:11:59', '2020-07-07 15:11:59', '2021-07-07 19:11:59'),
 	('75294ae0c55de8203b0266862d3ebce508a517f641ba8c6924a2cf1d24809be104c4712272dc8a01', 3, 2, NULL, '[]', 1, '2020-09-28 09:36:01', '2020-09-28 09:36:01', '2021-09-28 13:36:01'),
 	('75e5a8b8b596209c7366d22d8f6e0cb6730725da9d0fbfd4a26e165dc5a1cfc6fee83202ff2b2256', 1, 2, NULL, '[]', 0, '2020-06-25 16:57:05', '2020-06-25 16:57:05', '2021-06-25 20:57:05'),
 	('760587664f253560eb3ec997d70f51895b3b9b710023288ede02a1accef71a211c9c5eff741d77df', 2, 2, NULL, '[]', 1, '2020-06-13 21:49:27', '2020-06-13 21:49:27', '2021-06-14 01:49:27'),
+	('76fcad94eb0a96ed0a91b6c13d9576c1d913c96da7b851c82696ac0de563e9748ddcbeac1399bcb3', 9, 2, NULL, '[]', 1, '2021-07-30 14:22:02', '2021-07-30 14:22:02', '2022-07-30 14:22:02'),
 	('7734e98157c8700c6aec152aa8ed7d6d357fd25b65eb8aaa778d74d735a32573a844cf29b89e89d5', 1, 2, NULL, '[]', 1, '2020-06-07 09:26:17', '2020-06-07 09:26:17', '2021-06-07 13:26:17'),
 	('77a57d7b7a246eeb38abb24ef42c6cc6e47d93a5e4b73b0e5ecd17463c58ac456f9038b5519fd5ea', 8, 2, NULL, '[]', 0, '2020-12-09 09:11:42', '2020-12-09 09:11:42', '2021-12-09 13:11:42'),
 	('77b95881c82b9775a40a569dce0699688f8a0d4fe240a163b07ad2b6d75a9aa812cd72cd99fc2517', 6, 2, NULL, '[]', 1, '2021-02-01 21:24:19', '2021-02-01 21:24:19', '2022-02-01 21:24:19'),
@@ -2217,6 +2900,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('7f58f5a7d67208a4a983c09703dd8339ab6033a0829e0cae6492eff3f1019dcdf210a17bd0472817', 2, 2, NULL, '[]', 1, '2020-06-12 15:21:21', '2020-06-12 15:21:21', '2021-06-12 19:21:21'),
 	('7f938d90b3063e8211199bc0977e1b48babbc1ab27fe42c3f70597e13db2b19d21f4c3dfa91be011', 8, 2, NULL, '[]', 0, '2020-12-22 15:17:43', '2020-12-22 15:17:43', '2021-12-22 19:17:43'),
 	('80626d5c3074ae7b34bef5bbd64f1690c73184e7e456118235a9cb3b66843caa7b45fc895804d186', 2, 2, NULL, '[]', 1, '2020-06-15 18:57:42', '2020-06-15 18:57:42', '2021-06-15 22:57:42'),
+	('817867f3879aab228d56b075e86b8b0c97294573d9168e17eb838b5e62d602e73ae07e1d3f1bdbeb', 9, 2, NULL, '[]', 1, '2021-07-28 20:01:57', '2021-07-28 20:01:57', '2022-07-28 20:01:57'),
 	('82d51221b53a4ea186672d8564387f2fd8763788960ddea6bac53bf134e15bc30dfd818c4774b05a', 3, 2, NULL, '[]', 0, '2021-01-04 09:06:53', '2021-01-04 09:06:53', '2022-01-04 13:06:53'),
 	('83135d3423c2a1cea7880618457c383303842ef53059dc5009f61fe77d636450b5e2cb2485f5e6e4', 1, 2, NULL, '[]', 1, '2020-06-17 11:31:08', '2020-06-17 11:31:08', '2021-06-17 15:31:08'),
 	('83d16d2eef08a485fac57dff1883133859b2d39a4e3141ccaad708077bd73286fbe5b1e80ba26c17', 14, 2, NULL, '[]', 1, '2021-02-02 18:35:22', '2021-02-02 18:35:22', '2022-02-02 18:35:22'),
@@ -2224,6 +2908,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('851f5582c518bd7cb02725b299a3635167ee4398821eed02297571d05bbc6a87f3a7973deb46d74a', 6, 2, NULL, '[]', 1, '2021-02-01 21:27:18', '2021-02-01 21:27:18', '2022-02-01 21:27:18'),
 	('8545f17b4fa8a489951775eabc7ffc4fbb6c9af1fba66cc62423698d38b4d3fe7ddc63b5895e1f0c', 8, 2, NULL, '[]', 1, '2020-12-14 11:23:54', '2020-12-14 11:23:54', '2021-12-14 15:23:54'),
 	('856ec7500115e9414f48a7346abd35631fd5fd192233511fc6bf32e8400fd44ae54574dce585818d', 3, 2, NULL, '[]', 1, '2021-02-05 19:48:13', '2021-02-05 19:48:13', '2022-02-05 19:48:13'),
+	('85edb7995a2c17a98aa7e096f2bdc4353714f7b353c9d611d5711237084e45e756da93caa1172e08', 9, 2, NULL, '[]', 1, '2021-07-28 20:49:19', '2021-07-28 20:49:19', '2022-07-28 20:49:19'),
 	('8714857a777d2770f87d80b796e717300e9811b9cc8a4283d515ac9340d6f64062c11b15cea1b75c', 1, 2, NULL, '[]', 1, '2020-09-16 11:27:13', '2020-09-16 11:27:13', '2021-09-16 15:27:13'),
 	('872414060db9620200f852eb7ab2d3ad5d07fa3702fd8d8d3a31a197c9c2f953a8ed7f7ff85ab63b', 5, 2, NULL, '[]', 1, '2020-12-17 12:34:46', '2020-12-17 12:34:46', '2021-12-17 16:34:46'),
 	('873b0ab6fedea872d8af4c0c816f8ed3d88c11eb8f1305002bf6ac0198748460527a873272ad800c', 4, 2, NULL, '[]', 0, '2020-09-30 16:22:31', '2020-09-30 16:22:31', '2021-09-30 20:22:31'),
@@ -2233,6 +2918,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('8ab67d3324286b1844cee16b190951b93295d1a6c6ce27cb29535fbddab032ecb669558d5891063e', 1, 2, NULL, '[]', 1, '2020-02-14 09:13:25', '2020-02-14 09:13:25', '2021-02-14 13:13:25'),
 	('8ad0c44087aded3c2f41f71bbba4b6c8226da7755caa5bce5ebecce1afd3d085a5c10dbad16a9ea5', 1, 2, NULL, '[]', 1, '2020-03-27 11:10:05', '2020-03-27 11:10:05', '2021-03-27 15:10:05'),
 	('8b44f275b360f10a4a707908116a7c734d920df5986b0e1a33dc110403a1d202931344dc502594c9', 4, 2, NULL, '[]', 0, '2021-01-28 16:16:09', '2021-01-28 16:16:09', '2022-01-28 16:16:09'),
+	('8bde1881727c180093164fd10980de5d869a398f6982830f3491f54011e1b9655e4b4bbd534c9f22', 4, 2, NULL, '[]', 0, '2021-05-25 15:20:56', '2021-05-25 15:20:56', '2022-05-25 15:20:56'),
 	('8c4364594ca11a0493356422ec9a31c4a36d391f6495314c8095aa18e6f9bddf2f7f01ea5f22e260', 12, 2, NULL, '[]', 0, '2020-12-31 09:15:41', '2020-12-31 09:15:41', '2021-12-31 13:15:41'),
 	('8dbc587b085053effab5e5a4e31181591feeced9a5d1ee76b55d65baf7ceff4a5aa6efb52476c3d6', 4, 2, NULL, '[]', 1, '2021-03-17 21:08:46', '2021-03-17 21:08:46', '2022-03-17 21:08:46'),
 	('8ee3c6081e8bd029ef0deb5784f6d652375440020ea22a6d72748cbcb37fafd393806ad06ddca964', 1, 2, NULL, '[]', 0, '2020-02-17 18:24:37', '2020-02-17 18:24:37', '2021-02-17 22:24:37'),
@@ -2244,7 +2930,9 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('914d5d4689ae8f4d69090e4eaddbca07d2508ead96364daff3fd2b0c8cf99883cc300c8bde6511d9', 2, 2, NULL, '[]', 1, '2020-06-15 15:34:07', '2020-06-15 15:34:07', '2021-06-15 19:34:07'),
 	('9202094c75a64df564ac054ca5b38c5feb930cfddfff6e695f1904e9397bcab555e093e928df87d4', 2, 2, NULL, '[]', 0, '2021-01-22 14:48:08', '2021-01-22 14:48:08', '2022-01-22 14:48:08'),
 	('923b659899554f15d8d3b7075630aef52044bf98ab233f7e65531747070012e58cf08eeb92619d19', 8, 2, NULL, '[]', 0, '2021-01-20 11:27:31', '2021-01-20 11:27:31', '2022-01-20 15:27:31'),
+	('928d2b81e0144bfef273c5707c0c629f7665fa2b74e952c128cdb744f9ab59ca839b8bbffae1eec6', 9, 2, NULL, '[]', 1, '2021-07-30 14:19:27', '2021-07-30 14:19:27', '2022-07-30 14:19:27'),
 	('92d3064ece53601107dddf8fc1e381c110c057639b36d5b3a26e3a32d7a3cc46f2bfb2c94bcc2057', 1, 2, NULL, '[]', 0, '2020-10-13 10:02:35', '2020-10-13 10:02:35', '2021-10-13 14:02:35'),
+	('934e149dfc1f56a2585925068c23d04240a7c73872d3d34eda5e05f66c1fc10e03ab026e899f3d2e', 4, 2, NULL, '[]', 0, '2021-07-08 16:32:11', '2021-07-08 16:32:11', '2022-07-08 16:32:11'),
 	('93dc2844af7da5f62c94b57427e0fcf7522db5d26859ba0213eba8b2fd83c19071fb87652e8a46bc', 4, 2, NULL, '[]', 1, '2021-02-05 18:53:50', '2021-02-05 18:53:50', '2022-02-05 18:53:50'),
 	('940c71644665b4c64925fda780a6e25d543852eceffb45f025a7e98be1e6c8cb20121b343e50c304', 1, 2, NULL, '[]', 0, '2020-02-17 18:22:48', '2020-02-17 18:22:48', '2021-02-17 22:22:48'),
 	('943d8b8f99c1f7ac3f20d2db56e34598859450eb62970ee0689c38debec8028ec81b97a286ac399d', 4, 2, NULL, '[]', 0, '2020-12-30 09:04:38', '2020-12-30 09:04:38', '2021-12-30 13:04:38'),
@@ -2256,7 +2944,9 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('96ea4da4a7dc4e44c4cb1d59e54a16f44bd47697f57b3e908ca35c47a815f8cfee7e9475a4ab1d98', 4, 2, NULL, '[]', 0, '2021-02-22 13:53:45', '2021-02-22 13:53:45', '2022-02-22 13:53:45'),
 	('9767bea1c80bbdad9d2136f19e0bf97ed26908ebe3e47e89773bc560ad81ef57298ba4cffc33aa21', 2, 2, NULL, '[]', 1, '2020-06-10 16:52:51', '2020-06-10 16:52:51', '2021-06-10 20:52:51'),
 	('978c4930b492b48ad0b498ebaf98ff483c57f22b36341844810499eed715ad3d7d97cd1de379e479', 14, 2, NULL, '[]', 1, '2021-02-02 21:11:48', '2021-02-02 21:11:48', '2022-02-02 21:11:48'),
+	('97a3cd02dce84ec8a291d86003144135ae3d57d5462306d9efd38d1f8c400f07a97ac352fd1c744c', 6, 2, NULL, '[]', 1, '2021-07-28 19:52:52', '2021-07-28 19:52:52', '2022-07-28 19:52:52'),
 	('97e1d76ce5fbce8b1c3ae7410da9a43bc830b7142ad8aa82fc0b26800b35063a3fea0975ff2bf203', 4, 2, NULL, '[]', 0, '2021-03-08 14:23:55', '2021-03-08 14:23:55', '2022-03-08 14:23:55'),
+	('98ebfc02af6f3a060a0abb12993ea282f15a15602270fdbb01d8d67c56616f4a9701d76eff6e6fb1', 4, 2, NULL, '[]', 0, '2021-07-12 17:45:51', '2021-07-12 17:45:51', '2022-07-12 17:45:51'),
 	('9a2a75adb87a40d6ace1694fe2613d10793730a285c4b04fa6e05e05838388ea217e087c50cec3f5', 2, 2, NULL, '[]', 1, '2020-09-07 13:01:24', '2020-09-07 13:01:24', '2021-09-07 17:01:24'),
 	('9abf51ccf70e348a880cde25242259988cc620b4fb197e1e9c74081901304967557ae426ca4f0bda', 1, 2, NULL, '[]', 0, '2020-05-13 20:46:29', '2020-05-13 20:46:29', '2021-05-14 00:46:29'),
 	('9b90a2c5479e254156b2062c54e7604348479fff0e5e0d00d5a46c2b8ebc89a2fa3077a9aaa70a7c', 2, 2, NULL, '[]', 1, '2020-06-15 15:36:48', '2020-06-15 15:36:48', '2021-06-15 19:36:48'),
@@ -2282,13 +2972,16 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('a5d45b1939a683fc48dfa4a33e620873fc6438cd1334db819f46ccd8751886beac30e0632b1a7234', 7, 2, NULL, '[]', 0, '2021-01-07 10:05:21', '2021-01-07 10:05:21', '2022-01-07 14:05:21'),
 	('a65221d53ce04e72c13a2b253bb74070527722484e3713cf50a2998d6c80ba186217bb43ff3fcdf0', 1, 2, NULL, '[]', 1, '2020-06-17 15:51:27', '2020-06-17 15:51:27', '2020-06-17 20:21:26'),
 	('a67305ee2313dbff62e05c0d86b7b5c32b92619abd9ddc9492d7edb0d203b6f7bcdbfb01140ec195', 5, 2, NULL, '[]', 1, '2021-01-26 15:51:25', '2021-01-26 15:51:25', '2022-01-26 15:51:25'),
+	('a6a736a7baa0f1fcc0eff7357290d9952f69f57fa287a0676b83b0aac4d2fe9ca528d41e96993800', 4, 2, NULL, '[]', 0, '2021-05-25 15:21:32', '2021-05-25 15:21:32', '2022-05-25 15:21:32'),
 	('a6d81734d268fedcc172d03ed67cec950c6fd94f5de26772a70c54cf3b9eec47e6b57425ab80159a', 4, 2, NULL, '[]', 1, '2021-02-02 20:57:57', '2021-02-02 20:57:57', '2022-02-02 20:57:57'),
+	('a744122aed99da4f8ea44b90130837a788172286c0a291642a7067e1d1e57ffba7a61c86489f2194', 4, 2, NULL, '[]', 1, '2021-06-11 02:33:45', '2021-06-11 02:33:45', '2022-06-11 02:33:45'),
 	('a7a147ad1b3cd7f4084d5f5b69fc61d54a6d7047552b67708631bef0d2d78694a9856415a64fbc38', 4, 2, NULL, '[]', 1, '2021-02-01 15:50:11', '2021-02-01 15:50:11', '2022-02-01 15:50:11'),
 	('a831a862e9bb101f06f6056374c8aa80ca2ff3b1ca4bb130ed6cd4ff337ec646d1b3b11001ddc265', 8, 2, NULL, '[]', 0, '2020-12-09 10:32:29', '2020-12-09 10:32:29', '2021-12-09 14:32:29'),
 	('a88aaffe8cf52c491550b1bbd8acedcdb5b950c9b1835ec92c50985faf86b1d63a9e0cfaabd1898b', 17, 2, NULL, '[]', 1, '2021-04-26 21:47:00', '2021-04-26 21:47:00', '2022-04-26 21:47:00'),
 	('a8c45c6c56680baf54554ecb0b504a0e76b52fa959b234d3818e9c5c9d8be7024c0919ca90a8333c', 4, 2, NULL, '[]', 1, '2021-02-02 21:00:17', '2021-02-02 21:00:17', '2022-02-02 21:00:17'),
 	('a94a234f6c0a6b01a8689692a2b9fe278e15e9621d0bf97aad6d0298ea7a08fdef2a174faf9ca772', 1, 2, NULL, '[]', 0, '2020-04-18 10:47:51', '2020-04-18 10:47:51', '2021-04-18 14:47:51'),
 	('a9c29c9abc8610c14c8b1a208559f029693d01629f72ac1663ff26d41205425d588dba61c7f3c2d4', 6, 2, NULL, '[]', 1, '2021-02-05 15:42:13', '2021-02-05 15:42:13', '2022-02-05 15:42:13'),
+	('aa678c1cdaa0c6616f5265a04fb462b14cd7b6aa4897af50949ce50b2a1ca832e8351d29156e3372', 18, 2, NULL, '[]', 1, '2021-07-28 20:49:28', '2021-07-28 20:49:28', '2022-07-28 20:49:28'),
 	('aac0823600fb351e8c192824eee9f9c99fa52d205a1b0e76beed0d8cf3b87278e6071a4c57f54a76', 5, 2, NULL, '[]', 0, '2020-10-03 12:01:56', '2020-10-03 12:01:56', '2021-10-03 16:01:56'),
 	('aacfbb919483bf585f0749e685e2f0ee976585c3e205cf556f0a1e8259821f52aa9e1ecf5037bac3', 11, 2, NULL, '[]', 1, '2021-02-05 16:03:31', '2021-02-05 16:03:31', '2022-02-05 16:03:31'),
 	('aaf0325e936ce81e5c8ba88f62b5b043dac5a8ba1d3c4f343c2c9214314372b7456bb998b65055d6', 13, 2, NULL, '[]', 0, '2020-12-07 12:28:15', '2020-12-07 12:28:15', '2021-12-07 16:28:15'),
@@ -2332,10 +3025,12 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('ba6f30c84d372d60d082c8d5d31782ec4efdfd2a3193589927c44c6aed36cb35e6cdf4be36448795', 5, 2, NULL, '[]', 1, '2020-12-05 11:42:19', '2020-12-05 11:42:19', '2021-12-05 15:42:19'),
 	('ba8a91c3279ef89dd4ec3003189ae25ddc331623d527d471987dcebc130a247b0ce5c020d8186dfc', 4, 2, NULL, '[]', 0, '2021-02-01 15:42:10', '2021-02-01 15:42:10', '2022-02-01 15:42:10'),
 	('bab59e1a2f61ca3eb945752da845843f26382cc281c1364b3f0024027db99480cac332cbadd058b0', 6, 2, NULL, '[]', 1, '2020-07-02 10:55:01', '2020-07-02 10:55:01', '2021-07-02 14:55:01'),
+	('bae7f1cd2a61e3a33b4915f424de3350daeb760b7cff3291827561d5b29ecfb33b6a992e82b3f4f7', 18, 2, NULL, '[]', 1, '2021-07-28 19:50:27', '2021-07-28 19:50:27', '2022-07-28 19:50:27'),
 	('bb91f4f0c6e4cfced56b019c885de0b283aee47d5777ee24982c56185f15d786184e7d1325bdee85', 2, 2, NULL, '[]', 1, '2020-06-15 18:51:31', '2020-06-15 18:51:31', '2021-06-15 22:51:31'),
 	('bbd5be535d7d15e0546a926d95d1bf5a320b380271e566c3238dcb0b14e06a5b637132780fd95d8a', 1, 2, NULL, '[]', 0, '2020-03-09 09:31:47', '2020-03-09 09:31:47', '2021-03-09 13:31:47'),
 	('bbf4f7c5e965dcc771adb2ffe5c65c879773f12c51a3fe87c9b8a34ed3cdc07b3f84ee0d2d42b467', 1, 2, NULL, '[]', 0, '2020-04-23 12:32:55', '2020-04-23 12:32:55', '2021-04-23 16:32:55'),
 	('bc76133c0fad9bb194af01b908c6febb87802c342dbdf97ae2ef7096033dd03c8ea3f554927c4ba8', 7, 2, NULL, '[]', 0, '2020-10-28 14:38:53', '2020-10-28 14:38:53', '2021-10-28 18:38:53'),
+	('bec434741e49c21ce225f7d56503f79ff385a7216ac9d49d9f262699b37181d3b868f2b030faf02c', 4, 2, NULL, '[]', 0, '2021-06-23 14:32:35', '2021-06-23 14:32:35', '2022-06-23 14:32:35'),
 	('bf2fa9a1a96ef23a669c392404cb2e7a54798bcb795bb0751fc5d0bb1c9e17c6c166aa601c0ba4db', 3, 2, NULL, '[]', 1, '2021-02-05 19:34:05', '2021-02-05 19:34:05', '2022-02-05 19:34:05'),
 	('bf39971b41d51805d6befd67c895fd558245cb5db4556fc9befabfb1240fb4e4a511beb21811ec72', 7, 2, NULL, '[]', 1, '2021-02-03 20:16:23', '2021-02-03 20:16:23', '2022-02-03 20:16:23'),
 	('bfa33501a1ca98d68f9a0ef60771957694d2c12173f9fd1b09a48dac7d089467318644e4bd4bfa0b', 3, 2, NULL, '[]', 1, '2021-02-02 20:58:31', '2021-02-02 20:58:31', '2022-02-02 20:58:31'),
@@ -2348,12 +3043,15 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('c3c60bf6f1fdded8cabe1124243c0ce13ee64ecc2528685e78db947464593237ba7bf26f6135f5d9', 4, 2, NULL, '[]', 1, '2021-02-01 21:30:01', '2021-02-01 21:30:01', '2022-02-01 21:30:01'),
 	('c40658353c5f635c3a07d5d14584b08b4eebe633f24448240c4d1998bbe4a9a708f71f2048b22bf1', 2, 2, NULL, '[]', 1, '2020-06-17 11:32:49', '2020-06-17 11:32:49', '2021-06-17 15:32:49'),
 	('c489b76afeed0716e94615ac25ee64a8ae96b42a8b8dd2ea403e00cd389b0e7f90592aacc469d195', 4, 2, NULL, '[]', 1, '2021-02-10 13:39:00', '2021-02-10 13:39:00', '2022-02-10 13:39:00'),
+	('c495210533888b55857c3af0fec506cfd931e65e79cf7754833028c7d7641b48e3d7bb44530eebfa', 4, 2, NULL, '[]', 1, '2021-07-28 19:50:54', '2021-07-28 19:50:54', '2022-07-28 19:50:54'),
 	('c4a8ed3826b297ff582497f5d8eb027c40a7313cd58a77462fe7b8902a4c3a7bac09cb901b479f2b', 1, 2, NULL, '[]', 1, '2020-05-26 10:57:36', '2020-05-26 10:57:36', '2021-05-26 14:57:36'),
 	('c51b993decb91baf97cea90d59718a25448c203ff69d655e92dce53f22b63241296a3c1782a27e12', 2, 2, NULL, '[]', 0, '2020-11-26 11:11:28', '2020-11-26 11:11:28', '2021-11-26 15:11:28'),
 	('c54a8674cfda1c4f4d72943df254c561041e47623f5f50e08f4e5c3962843f7db5aa110919501929', 4, 2, NULL, '[]', 1, '2021-02-02 20:50:01', '2021-02-02 20:50:01', '2022-02-02 20:50:01'),
+	('c54e6eb5c855bf0d2d140cd8d78ce21c776e77d7ffc508476adf0929ab4e75ec0fa0eb97c539e2a2', 4, 2, NULL, '[]', 1, '2021-07-23 14:11:11', '2021-07-23 14:11:11', '2022-07-23 14:11:11'),
 	('c7445786debc0f6a9a10c7e5659a7d7e0ec5a2c1c3145e0cc666bed8732fbf7881798600f462a6ef', 2, 2, NULL, '[]', 0, '2021-01-05 12:22:24', '2021-01-05 12:22:24', '2022-01-05 16:22:24'),
 	('c7a5481c9833729ea147ed6ac503c6f1ecc4fa52895df3222c613f4359da035393a73701a612ca6b', 14, 2, NULL, '[]', 1, '2021-02-05 16:01:00', '2021-02-05 16:01:00', '2022-02-05 16:01:00'),
 	('c7bdbeeb65267513e5b0402a137a8c21ebf19237eed670331afae7e9408ff15d22e32843c1fed3a9', 1, 2, NULL, '[]', 0, '2020-02-14 10:06:08', '2020-02-14 10:06:08', '2021-02-14 14:06:08'),
+	('c8473dde3bfc81bb90e2b7983c24763a4ef48a5218b5291d2db24e0ccd06fcab3b55c80ae6e3a66c', 4, 2, NULL, '[]', 0, '2021-07-09 16:35:04', '2021-07-09 16:35:04', '2022-07-09 16:35:04'),
 	('c9655c7d08ccccac3e42a39252c45cb740bc3744062fd1f72a78363e064288a7b56140c2f1a774db', 1, 2, NULL, '[]', 1, '2020-10-22 11:46:33', '2020-10-22 11:46:33', '2021-10-22 15:46:33'),
 	('ca8ae3cd582cd9403b792689e861c29e0e9a82d6e2339cbacd5300a8866cde633e3bbac065a673dd', 1, 2, NULL, '[]', 0, '2020-10-29 16:09:11', '2020-10-29 16:09:11', '2021-10-29 20:09:11'),
 	('cb6960b8e9d6816dc283422622fb8387aea554a617075e60a01746b88a151652f572b60cda08e73f', 1, 2, NULL, '[]', 0, '2020-09-21 10:00:35', '2020-09-21 10:00:35', '2021-09-21 14:00:35'),
@@ -2398,6 +3096,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('de4d3e03c45c72e18f9fcd324dd6eac44f61d5f3ce0c28eb3dc7a7d960a4de5077289ca8e5396b62', 6, 2, NULL, '[]', 1, '2021-02-05 21:02:38', '2021-02-05 21:02:38', '2022-02-05 21:02:38'),
 	('deeb81194506e8289f187dd3541994171898cd8cff3d7f6fdf871cddd579c3c1b47b7bc550df0b51', 1, 2, NULL, '[]', 1, '2020-06-07 09:51:48', '2020-06-07 09:51:48', '2021-06-07 13:51:48'),
 	('df28b0ebffaa5c2496876ac20cb830427b99c07e261823633bcd1e56760652b8b5ac66f29fcdfeec', 2, 2, NULL, '[]', 1, '2020-06-12 10:19:40', '2020-06-12 10:19:40', '2021-06-12 14:19:40'),
+	('df6dd088a2fbfcd4806881b585e1a0fd65e4c6aebf6b1705bcde664b8b8c17cb566bb1ce225855dc', 4, 2, NULL, '[]', 1, '2021-07-28 19:52:29', '2021-07-28 19:52:29', '2022-07-28 19:52:29'),
 	('df9a296023b5f643dfda78c8e5a0ef2c9ca348c107fd3c8d62c704ec1be23788a79379593cdca595', 1, 2, NULL, '[]', 0, '2020-07-02 20:31:17', '2020-07-02 20:31:17', '2021-07-03 00:31:17'),
 	('dfb34891262f12b487266ce06fc11ace877501a02271f7c87ce606834cd4481099e7bead51c9f4ee', 3, 2, NULL, '[]', 1, '2021-02-02 19:36:25', '2021-02-02 19:36:25', '2022-02-02 19:36:25'),
 	('e057c2d35d883136a7eba452dab8ba4c2b28418410f3d21bebbd09d2fffae0bf59a0975166a514ef', 4, 2, NULL, '[]', 0, '2021-02-01 15:41:04', '2021-02-01 15:41:04', '2022-02-01 15:41:04'),
@@ -2420,7 +3119,10 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('eb3cc2b56481cc1b8576283d79e66b4cf90e96accc7cdfda128f7a9ab641071d456867b16c9a6667', 1, 2, NULL, '[]', 1, '2020-02-05 09:49:56', '2020-02-05 09:49:56', '2021-02-05 13:49:56'),
 	('ebad0bcd061a1be78f0f5a382f60133bc4657fdfd68a9d053e98ec7113d216ca682192ee44eeb5af', 1, 2, NULL, '[]', 1, '2020-07-10 14:07:06', '2020-07-10 14:07:06', '2021-07-10 18:07:06'),
 	('ec40ce354db1d2b916b10e9c4810b85366674eeb6cb37e9a0bf74dd6e72c166b86d34ba3c8bcb7ca', 4, 2, NULL, '[]', 1, '2021-04-26 21:04:43', '2021-04-26 21:04:43', '2022-04-26 21:04:43'),
+	('ec48f2a0dafe61ce6df6d569c98f4407058214126832c52ec64545b066caaa88be35086dc0308f98', 18, 2, NULL, '[]', 1, '2021-07-30 14:22:48', '2021-07-30 14:22:48', '2022-07-30 14:22:48'),
 	('ec499e60a45bdfd3cf5f8267b7c80c2455946c7f49ecfa224cbfad606dfc2e7366bbd44a9d6f974a', 1, 2, NULL, '[]', 1, '2020-06-10 16:45:49', '2020-06-10 16:45:49', '2021-06-10 20:45:49'),
+	('ec570254b65ace908bdd95e535f0fd6512e15aa633ac7c7ef0192ee359eca6d581011e5638b2020c', 6, 2, NULL, '[]', 0, '2021-06-11 02:43:19', '2021-06-11 02:43:19', '2022-06-11 02:43:19'),
+	('ec977551e759dd452196912c77855cf80c2da4b3e78438cfebc5c020e6d12d87300904489a8d98e0', 4, 2, NULL, '[]', 0, '2021-06-11 03:11:48', '2021-06-11 03:11:48', '2022-06-11 03:11:48'),
 	('ed16e8b6b13afe6907c854aee70c34cab1e3164056ddc314e6aa9ff381b9e336444b5b881b734ed8', 4, 2, NULL, '[]', 1, '2021-02-05 20:15:07', '2021-02-05 20:15:07', '2022-02-05 20:15:07'),
 	('ed210e6f9ffde6461b142022765a4fff3a6b252100bdebf8bb939103368318c8d5a3d84c00cc3a8e', 4, 2, NULL, '[]', 0, '2021-02-08 15:17:16', '2021-02-08 15:17:16', '2022-02-08 15:17:16'),
 	('ed7e6abc0cf09e9c69537f2e80843184d47c7f8f6676ae2403250d2dbb3bdccaa879448b908a591e', 4, 2, NULL, '[]', 1, '2021-03-17 19:45:12', '2021-03-17 19:45:12', '2022-03-17 19:45:12'),
@@ -2428,6 +3130,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('ef868221df62017175f3fa42a9d1fe4200baa62239177bbf12888bc0f97e761e0797b57040a14181', 2, 2, NULL, '[]', 1, '2020-06-17 11:31:43', '2020-06-17 11:31:43', '2021-06-17 15:31:43'),
 	('ef8f65e5ed76ee1068fd92088e2aba12e8e8542a7667e3bdee8d986e39a5590445eb64e60d3d14be', 6, 2, NULL, '[]', 0, '2020-07-08 14:36:24', '2020-07-08 14:36:24', '2021-07-08 18:36:24'),
 	('efb649831102453a02b12b2a2e9b58a6468f1362fc60c97814484c321188e6c9b9e5b9869eed8daf', 1, 2, NULL, '[]', 1, '2020-06-07 09:52:24', '2020-06-07 09:52:24', '2021-06-07 13:52:24'),
+	('efc76b8a748258b4cc18e6a12c38307abbf1cc535994593fdbe1e09a375a1041667694c3c205beeb', 6, 2, NULL, '[]', 0, '2021-06-11 02:33:03', '2021-06-11 02:33:03', '2022-06-11 02:33:03'),
 	('f0e50f16ab55f26249f9328278e0271f809a6fbd2f5e95fcffe5002c82325fe71a71930ffdeedf74', 2, 2, NULL, '[]', 1, '2020-06-15 15:27:08', '2020-06-15 15:27:08', '2021-06-15 19:27:08'),
 	('f12ea247829f0602a27dae3e24ec1486d248c45f07d9e57d12e8fcd15445920099d7c07e6709e463', 6, 2, NULL, '[]', 1, '2020-12-16 12:34:58', '2020-12-16 12:34:58', '2021-12-16 16:34:58'),
 	('f1c54f0fe21294082dff7311a60f7cc474d7b992e8b11ec32257da8b68027f878f6987143c0688d8', 10, 2, NULL, '[]', 0, '2020-07-07 15:12:16', '2020-07-07 15:12:16', '2021-07-07 19:12:16'),
@@ -2443,11 +3146,14 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('f64f99ab2861d68c431a150a985038c2e2d275332e31ddcd74fa71087b5970a31c0816ee4cb17248', 5, 2, NULL, '[]', 0, '2020-12-09 09:54:36', '2020-12-09 09:54:36', '2021-12-09 13:54:36'),
 	('f6aef47663a79bfdfbb8287b99e06cf5c75bfc68a776aeaeb9a7446e3d7647c871a03cf073a0bbba', 8, 2, NULL, '[]', 0, '2020-12-09 09:31:31', '2020-12-09 09:31:31', '2021-12-09 13:31:31'),
 	('f6c45034552be72603ee64c9c82d957703c6ba9c35825a6928a79f1888596752882ace19b2d73cba', 1, 2, NULL, '[]', 1, '2021-01-25 21:18:19', '2021-01-25 21:18:19', '2022-01-25 21:18:19'),
+	('f6fd462e3515622fa1e4e15f61f6800d4a08db6cbd2d0033501a38895344405f394ab1593808faf2', 4, 2, NULL, '[]', 1, '2021-07-08 16:16:11', '2021-07-08 16:16:11', '2022-07-08 16:16:11'),
 	('f75b5b845ff6426df8e197cd1243379dec6f891663296a46441333977dbc7eee505619b33f03bc68', 11, 2, NULL, '[]', 1, '2020-12-03 15:46:13', '2020-12-03 15:46:13', '2021-12-03 19:46:13'),
 	('f7b8a480184e6ff6c1fc8c4a741e0c314f34f1f5e99d6c87ccc22a16d757f764316d9ffbc3d02ae1', 4, 2, NULL, '[]', 0, '2021-01-26 17:17:17', '2021-01-26 17:17:17', '2022-01-26 17:17:17'),
 	('f826427a048d5e843dfd711f8285f8310aff662ad860125c2270a2d8afb77b443d9f4dedb4ed3219', 1, 2, NULL, '[]', 1, '2020-02-05 09:50:16', '2020-02-05 09:50:16', '2021-02-05 13:50:16'),
 	('f8481ee5793a282a40eac421e1cbbadf921c2855ca485408dc0427bd6b7775ca4e77aa583abec445', 1, 2, NULL, '[]', 1, '2020-05-19 11:21:11', '2020-05-19 11:21:11', '2021-05-19 15:21:11'),
 	('f8f87d5b40b810b759310c3d1436a495713a66942301fa9c179496d5f5979e75d7ecdd1f6de70fd0', 4, 2, NULL, '[]', 0, '2021-04-29 20:15:03', '2021-04-29 20:15:03', '2022-04-29 20:15:03'),
+	('f9fd4b59c07cd3ae6a9f2c6aafe2294db1b28c5f36839e6498a576b68e41d7c631b05a6cbcfad2a5', 4, 2, NULL, '[]', 0, '2021-06-24 13:44:44', '2021-06-24 13:44:44', '2022-06-24 13:44:44'),
+	('fa41a330c895728b29dc9cfd588153561272ac77a4542ba0f451789f0026825c8f238501e6ea4923', 4, 2, NULL, '[]', 0, '2021-05-25 15:20:37', '2021-05-25 15:20:37', '2022-05-25 15:20:37'),
 	('fb406eb14e2d10893efbf465e0440aa6b6d59f4067f948bec24dce0f911bd613b1f11d65cbe1cde7', 4, 2, NULL, '[]', 0, '2020-12-03 16:03:12', '2020-12-03 16:03:12', '2021-12-03 20:03:12'),
 	('fbf03e0dc632b6a87c65c1c7f54cfbfe976bf9e3ce348b87f8bf8cfc5abb5b5d786f1befc9041a0c', 4, 2, NULL, '[]', 1, '2021-02-02 20:56:37', '2021-02-02 20:56:37', '2022-02-02 20:56:37'),
 	('fc9c7a697995accea8e1b0b8bac65c6d1c2e7780a7177ef60ec7c2737ccc972f3aee561b53f1d693', 15, 2, NULL, '[]', 0, '2020-12-02 10:42:58', '2020-12-02 10:42:58', '2021-12-02 14:42:58'),
@@ -2457,7 +3163,9 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 	('fde6b20ead04ffafbd269289e8c76b4498530f3ea5d5ca36fe482a66838a7517117f295657081bf2', 1, 2, NULL, '[]', 1, '2020-08-07 17:09:38', '2020-08-07 17:09:38', '2021-08-07 21:09:38'),
 	('fe25023c035a27a1ff44120e7c71b288b554c4a7d0ec8976c79c64e31835f24250bc378bf64f377b', 1, 2, NULL, '[]', 1, '2020-05-28 11:28:35', '2020-05-28 11:28:35', '2021-05-28 15:28:35'),
 	('ff32af9d47df05bed23cd70dce79f862fae3f47e4d4f5ec1e0c140ca383ddd765f35bf66665f1eee', 5, 2, NULL, '[]', 0, '2020-10-07 12:18:03', '2020-10-07 12:18:03', '2021-10-07 16:18:03'),
+	('ff4f504d66919d58553815051b6d652c2799ab3f27bf272f8dfd0dc6c9f4c233c5277982a2ca85b6', 4, 2, NULL, '[]', 0, '2021-05-25 15:40:35', '2021-05-25 15:40:35', '2022-05-25 15:40:35'),
 	('ff603eb4b684e49cbcd3faddb68b1a4fac6ac4b18d85338a5997d4bef1ff0f8402871fe8c9eb7605', 1, 2, NULL, '[]', 1, '2020-06-14 19:20:37', '2020-06-14 19:20:37', '2021-06-14 23:20:37'),
+	('ffc233e23e036ca6bb9e9714047a8143010fe4a1d5f771b7559a88465dc7f1aea5b65faff29838e4', 6, 2, NULL, '[]', 0, '2021-07-28 19:50:42', '2021-07-28 19:50:42', '2022-07-28 19:50:42'),
 	('ffd74a816f56061dc48e55bfad26343c236d2f3af871545958ddf353d336d70f7b649cf52ea36fed', 1, 2, NULL, '[]', 1, '2020-05-15 10:32:31', '2020-05-15 10:32:31', '2021-05-15 14:32:31'),
 	('ffe2b4eba9491c4778e9dc90eb5d0c37c556114f701e15661681068b9379b2766fe5564712dfff37', 5, 2, NULL, '[]', 0, '2020-12-01 08:43:36', '2020-12-01 08:43:36', '2021-12-01 12:43:36');
 /*!40000 ALTER TABLE `oauth_access_tokens` ENABLE KEYS */;
@@ -2510,7 +3218,7 @@ CREATE TABLE IF NOT EXISTS `oauth_personal_access_clients` (
   KEY `oauth_personal_access_clients_client_id_index` (`client_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla imagen.oauth_personal_access_clients: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.oauth_personal_access_clients: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `oauth_personal_access_clients` DISABLE KEYS */;
 INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `updated_at`) VALUES
 	(1, 1, '2020-02-04 21:47:22', '2020-02-04 21:47:22');
@@ -2526,7 +3234,7 @@ CREATE TABLE IF NOT EXISTS `oauth_refresh_tokens` (
   KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla imagen.oauth_refresh_tokens: ~523 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.oauth_refresh_tokens: ~539 rows (aproximadamente)
 /*!40000 ALTER TABLE `oauth_refresh_tokens` DISABLE KEYS */;
 INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires_at`) VALUES
 	('0012ac723d07918425eee09d4faf717e9406e1156bba766cdbaabaf3c89bd7ea41804687862f7d97', '262299fa06eef48a6691074d588b9a2e5d85e8fbcf7c1f7a535abcbdccbcbb495647baa61b898cee', 1, '2021-07-28 14:46:14'),
@@ -2548,6 +3256,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('0685451509187fb58163816b9afec8c670e1d8f11f7cf1fa50b35600433e45b41da772f7b6e45847', '5a63a1483c323e8ca87e789bca0970bd0783df78e0436aac05e79a38d8bb38f1ccfeb9b8ebc0d6e8', 1, '2022-02-02 18:36:10'),
 	('07ac8e661dd3fcda98344d4b226b92924cd0b64a53e227258f0295244bd1026fbbb96b378d40ff2e', '4255f36c58b9bc41735b57d9ae4dad1033d23b3dacf97983448c21847ac4359065fd68308cf66809', 1, '2022-03-17 21:45:56'),
 	('07e9003ba07845f7e83beb82bebfbc9c5e191beeba927093250115effab8fe053b9b0d7d859e9199', '16be76ff9dfea7c56c3ff41b8ac51f40e2596bd9f76bef295a5dbd6f56e35d0e62278a15d9174802', 1, '2022-02-05 17:39:05'),
+	('080177527810c962e8ea37b8a2c11f048f8156ea11d9e5fe6d43c27f355bf12f20c0dd0fca26157d', '1277fdca208760e3aa21ddb235bce21c19d47a8e322f0d925d1de72b6ed5db139d987527874f0524', 0, '2022-05-20 17:25:03'),
 	('086d281beb5d043a505a22274bd5d4f96228594ec549dccb2e96901f9fea6fc9a75be7d12fb94663', '4bdd36959732b002a27a4b20fd84431fdde88965e7329b1e3982c402b9f8ad4603de52f284ec9685', 1, '2022-02-01 20:37:58'),
 	('08f927ea7aee2ea5f754bd6ed760df6004f6a65ad3bf4a554e1d48a0e6d57ca93aea96b48203c543', 'de26cfa2b7cd886e06930ef4db90a920caca0d34329f0bb90e35cfbf71f1f69e1eeb8fcd12eb375a', 1, '2022-02-05 19:33:41'),
 	('09f8bbb1961098a687d1375788f9065e334ed7f129e39e933786828b9b0b8052a5a1db67a66022fc', 'f0e50f16ab55f26249f9328278e0271f809a6fbd2f5e95fcffe5002c82325fe71a71930ffdeedf74', 1, '2021-06-15 19:27:08'),
@@ -2581,6 +3290,8 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('11519ce3cfca57a449a86b5588d9eb7c630037118ee6ecf7ba9f0f280c0bd875a44e12b4e6a364b4', '2413d93b71c91d28aeb5eb5d712a8b00429b3f0d582f9d5dfba395b0e1672efa1dc5378e8ce6e264', 1, '2021-10-07 15:54:30'),
 	('118bbd8dee6ade626a6a2bc6e2f408244501aad2f469eaa912e58d7cb0691b6849af9e00e0688544', 'ef868221df62017175f3fa42a9d1fe4200baa62239177bbf12888bc0f97e761e0797b57040a14181', 1, '2021-06-17 15:31:43'),
 	('121c0a498a97373669716ef9bccfeb6ea00e3dbba86251004dfc1037ca2cd92fb311cc39c066a120', '5de3cfe2841747bd02e5b4a9e36f5f014df6114d26c6a66007f4a1e006f44bfa70265bd656748a08', 0, '2021-12-15 19:51:33'),
+	('129990183e3bc655dc235bbced86be11f06f1aa9b5b51197cbb8397a49ade76fafbaf8817eac6636', '06a13704d8ec142d73edb7ee512e443058530e5ea0a50aab32f9e4cd56e0c8fa9879dd1ce6cb41ac', 0, '2022-05-26 01:04:19'),
+	('12c10f5322e94d9250c6f27902d601a8f5e08375241749c7becb21f4591c0cc009aa294ba77bef26', 'bae7f1cd2a61e3a33b4915f424de3350daeb760b7cff3291827561d5b29ecfb33b6a992e82b3f4f7', 1, '2022-07-28 19:50:27'),
 	('132fc472c91ce9c126b7dcf0493c3f125d4c7a43188db44338b9c7a3ba0d26a917851f3c4744a38e', 'd7a2d2913329c27170573b81b5107770b4b87fe7e0a943a1a0bfe01b74d55efd482685eb58b307ba', 0, '2021-12-04 02:04:13'),
 	('13328bb4a5a676c93a2f4799f2a4dc03fb16dfe167a73cb10438a6ad3b51b1b906e3596e905ad5fb', '54ee204621c63c050d1e24d903de42dbcd2080a30d35ee384c3d62429f5e4e6b419a9ec52704b15c', 1, '2022-02-03 20:55:02'),
 	('14d558cf560176e9fe1bb9727c1a251e3ee4752b6665a99722099a5109adafdf0dbfe69a71085aeb', '5a128ad0603e5a5ec35c5e1319a6cbfa360dd4dc1b920eb0cdeeac414ecfdef9883bfcd117a19a9c', 1, '2022-02-02 21:24:06'),
@@ -2594,6 +3305,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('1865bedbeead46a7d806cb6a955ff18b5d561a211e4a14e85a660ae76439c7d3409069dbc395b04e', '113c55900fa77886642e1dbae9564b346b4567a9607ebf80f94a5b911f0946990ccb935733335525', 1, '2022-02-02 21:19:24'),
 	('197426836aa31e35e619c21dbbe31e99c1d60068d816a2ea071576a1a058b4cd6af50e8c7b43cf78', '6ece7bbbaf00d39506f6c033f1b1ae6e3d978fb61405fdb68179ba68cbf81394ef23d8b61266e19f', 1, '2021-12-02 13:23:17'),
 	('1a37381d3ddd4b28824470913d6436b9148aa3dd53245f021ab68eec654845325c9a688a714f7c37', 'b2cbece9aa5aeee1b6c601255501ee1e28dd5da46ad53cf7bc6efbfb50fa895b4cde7c95d1fd9092', 0, '2021-10-16 13:24:03'),
+	('1a8d6ca8a6d331482e63c88d9af33938c2a97a8921278a63ddf14b3d8cb8aa129743b433d0e2bee5', '6b2e3bbef225cd8a5d9a6974c652d9995bb947ff3583b9e4cb7ddf17223360bd355fabb03c6b8589', 0, '2022-05-25 15:21:48'),
 	('1ae1f239b2db6998967f6fe04dd8018721169d1867b06365beb03735237e2b99f2fdca951e103a24', 'a7a147ad1b3cd7f4084d5f5b69fc61d54a6d7047552b67708631bef0d2d78694a9856415a64fbc38', 1, '2022-02-01 15:50:11'),
 	('1bc8d76cf5e2488594875c3e2cbc195eb77f2903cff10d52e684ed2d79387fd01b6e341d6d355f8b', '190639646a6fae32531771d8516e6abbb8c03320b67147d34f1bae47b35c64f2b9876d64daf71178', 1, '2021-06-12 15:33:03'),
 	('1c20772dc5dd8ffa84c8a4063cab51c1aac75b3a7208566ea1787b27deeb2c31625d9091a67b6d97', 'acefcb140c7083b94776670a396947e6b26e6a0109e3fa102c85eb52cc831a87ed40daa7045c601e', 1, '2022-03-17 19:45:58'),
@@ -2601,6 +3313,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('1d47bfec43003f9ade4b77161be49dbfa375d4c2ee187eaca5ee4d3aab5f847e17eb51f40d1f0540', '59635b250d0532e5a2b27bd7c61528a34bdc64ea18d278a099e892a6cd334141328db2c643de214f', 1, '2022-04-26 21:48:20'),
 	('1da3c7cf8006a2dba64ecc1e954c82056328d5546a861c276f70e3d761318b23c3910517301e52f1', '7ea2286ab2f988366626f151581d4933b6b00efe4b627baa7bb38960c4453a917cda6831fa80061e', 1, '2021-05-14 00:46:57'),
 	('1da8dfdeec8a14b87dd813d285b2ccc55491c8f81c0d91fa3f503cb635e9238c332e8d05937083ae', 'de4d3e03c45c72e18f9fcd324dd6eac44f61d5f3ce0c28eb3dc7a7d960a4de5077289ca8e5396b62', 1, '2022-02-05 21:02:38'),
+	('1f50eb7025d484c6de4cf58f1693147a71463b1e101ece0f4e8c4e6af880517481bc8bb6d2a0f5b4', 'bec434741e49c21ce225f7d56503f79ff385a7216ac9d49d9f262699b37181d3b868f2b030faf02c', 0, '2022-06-23 14:32:35'),
 	('208b1000391315efc4b55927c61629e731d01e9315456996ce87aab5a85addadb39fe032754bade0', '5eda53f80f0163a27fb6862ef7942db6d22af7ffddccba95d902e0b4b0b6bb3ef16c6cf12c265d2e', 1, '2021-06-15 19:18:14'),
 	('2098c39246d23feef43f4b21530549c5edbaaa80eeeb3996ae23bb7043aba55c9d40f54c1acbb451', '8dbc587b085053effab5e5a4e31181591feeced9a5d1ee76b55d65baf7ceff4a5aa6efb52476c3d6', 1, '2022-03-17 21:08:46'),
 	('20ad82e9bb3b740fdd511fd83c40f97dc7188e6733a0dbc6c64a53cb8a8f1e1f59042b8abbcbc8e7', 'aac0823600fb351e8c192824eee9f9c99fa52d205a1b0e76beed0d8cf3b87278e6071a4c57f54a76', 0, '2021-10-03 16:01:56'),
@@ -2616,20 +3329,25 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('266597915a7d7505b9936ffe3a11221e8e9c2b9493b0441a303ba1952e52f69e3467f847fa4e0d69', '851f5582c518bd7cb02725b299a3635167ee4398821eed02297571d05bbc6a87f3a7973deb46d74a', 1, '2022-02-01 21:27:18'),
 	('2698bab4a5dfe5f84db43885530df3516de82d025a32b04c129f292f0c6145a0c6f8a1e41c7487b9', '5d3553726fd405a7aa5a0e99572166e05b5d328e98d002873231c4feceed11341321d42bef872eec', 1, '2021-12-03 18:26:01'),
 	('26d4358f559fe282f9f92e8433aef9927631942b08b6126757a1555f28c14151afbe0e01bfacbf9c', '1374ef6b99d22263f6ed03fd7ec04992dea746a9cf60e646b6d0ccd361f3a161732829dddf6b398c', 0, '2021-02-17 20:30:50'),
+	('270018508113ab332f9e78c7f61a7acd91830582c4295bbf6f39e3142e34139b69a38a7a9e0b0533', 'df6dd088a2fbfcd4806881b585e1a0fd65e4c6aebf6b1705bcde664b8b8c17cb566bb1ce225855dc', 1, '2022-07-28 19:52:29'),
 	('278dc39afbc5889a07b3f6a1a6cb55361776e72eb6f1e291b4ebbb0cec8bacca3c713f8529ce9d85', '6756dab5a74fdb7ded31232d8e1b7f380a8eaa1f974c1a8f52bc567923b01844853ba8f0fc36ac38', 1, '2022-03-17 21:45:33'),
 	('28d2a861998c1d502ea0d27ea3bd555fc31c4dc2b2f7a985f223c194468f2f09565ce01c23fcac10', '3b7d3d9960e1c1bf2efa736c731451d451c811db82e333f685facdadde414235035a56cf8b5ab34f', 1, '2022-02-05 15:54:17'),
 	('29432e4da6b9a1b8139c61572a0c926c6fd3b177edfa83e645be83d2457cb2200c5e1d6737d6d7db', '90faeb6879e0ae0deb5c22d4dd6dc90759bc91cdc6a37122f8c248c6c887b9fb0f33decb36d463db', 0, '2021-12-29 18:11:22'),
 	('298b71d75634cb8349d724a272694620e2f76fc1328bca34de4cfdbba0915c24e14e4e5ef5a4022e', 'a65221d53ce04e72c13a2b253bb74070527722484e3713cf50a2998d6c80ba186217bb43ff3fcdf0', 1, '2021-06-17 19:51:27'),
+	('298e9296304d05b43343db6ce7b39a2f9b56c0aaa906a07307977d939704ce422ff3b7dc30894c56', 'fa41a330c895728b29dc9cfd588153561272ac77a4542ba0f451789f0026825c8f238501e6ea4923', 0, '2022-05-25 15:20:37'),
 	('29a62ffc64ab1620e0122bed6236a1872d1f3e899a33a7bced00c6dcc778b9c71b92fa2e8099c0a3', '70afc3620ece1c0b73a7f2936fed4755baac7e2cda96a9e25ce065ad347690a96262fbdab1fa78fb', 1, '2021-11-16 21:09:16'),
 	('29ee4ba1a09a8642f84bbd04eb6b76ee3ee678e4481b42baf29c61ff1f3185525c6e631461c66077', 'd1a794ba42d24f71671a852ac0a87d1ed98f424f5166d4ddd1c9ea3c7831bad2edb203f56cb067cb', 1, '2021-06-25 14:27:11'),
 	('29fc07734dc2aa78ca6d1ddbab7226f3a4ab520f78c203ec3b6798412b614e8239bd9354564566a9', '2fa5131694584e2e9397c5e04b40f839a8aad897961a4f4ae6366b55de481999bf6d27e76e77563e', 0, '2021-11-24 18:09:50'),
 	('2aa7f1daad1b41074e0f7b69d36372aedba7d50078b255a8b8c96b0d4896b85a987a43720764b88a', 'd252eeaf7810e1b0f17c8eef2031db460bc70180dbc7ee242e242d5155e52691e93274f07d2b092a', 1, '2022-04-27 14:47:07'),
+	('2ae201b1446591886eb12b8a64724d73923adad3abdbf02bb4e4e5b5c113e2935cb5deadcf3de511', '85edb7995a2c17a98aa7e096f2bdc4353714f7b353c9d611d5711237084e45e756da93caa1172e08', 1, '2022-07-28 20:49:19'),
 	('2b604d4a3db93f1713d3461173440b45c907cf39e6bf9c878043ee685192f6967307c1f59577ec44', 'bab59e1a2f61ca3eb945752da845843f26382cc281c1364b3f0024027db99480cac332cbadd058b0', 1, '2021-07-02 14:55:01'),
 	('2bada5cd33b196795b322b074989289fb01af9a19bf1bd8555434e46edd23f9fd1268d6c9b34d971', '18ed158ea32bea520f7554e25de30f4074e6e721b64b7762489b0e7105750957b26bc243807aad02', 1, '2022-02-04 21:26:16'),
 	('2bced143008f4a5abac11a53aa5e0c6f59864cb8b19d138e02c5cbd4420f6e1271fb025632ae0be3', 'c9655c7d08ccccac3e42a39252c45cb740bc3744062fd1f72a78363e064288a7b56140c2f1a774db', 1, '2021-10-22 15:46:33'),
+	('2bfecc1526449005b0016f6900ec129c112e0d4613172af433fa56618257db2f51eeb6db05567478', '2dd389793f04da1cdb6d51a82c1cb572dc28c2a99e18f1718592b1795b2cd3467ac84774b83bc92e', 1, '2022-07-28 19:22:23'),
 	('2c3a58dd2f7686f14208192a98f251983730b40e1a6f53d291bd2657a20be0e7abf1e4f55dc031ac', 'b922034ad0c7c9e8d481b952e255bf22e0de9192413a558e172d4c1c2f949bc429eb205a546c850c', 0, '2021-02-06 14:24:44'),
 	('2c3c9c2b97e916f3596254a1713338293facf68c1b2cf426f33995957064c097f3863437feb44850', 'a6d81734d268fedcc172d03ed67cec950c6fd94f5de26772a70c54cf3b9eec47e6b57425ab80159a', 1, '2022-02-02 20:57:57'),
 	('2c42051855d6e12cee74a45e40dd38201460c59f8a1c70a2c01e895b5a31fe3aa4218ee4ccc5bdb7', '6cc3932a8ce96ee4e89538e3985a44a37700bc85b142eaf109499557b4b49f60a2084ccfb5cbb82a', 0, '2021-09-25 14:06:01'),
+	('2d9692dbfaf33a42455a08c17ca6106b0ba9ed152458f976c73309d6209e1fe85e9dd35e691fb2e3', '98ebfc02af6f3a060a0abb12993ea282f15a15602270fdbb01d8d67c56616f4a9701d76eff6e6fb1', 0, '2022-07-12 17:45:51'),
 	('2e15ff43e9e576bf15b6b3f3c1f11934c96e12513eb9ef194645176ade6a04f4cd9093cca41795a8', 'b2b8aa356a3d2ad60f72f1fc50d02d6ffdf0b0731ae5a9203f36d28d5441c05be56772f1b900e588', 1, '2021-06-15 20:35:11'),
 	('2e471ae2e73920053794df525b8df2da39f4d84c73e6854456bc836cc26bab13f9da83aa6a3fb07f', '325e50b7a215aa28125053020ebf29304e7b5b27eda8ca473a92523253d43ec551e8c1093e2a478c', 1, '2021-11-27 13:31:22'),
 	('2e598fd1a78bd1cba3adc4f3aee730dc43dd936d6ca64e177c2c8ee56a3546c68c51b39e48da5008', 'b6806d64016da88095e41431f75fbddae20b0d1f266ccfbd9ab064d80fe199c146d09bb49394c28f', 1, '2021-06-12 15:49:01'),
@@ -2659,6 +3377,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('360bbe454b749151aae9212a67dda3977649b7b9c6909a0831f612298b9376b0310b9db54453e90a', '6c6a13e4aba888770527f7cc3228efaa1c4c254cf357bfaa00a3d7892a801951ae830f6b319c7f8f', 0, '2021-07-07 19:07:34'),
 	('364e6369a5a289d808ce3789e61e62c12a379a32adfd4ddb4e579c6dff7f5b8a059b4c72767d6ff8', 'bf39971b41d51805d6befd67c895fd558245cb5db4556fc9befabfb1240fb4e4a511beb21811ec72', 1, '2022-02-03 20:16:24'),
 	('36764c7f9f5a88f5a9675188538dbc7cf29719ad1606c5398d76a382df6ee6c4187a88088564df1a', '6e6f946a99641998e857d67b45cebc4b66f1f97a474713bb552ed9ba4025b89994f8aeaa347bb51f', 1, '2022-02-05 19:33:28'),
+	('36a83367b009aa7965e0800b3cc6687512cfec5181be6730d65cb8387956843cb6250c0ee4d61c57', '817867f3879aab228d56b075e86b8b0c97294573d9168e17eb838b5e62d602e73ae07e1d3f1bdbeb', 1, '2022-07-28 20:01:57'),
 	('36e3654312efb868a85ca04fe3ee73ce13151084171a7a2590a588da0ee476f1819a6fc675dce323', '49d19062908c9d8290ee9a5e39a2dc087c184ef5c14ebc3b1fb71a05da57334546de518f7291b2fe', 1, '2021-04-23 16:33:55'),
 	('377dc45dde7ad3b19215b7d6d676fa56d6e49c74baed1555aa67c1d898d2e6f3ecf197b609e8e55a', 'b9fef66879082465aa78e41d502e7920809b58553a5eeebd2716673814155fa22eafb17531f55f0b', 1, '2021-06-15 20:36:23'),
 	('381861115ed53de16c50667186e8c8d24330dd691e1afe8d1d33a54daaf39cad78bce75de7dc6dd7', 'cc9a94ff75e753275ea93c89467c7bcb77b59fd57d88726603019a34dcf528af7c76362a7c63e193', 0, '2021-12-15 19:41:44'),
@@ -2669,6 +3388,8 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('3b3a57f03fef17e97956676c835a2fc9c28fda3de580d573f9fd79f521e06108f78d062b4b9db80d', '9e8fb8242c212ca1bf090520f7f2909ce947534501fa0e220dcf5a3907694a7f8b216eb792c8519b', 1, '2021-06-10 20:34:59'),
 	('3b98f041da63a6ddb93a1992e1434a06c46c06be8c4a99db402d9a0d6611aee77dae1541f1011b18', 'aaf0325e936ce81e5c8ba88f62b5b043dac5a8ba1d3c4f343c2c9214314372b7456bb998b65055d6', 0, '2021-12-07 16:28:15'),
 	('3bf8b32d9def1a344b77b04000b52e460b99189414430899370dcd43348928506c8f1530919b9cae', '4951bf9eaadd6b50196fc0818c603ca8bf23cc69476b602f3a2e3880b0365ef1feba507b67425bad', 0, '2021-02-17 22:30:28'),
+	('3c5572138ba1c311bfcc8512bc3e44a720d6748c0ba1ee3ae7e1ebb3168c1cf051bc9279d6e7a0bc', '7406f67a36c2166bbfe15ad4365a6184ac733de75993b7a6eec9710542a476b7afd2194850b948ec', 0, '2022-07-30 16:44:15'),
+	('3ca5cfcd6afebdb8849fbe911f9391fa0b28d6c6e75354ead4074168efb04c295485c64414884e4b', 'f9fd4b59c07cd3ae6a9f2c6aafe2294db1b28c5f36839e6498a576b68e41d7c631b05a6cbcfad2a5', 0, '2022-06-24 13:44:45'),
 	('3d04675a1057c61585aaf8557e4361eb605da41c12fd685f6bc344b8d6c840b0c540d507bc873ca3', 'ba8a91c3279ef89dd4ec3003189ae25ddc331623d527d471987dcebc130a247b0ce5c020d8186dfc', 0, '2022-02-01 15:42:10'),
 	('3d27226df7730f9b9491de0c66724dc93252f877225341a94bda9fdb369011f48f98afea71355fc8', '0b122bd0af746ba56868e72cbfcbd999180b7fe946f72ceadf74ce019634d1ca37a6d8e3a6cbf97f', 0, '2021-12-16 14:21:54'),
 	('3d46d0f887fb87920649293f78e03caca5e037286ac8cf145354337a03fa8098ed8283f3e6864150', '68fbb60c03b56e6bf05b6564b822283f9c57a199b8167c236e09831b2ff57800239a96bc79bab609', 1, '2022-02-04 21:25:24'),
@@ -2684,6 +3405,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('4124448ff0f45d34ab5315d533b17196f16d15557f174dc90b13333584cde2da793fdc5853397385', '96a8eeaaeb5bda5bb0778344c53e77bbfb900f95133cd693eb882d280a0689f4972490ec84f87041', 1, '2021-08-03 18:26:47'),
 	('414952e5f4033c381b7c85561f53fb63fa0956b29d0971e987fc7cc799aefe221bb1b72e346dc5bc', '3c1968d9307685d9914e8e0dae9de619171b1d57b4117688e36ac560a0e694bf6e77c6bfa6e30238', 1, '2022-02-05 14:53:48'),
 	('42165b7463827b07b0237502b9d62a12b5218b101666e5531d5e449b8b630976542ee8c504ac3a58', 'b14e4c07afc736a37642cb7c8bd670e8397bde6d4bdd7ef6de064ab53d57a778bb42def55e550b78', 1, '2021-06-15 22:56:19'),
+	('423005463f6a858d7e0a2de17f176fa86ffae1aa396df715f5463662dc81cc8b1afda566ed3d7dfe', '48def8e35786340b946c7c9d16f1ca11af236d5921f18ab19eb80d1fdaf0046f060838fec4e30559', 0, '2022-07-08 16:30:50'),
 	('42bff4307d264301b498c4975fdb5b75400954693bef25136dc8f6ed6a7585030aec50b460f2cbb9', '128294223492ae90097be6906eec2bd4d697eef12867e168f0ae6320dd29718bacb5ceff4efba3ea', 0, '2021-02-19 20:11:14'),
 	('42d26d3e943f1063416707e0da1dd69cb4cf2157890a444b740121e351806ff608275e342bce547f', '8ee3c6081e8bd029ef0deb5784f6d652375440020ea22a6d72748cbcb37fafd393806ad06ddca964', 0, '2021-02-17 22:24:37'),
 	('4421749d83d78ca75d7a35232ecb3bd3d7e374c0b2a4563b35f9b1c2bce962e34e442500ffd8a0e1', '35b6d44244bbbd636481b6be6edf3563553c96163a5a11f3226db00a79de416a83ddde72eda0913b', 1, '2022-02-02 21:22:17'),
@@ -2698,6 +3420,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('47398fcca5361664fc9625a02a0942c491f1d96e450f6020d7f911017518d7893b9b0f9407eea34e', '3c0b4836396bcfaaf8604fd4de831c3a567c6ec017fcd511d41c7b3ab5b09da01a0cebc21826e6e5', 1, '2021-06-11 14:21:37'),
 	('4770198771b3ec10f67d57a72d44140447f385e8a22fbf9f73ab781b8d7cc5b0cf83fc25c6c86af0', 'fbf03e0dc632b6a87c65c1c7f54cfbfe976bf9e3ce348b87f8bf8cfc5abb5b5d786f1befc9041a0c', 1, '2022-02-02 20:56:37'),
 	('4953abae9fb3c899aa9108d426c4b5c353a5f085f910534ebceff7fbaad27f4841ea4479365bf0ee', 'd10976b919e83d726432187dadc50713938e7edacf4b23eb95c545d62b5d5bf967688105a5b7e0a9', 1, '2022-02-05 13:44:50'),
+	('4c7df197f1ca082b28466393399dd4af8abb9a8510edc143b7c3100abc0c3bc4faef6d0482064617', '928d2b81e0144bfef273c5707c0c629f7665fa2b74e952c128cdb744f9ab59ca839b8bbffae1eec6', 1, '2022-07-30 14:19:27'),
 	('4cb5662a6ae2b8c73bdaf919f712c6e9315e6ac18ae135e06849a355138127b0450fa1465d46da63', '55e8882e83bff2860862d6a0f137d73c2c8fe5e8ddc1ee4f87a33abc95b31dc472a27f7fd58f8660', 1, '2021-06-10 20:36:11'),
 	('4ccc5336c562164178e8cbd1bc71850bba6de5a6473730f0688da3957fdae1afd3d0cbd028055453', '3c7cf9ae6844f0b0bad031ef9d18cbf71f38cd37b2bd5180c2240e4742bf4c8dfd6d3639ca3c4d35', 0, '2021-12-30 18:30:43'),
 	('4d9f8f84c11a6a92cb3effd55c0d8634462df55f04c1287d381e75636a3497a5fcbf26256b28dac8', '6036991c69de2f73b124e7223aa3bd225ea0b1e464328bcd30af510997510e93474aae67cdf71495', 1, '2022-02-05 16:03:57'),
@@ -2719,10 +3442,13 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('5338755d4648c69cca6aeef6701aa04df9e1487cf1b5fed8c78eb98ecd64e635dd9ca0cb64283b3d', 'd157b54257814cf2068c01e5bc0f1642132f19a25dbb6de2132e0f53aad974c3a817056ac5409cd9', 1, '2021-11-24 18:08:34'),
 	('54271aa8b6dc1924c46d7334c513d1f5ca5e9d555c20005f77e8382bf7351998e58b2dccb2d547c6', 'fdb2ba830303ecaa2f386156b0b0bd265d70c715ccf19223d8fce6d62b577ae79818d60869bc54f6', 1, '2022-03-05 13:21:23'),
 	('543e076fcc483148a4b9bd5f3081f8de0ce60d6912a707de28ae80559687b4d554c39909846d5c29', '1f321ce31618f4bcf89aae48736deff3cecc24adc5cd8102de182df97c49f75074d8cdc2b0cf5377', 1, '2022-04-26 21:47:56'),
+	('54f3ede47776cad58bcb9cd14663d322c1573078c9b48f742e2ba810e754870c7e2200bc6008dc7e', '6ecd28d60ec159abaa737d8a95a647ef160027188a3488656164aa658ae35977f3602554ed653bb5', 1, '2022-07-30 14:17:55'),
 	('550dc5ef04b3fc4a542e4e21f1309cc54ce27798e1b36b783f697645b10ebfb663c40795647cf584', '19cdbeda21146af1470adebfd7bf4820ea01d8b816a14004c7e4427685eeea30cb297ac255d0d2d4', 1, '2021-11-24 16:47:11'),
+	('55622023e188860c250ff4762dabebe851c0bb668f7e7cae7451c3f831b930c3cc6ad698b6d2d428', '5b596e67d8c00820d99604f1e62540a9c86d351c79ccd9c52385897d23d58b680e09742c3ab3b859', 0, '2022-06-30 21:54:30'),
 	('56eb8e22be79e2b2f00155292ccd8796e76a7d65b8f48753c8c830752fbf981085af70e67d6f1c5e', '5643581867e384e05b22c7d283f5d10531299ae29229140fb9306f1d4dd68bfa712b4e88d88f2605', 1, '2021-11-26 13:45:51'),
 	('57918a66000baa7fda5f98a90090cf71d26d56530fca4360d580d6171b845d1db8307c76c3543bf0', 'b5474f1f2ea4fcdb913e12f5dfca2497d6ebc96947038a8c31a900c324e2adcb4e4a8ff5623c556d', 1, '2022-02-02 21:24:42'),
 	('57ae9143d729c15008422bee15db6377b9bc22d56abeb92d51990914422748836d492426456c2400', '5e7c302c6ef451cfd391dd491c6e10cacb21e456e92e6f597e514e43c22b0683beebf88585a8d6d3', 1, '2021-09-30 14:18:31'),
+	('596cc7dfbea6de291c99cd2fb71c0cdc1ae18499788ad930740fd790e27e5ef51f242d8367975808', 'ec48f2a0dafe61ce6df6d569c98f4407058214126832c52ec64545b066caaa88be35086dc0308f98', 1, '2022-07-30 14:22:48'),
 	('59b8142e05ab6b7951a5d7c109cda291c1ccaa55900e4ef18f2ac57d216164823458b79b8aade2da', 'ffe2b4eba9491c4778e9dc90eb5d0c37c556114f701e15661681068b9379b2766fe5564712dfff37', 0, '2021-12-01 12:43:36'),
 	('5afa9405463215dd08f7cef6cf46bbd99a20cb8005c8571aa40702121db037a9f10f10752c65ec8f', '0cffd2fd92e1aefe44463b5b60f0155dfaf39d6fbdce0e449455d1e3144070f81d4923ce57df3f45', 0, '2021-11-24 17:22:52'),
 	('5afbf78df170aade7db3749d57c631d8014db0cd84fa3d3dc3c35b2cef3e8e7e6c0e26d02a55190c', 'a52681338ee61f63f9b089434b97eb1a7dba37b8cbdcb8c4d109a4ff3882a7e348acca3a57d055cd', 0, '2021-09-16 16:22:35'),
@@ -2749,12 +3475,15 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('63afe89c7ad1392dcc96b64c65a31e6f08a80ef79e32f9d9ffcf3f34207d156e5caac951383e8a71', 'f472cc8b3605b6763bfc0448610819f1523f9892f80071bcb157bbc6a78c5b6a4d696098a68f07e3', 1, '2022-03-17 20:39:51'),
 	('63e7a63dcada91591a2c68f1b627bb4c6d4c402fbe1aec4ab7e8b38dbcd88636ef294b42afd5e277', 'cc784e6f3f1bfd70eb859368f85c4cdc5f625471ba1426b0a1d049622bf79353179ed9d3c8ebc380', 1, '2021-06-15 19:48:32'),
 	('64044cacfa533243681109e61c693153b74e0e724b3eb232e9e301ef59e7353439016e1fd1e2a809', '9cebbdb753f6909b2768ada358ef01691c08d7625f1bee7dfb2c8a8f0269f0094ebf211a2109fc89', 0, '2021-10-19 16:00:25'),
+	('6570cff6a060fb44a93d3c873af62d302db248883ffb400d2da24897f31d88bc241fce038f305f90', '59ce25e10fd799cb3175114f48fcb74b931e62e1100767af7512456d61692cef929620373fe0cf3b', 1, '2022-07-28 19:24:21'),
 	('658534b3bd698a04ca8ddd0e43655f69ef1c8a8060da77fc8dc9c0a56dee1735864a697489f6de72', '3b302616425c70a2151dbedfa23244e7c78241f6c360d711eb739f381f1991321ddea99dfebedb7b', 1, '2022-02-03 14:30:24'),
 	('65e86ae4b8e4d8b1a9a757a2e3231283d58225530a763bcdc2c0ca7c7a699c0d229ae06e27c1eb39', 'e1e981aeacb5b4b02161b92a69cb578d54c7ad3e591c0a923e8153edec76767af0e0905d67a29669', 1, '2022-02-01 21:27:30'),
 	('668dd0e5f31ee889af0216ae35ba648066c9b1246370c379420d4ac7c87415d48171ed1dddf4670d', '5d284490adeeefc74322c54b552398179bd7d2bc46277eb32fc8260b862ce03b0b56289467ecaa31', 1, '2022-02-02 13:46:15'),
 	('66d575ab665204d0e5613ffe84cd450bf783fbb57c6c71e2275d93e510a7d512c64895a266855a0d', '6917112cb11bf7b134e5b2518d304d444c00a778bc7645aa65aee0fa6b1576869c24b4876ab890e8', 0, '2022-01-19 16:02:44'),
+	('66ea8eb14050df43545cbbf6c1ed20dd198d8ce8b9d2ccb6f1cc8c451d86c0771a93db6449614c21', '76fcad94eb0a96ed0a91b6c13d9576c1d913c96da7b851c82696ac0de563e9748ddcbeac1399bcb3', 1, '2022-07-30 14:22:02'),
 	('6729702461d0d4686b884a55a09eb0df98e85b35957c55a02fde94a942c66069912fa62f77de7a1e', '23be2018d0b80ffb675a74c477045807e980c038d17054c9f49a646f93f48ec2033bbe4468cd4a04', 1, '2021-06-15 19:17:49'),
 	('6837d2a075e3fca8fc1d3fc579f86fb68c2174d130045d5270f88560ffe01e8d9aa6ca6ca5e90643', 'eac9d73f74f20cb2423da2a4e8979a0ecb80412b47749d40650ebf6b805b14d64de9a9409df6cc64', 0, '2021-11-25 19:09:53'),
+	('68c8b1b448a76c7a5ca66b79d012b89b6cb8c5c8693cf6e52fdcf4e33deafe069a37eea557b3e317', 'f6fd462e3515622fa1e4e15f61f6800d4a08db6cbd2d0033501a38895344405f394ab1593808faf2', 1, '2022-07-08 16:16:11'),
 	('68fb565b4666e34c9035413e879ebf02872d2f418f480047407a074ab253b306ddc812afbb0cc758', '0ee2cfa1c08c0aa03f20ae02de94130599af16249fbb008080239974c8ef5f9cab5a9ff87b4a8b8e', 1, '2022-02-05 15:52:04'),
 	('69054eedc376e07157b0440e17a740fca4d10cba86ed05f5db2adc9fde6cc795cf99a27501b9a6d7', '10262f9e3452153ce946a42f370a1f9d4d94b7b8f191aec8c413bc98f8dcbcbc09fdadbafad49dcd', 1, '2021-12-10 13:29:17'),
 	('694602ddfc4419cd7499fae7a1074b4fdddd26a228d94ba8ec8caa408825410ee822975affdfad9d', '541aa4eee5acbaec9dd381edeb7837e30bea1af8c0486285222108b8e90cf6dd2197c0c594c2bcd7', 1, '2021-06-15 22:32:19'),
@@ -2777,11 +3506,13 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('7029065b95c4b11474d3b667db5cbbaff185dcc2f85c253628c8e0aab3afc2c42a7dac71ddb952c3', '1be735915bdc2b1da158888311ae050d299dff098a3fa3b3cd569ca7d9e6905ab8566464be6facc0', 0, '2021-02-14 12:55:01'),
 	('70ce1ec3a18fa09db21887a7d0421cf91df460dda104e3f0523bea8291a2464699dc07699d61fb49', '7d4e6e3682c98d73897b8603481bd6213e50dde723a478898bfb411a18c8eb8266d0fa5f17aea0d2', 1, '2021-06-07 14:02:43'),
 	('70d274bbbbcf3e17c2de3194f0dabd4ded088b14d98c5d11d2614a9217320410499502fd9c482ded', 'ca8ae3cd582cd9403b792689e861c29e0e9a82d6e2339cbacd5300a8866cde633e3bbac065a673dd', 0, '2021-10-29 20:09:11'),
+	('71087fcbc4bb3c2ea6cac8f2e6ee5b17cacf33dcdd07d41d3d833ebe6f0ae7535334e1ec9264b22a', '934e149dfc1f56a2585925068c23d04240a7c73872d3d34eda5e05f66c1fc10e03ab026e899f3d2e', 0, '2022-07-08 16:32:11'),
 	('71b4370b779650a9a95370a5e6a6dead7104cf2fd839ff81fcf8534bf428f71771bb44b730d02f4b', '8c4364594ca11a0493356422ec9a31c4a36d391f6495314c8095aa18e6f9bddf2f7f01ea5f22e260', 0, '2021-12-31 13:15:41'),
 	('7211b8464e8dbae78e76fb46c4b24c32329632cec6ec62ac316c94c395a37fb30a301d38be077bc9', 'f37587cbd9609b21193ce24717a5ccee5db414da2e95a771f093772681e54609c771f05e4f7b58e8', 1, '2021-06-11 14:18:14'),
 	('72abd3f9f6257bd8255a885616c3c92787d85f638f842ad1464f6730917ff3e78e448e56425b1725', '3ed342bbbb5327216ebcb1619c7440c17d43539e26f28020dd34b54a0bd154dd2d86c922bd7ce4ff', 0, '2021-11-23 21:18:50'),
 	('72b1307216f72eb2e942d07dd6dfc9eea942e91cc4184895f769a813122b959951d16a5e581cb8f4', 'b1a9c1a1130b485b310b21cd70f21db69cd2a338c118df83ca855ce08fe65d40aa4a32fa5f61d198', 0, '2021-10-14 17:05:22'),
 	('72e5afa61020fd685e02fcccf85a57367ddee801f731c83bf346fceebaeedb927d23406160054b49', 'fd7165d8de9184c2e06a8b9734be78b40c4f9a33446bb3086f061c42de3fc3cd73c25b2648080239', 1, '2021-02-14 13:47:00'),
+	('73cf466e7ef036d83c050c33c0771dd18182a602a63ab84205c8405bc600a250da0602542aa090cd', '44022cccc7f065ef0bb85a513ac5f94df0382e44b1d9afb79d078225fe133c14c6f2bfeade1e581f', 0, '2022-07-28 19:19:57'),
 	('73fba2e141c7235ead3d35c42c81d36d9d31ceaf10347b63603cf8eb0559125545aec6a6e2a1df42', '5595c76f3ab31e7bc3779c1230e31606f3cb3aefc56d27b33c9c15a0a0f47b3737fa295105485390', 0, '2021-10-03 16:44:33'),
 	('7443aaec1c9797b12e72c9c1d81220cf461d028752df0c7dfb9e496811d633ee747d8851a0931c44', '3e0832a081f95493e2f6ffcd0f5f00ecb2df538de2201737839bcf43909fd814b45de4b404f54769', 0, '2021-11-18 16:30:05'),
 	('74a6d6b3bc01968b899104fa519624972f45d6a5e9c29f37a86a94ff7ead43eb4cecce80cfb043ae', '2efa7846f97a050f5c1342ef6718562428a87332aa912beb8ffcc78041d3cbb53a1b8686bf735a3a', 1, '2021-05-26 14:59:11'),
@@ -2794,11 +3525,14 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('76aa1044c808996d88a064b68fe939508845f137b9a6d8f24c66f0d05a7daa6bade02cbdbd0ad919', '1365ead4334a524841a3e9979bebb64a9e0e1641ac6719940d7f85d4ecdbe3f62260e04bc5738e9b', 1, '2021-11-27 13:28:32'),
 	('76f038960313b4731bc8ce0610499dc4016107c4d0096ea76b8a3030dd6b6aefb5f17bfc6dc87bd8', '22d7715e74acf1bc803f576c5f81934114f98772143d25fad13ea34a2d1f26ec816c20bf48141e17', 1, '2021-06-12 20:38:25'),
 	('77034c8887414710ad3be1650b484ab81bf1067f28fccc606238f13d915a0c54c76b3568dfc1bd88', '54aae5c30a6324984e67575e3dcbf14b4362d572c1b5a5d4fd0a71049a7a7086300430e49231cf06', 1, '2022-01-25 21:15:43'),
+	('779f1c53548bdd8029e2ced510a16363c5949afd9a59d130beb5c1e4cf189ce830b528e31c262884', '66499fd5b67445ce2cb579a2389d20797f66420947e0d2e784e04e093aafa25bc03c64259927cde2', 1, '2022-07-28 19:22:53'),
 	('77d047a14603a0c5ba13a4a28852318a6541f1544226a48b280381b015c3f25fdf5354ce1a69893f', 'cbaf8eaebb6be2005f71e8b54f20f7b588c870f94e79f194c9963536693ef06fd6e3a87f98258d2a', 1, '2022-02-04 21:26:37'),
 	('77d97cca15ce71d525c959248d7e7a63cf337dbfac2ac0ee1c4c04c407757858b66e3c1789abdd6e', '4dc30e587551f10bcfc3960bc278a7e02d12a30d61b98b5a97f1b8707a4647c8747063fb5b30c17e', 1, '2021-06-13 14:13:16'),
 	('785f862f31a9de97a2facf3597b87942d99d5302dea91cbeaa8a91d2ad99df6c0c5e977f6103cb86', 'e8fc4fcf69c4b24e5eb10d06d2c26a1d4af3147103c902d5d66665d85a6b0b0029bbdf4fb8c08ce7', 1, '2022-04-26 21:00:00'),
 	('789a3121c3243fcd98a082bb5c4a505d71f2d5eea5bac34c3dbca8bbb8987850e849254128b2198f', 'b9b855c1e7ea8a281833e6e75809a63ea42befbc87adc7408faa8cb294af13f48ff3d1d88d6b6dcd', 1, '2022-02-01 21:37:47'),
 	('79fe97c5bfc72ca39fecbba0ff011ffc785887dd9af9d73d77ed466a6409163e658660e641aa4fda', 'b4013c8e331c40d7d79401451b180593623e0ae9ba7458c979de3beffb02f71d8c938f61743c190a', 1, '2022-02-02 13:45:17'),
+	('7a479db5da31371586f090b4fd932c7ddb3ca5da3087c883848edd6c84cf911cd5eccb21e6983e62', 'aa678c1cdaa0c6616f5265a04fb462b14cd7b6aa4897af50949ce50b2a1ca832e8351d29156e3372', 1, '2022-07-28 20:49:28'),
+	('7a60aba1f4896337ab467dc019c73136fe5b6d247c6b1c48f481003b4562ef37eb5a1e4bd866961b', '5393c6d8bb812c67f5715129adf0816d8b4f0c539f9590f3f33ee8185a50543887071039bbd17c43', 0, '2022-06-11 02:33:34'),
 	('7abe2199886255a7573adec841e1f6f94b735c62f65c37252742afd427a7ad5e5de4ce9c0943f9f7', 'b4c1ed00e0ba52968237111b03abc2a9f62238834d40fad2d8fd186d9dd4d8ddb533e424e61888c0', 0, '2021-11-26 14:22:22'),
 	('7b0d4e31bea4c50f1ae5faea66ff40c3cde9d25d55c4709c1d87f52548dc4060429b0ed4ec0e7da2', '6d2499d8a417d435f1b4d7d262aa02686d3d9ebb3123b5e8c4c622487531d42e3d0a2df3a339dfe1', 1, '2021-12-01 19:42:18'),
 	('7ca073c06920e715607e2a914ed407c30500f0fb595dc09fcfdae1277c12c6cd42e741ed76a11ed1', 'e5e981516347e363aa71735a6710ee01a650646fc7f3465d2ba637aacff6d9806b5ecaa0e4d042d6', 1, '2022-04-26 21:35:12'),
@@ -2819,10 +3553,12 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('83228e7e59f3316e64c53883805ecf83dffd78b3241d9faa25cbd709d5c1786d83eeb204559802a8', '0a6b7fd839d49d772136e5501f4ad1432453ab9fa8ee791e73b30916ddd101545364f2ef11ecb149', 1, '2022-01-26 15:50:29'),
 	('832ad52c9c1eefead4ed7c6e718833ebafcd5ed05515e062e3ee5d4ba4d070d8d3df8d13491d4e78', '8ef8379dc7388fe0b7de555835b3db27b33c751fe6af8b66700da4986de5bd6fca62ec440492f67c', 1, '2021-06-13 22:48:06'),
 	('83ab919981ae7986d429989796c529991b3b11f83c964c3494779b0655d7dd4b556e056f2c722f83', 'ce44a991482e31a783a835037ece4c7b06bc4f6234461d5479e3fddf5cd83deeb62f6525e8183cec', 1, '2022-02-02 20:38:58'),
+	('83c840cb46eca7b7d2c405a7ae9428a451ba31d5928d7f04e6153e1131561a8fdcadb878f02b5bbb', 'ffc233e23e036ca6bb9e9714047a8143010fe4a1d5f771b7559a88465dc7f1aea5b65faff29838e4', 0, '2022-07-28 19:50:42'),
 	('83d2ed98078e1528b0f8b66aec4c87a5b2b4775d0ce44831ff1d69d6400ce9eb49d928a58efebc10', '3267a7f881ce45629c1ee881152b2d0b0f73111b0b66235157f4b49005abb88e1177aed64560b930', 0, '2021-03-27 15:10:37'),
 	('8615c0bd0db1f3bda8e1feb9fdd31a145e79cf4ae7ca8580ea3df547a9400d659bd066c19ff0d8ba', '923b659899554f15d8d3b7075630aef52044bf98ab233f7e65531747070012e58cf08eeb92619d19', 0, '2022-01-20 15:27:31'),
 	('8658d3d7fe1de5a63ccfd6145b392a0a4fd2f8324983ff084dbe2a826c81eda6e122c6973094d965', 'b247710fb9688bac8a02534f85a71c036bc770b4d263142f8a4d44115155270898811d581edfa709', 1, '2021-05-26 19:22:58'),
 	('86ca8826cd898547efa65283f7bb3ee551bfa8b10f64b1f814357423883467a154031c5678747293', '162253aeb7eeed6308516cbcb4ea4d24dc370fb21a0abbcc4e770705727db60fda21fc09ab36d43b', 0, '2021-11-30 05:29:38'),
+	('86d89206a858177723729c8f65a107f46875571215264450fb2b5f88533b64b29e0644e65e7c7c0d', '5c2ffd3dbfe60336793ab3bc3e08d5389c3794eb303dcd5f739fdb65805e495a4470f4e638f085cc', 0, '2022-06-15 18:04:41'),
 	('87a6edeee023db5a61799b0adab9a5daf50ccea5532c33e72a0d7e0c814e28b1b2c206f9b983affb', '1395fa6ba5075359bade14376bf40708285ea72baa6766b962b090d98340a5ea5ad619df7f19ef4c', 1, '2021-07-02 14:38:13'),
 	('87fcd4cf7390ab9b9760c9b063c3e56cb8e0bd21528f7d4e3da8e738532f84ae4fa5eb776470476f', 'ed7e6abc0cf09e9c69537f2e80843184d47c7f8f6676ae2403250d2dbb3bdccaa879448b908a591e', 1, '2022-03-17 19:45:12'),
 	('880863c034c3cf9a5eb640578df1e9d8050ad4a51f4524771bfb657177fe203eca3ad49fa912e55b', '7ce52b54c3b993a3d86168a564359e5869e5040f92b71274ff231e2f0c6288d9a524f277db4a018d', 1, '2021-12-02 12:38:12'),
@@ -2831,6 +3567,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('88ec1d930e0a85580c0673e003c999b2b4ea2a4100b47847378de7dab9d3993c72a38ab37d5e1644', '9c460bd4b1c48fcb69f609ba8f2893da66cf4968f9c4d02039ee816a162205e8af44627b28bbacec', 0, '2021-05-14 00:23:34'),
 	('891be17502d1b7c14dd813053528947e986adec92ab9fb6787101d5f348680a0352f337a4d7ca2c0', 'da531a982213dfd449ca7bafff33c86f4a7c089290a8f97f69e79f7117ff05d32fc815060da1433d', 0, '2021-04-21 20:26:42'),
 	('8923c0ee12f82eaa2c90337c616371c19a5e708a707877ec2c0a42082d6cfff95f68978f20eb1744', '1bf96bca0508c964fcb341cc6092320cf2d15863570f7f4c11283a291b273786f0e366641d2814ce', 0, '2021-12-16 19:27:00'),
+	('896084ebfcdfb8268bf85ab512fce1e2135598a3bf5a3710cfccb93a399759371c3bcfd0f6901ae5', 'efc76b8a748258b4cc18e6a12c38307abbf1cc535994593fdbe1e09a375a1041667694c3c205beeb', 0, '2022-06-11 02:33:04'),
 	('8b0c64f6276c78faf9a078787a4c7bf0d515f24caefcba098a2b2d7531c3f3b25699d8ac867850cd', '57047396ee819b27d4e7b8dd8488650603e3b14ed886de12312fa5c0486266515637488e951d9ba6', 1, '2022-04-29 15:24:34'),
 	('8bb91bdfe77b9cae65d1431c3a204ceea00ed0c02cfc3049697feddfd44323301299eba55ec1ee58', '75e5a8b8b596209c7366d22d8f6e0cb6730725da9d0fbfd4a26e165dc5a1cfc6fee83202ff2b2256', 0, '2021-06-25 20:57:06'),
 	('8bdb3e98f60e50ecdaea82bb8a539752e73101cbcb207fd08b5aad780997f3af255dc54b9921e0d8', 'ec40ce354db1d2b916b10e9c4810b85366674eeb6cb37e9a0bf74dd6e72c166b86d34ba3c8bcb7ca', 1, '2022-04-26 21:04:43'),
@@ -2844,6 +3581,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('8d58bf41be02b777a60fd4e419fc17f3d32c524c15ba1b14462798cc55f3de95d2ec6277fdd1f81c', '4a69c1dc7029b2dbc97eebbe36f00b1c322c5deca22cf8d8b35c43b27c0e3d985017e94442b0c139', 1, '2022-02-01 21:25:19'),
 	('8fb7b5082d4f912f840ad10633b792efac2c26c5f3a18769f20e2eb5e86ff24aa4433f828d10d46c', 'b018566b9ff629873be3e4ab7f5b6e412308e0054a4f4c0c30f46601b644cd6849ea956ec1761ea7', 1, '2021-07-07 19:11:23'),
 	('8fbbe91637aaa9227f2649703226cf2603dc28f27e5ceb0c28d4c1a7b0a2f135705ad0d93167f2ee', '02aa5dc2d48a823ae1c75d466f5bea1dae96296fa182e00e64d1237cb925a670aaad9a9047d997e9', 1, '2022-02-02 18:41:05'),
+	('9054bc632f9412fe4e16ed08ed1995d853f8c7b71adc38145ca55c3ebff9804c6695ca914dcffc90', 'ff4f504d66919d58553815051b6d652c2799ab3f27bf272f8dfd0dc6c9f4c233c5277982a2ca85b6', 0, '2022-05-25 15:40:35'),
 	('9088e8e6a4b3d961e336eadb1f41f74ed84d0b1f4bd02f33fb84705b454b15b34b89c375e17649aa', '42d3f975a19a7d5efac3f7b5114a1491b86086d08037031e04ffd4bfdd01d6751996b49fa157b7e7', 1, '2021-05-26 14:54:57'),
 	('90edb884a9dd8ac263ea9cae8503265139fb873287f8c5ee1f983762870800a1bc73a7db0bc339b3', '4535b8e16d4ee6abf36c98821451a1ae7d695ec8b3af7626d0e5d2855cb6941deb5081847cce32dd', 1, '2021-12-01 06:14:37'),
 	('922ab3cdc58f932f971534c3ff99fd55e6191e8bec92f8787ed2602f2282a000826b9012326e54e6', '008fe9ae54fdd61eb9bc12e459868cde229520d00e8f5ac4a7e3fc323a018fa35df5c56826c56310', 1, '2022-02-02 13:42:02'),
@@ -2862,11 +3600,13 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('978ae22c04482f2367840479b9828453862d51dbfc34ed013a85ecee2a089d0064aff0de3768803f', '5881c5c2d53e46582c45d60d1b4925c362db27a0508c14aa193aa8629f2ea56ee6194ae8ec2d08ac', 1, '2022-02-02 21:02:41'),
 	('97e60a0cc0c1d628fc47883e620963c0aa0ed8d780271dff582a8268a99b09d02672ec33b8e226e2', 'e73749ee57c34475f3c716d41ff9d014f022ef3860908369eff6b988a6482d98dfbaabc2e026c0ef', 1, '2022-02-01 20:05:39'),
 	('99451e92bfd7c287dda655c25e03bb6c0e11072b6ed8eccca7926ff39c22cadd7180debe094edd65', '9c98f0e53c520f7906177dcbb73d095e6123e31c558df249e19e0c786d318778f11da3d2e71e1303', 1, '2022-02-01 21:30:25'),
+	('99a3378c363d5eabf8189d664775a19900df0a194c59006fdb3f039384c1b505f2af9a418e9d9916', '03f545ced18149a12006a131fe831e39cf55f26e59d240390d17092873d1515a0f3b096a066a5c84', 1, '2022-05-30 14:43:55'),
 	('99c96ee64741c1bcc8fb84708bf3aef634fb94c23a169be98b487353d04c779174a7dca57ca7a1fa', '82d51221b53a4ea186672d8564387f2fd8763788960ddea6bac53bf134e15bc30dfd818c4774b05a', 0, '2022-01-04 13:06:53'),
 	('9ade5868fa8cd7d4d8b6ce0602b131f117b7a4b996cbda7e44c5f9194de40fe7bd2bed674b7192e0', '9202094c75a64df564ac054ca5b38c5feb930cfddfff6e695f1904e9397bcab555e093e928df87d4', 0, '2022-01-22 14:48:08'),
 	('9c2daf46843c95bc6f7f6fee4f6010c718f05e6625cc6d3382b55528ea284a679fc43c2d69ef1a7d', '0771b15b165c807b5b013a0f5b5edc3e1b8f7844e6b7332a67dc6f931a2044e6e6f025813be10f1f', 1, '2021-12-07 16:23:51'),
 	('9d5b4071e9b4f8a2186af3a444b9e501ba8ae4d99d6f3043c34256a69f094086964b1968674f12a1', '89f7c3454d5f43db4898dae186d7cbc2557137e4c8000201c6b2b418d972ee68551b878885f46c37', 0, '2021-12-17 19:06:50'),
 	('9ea1b1f309cecb4cd0fffa60999c9e81927ea1ce50476dc0815f27ca2cd385f8c7c942ad5648c76d', '0eefa69966098f6ef0678171cff995049a30391cb5ac74ce416c82717c75a711755426ec34e16176', 0, '2021-12-16 20:28:55'),
+	('9f1688da12b0312be478f2600b806b5a941c485a13e98fbeabee18cfc48d082d06794595a0e1abde', 'c8473dde3bfc81bb90e2b7983c24763a4ef48a5218b5291d2db24e0ccd06fcab3b55c80ae6e3a66c', 0, '2022-07-09 16:35:04'),
 	('9f1ed7b0e3d0e827ec66cbd5cfc4a4d5b68bc1fc012b65f97d9127f68d90a1b02208f94e7bff7ae2', '2c04317e52a88343ed9b994019e8e90e1e9c5dd4a97f80e8c916c41a692c98ccca082ac03b0121ab', 1, '2021-12-03 19:44:24'),
 	('9f5ed8a56ee48eb98766cda6de1cc4ecb77b6800c40ec75d992150b3386009de3c650bb5937fa5f0', '0b02fb486c882d456cb13a96a52af588f5c5516d67e2593a63ed96dfffcfbe8c4e6cf5b2cb6adcbc', 1, '2022-01-25 15:39:21'),
 	('a132c42f1409e7e8fe5eacc2b79fcc76c86dc55ef8d0d83da0c654c5b213aa57076cb740e043a8b1', '1d2d680d25296df05a427d9888fb141cc7947466443c49a14221f8d1de26e7c6eb5e4c53357268da', 1, '2022-02-05 20:19:40'),
@@ -2878,6 +3618,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('a3f7abf68a376cf95d0babb369260ffe1f07b561e715db1af053466b81479e260a5fab4f4c04f864', 'f75b5b845ff6426df8e197cd1243379dec6f891663296a46441333977dbc7eee505619b33f03bc68', 1, '2021-12-03 19:46:13'),
 	('a49fbde216f87d8b9e09b705987bf5d7995f91cec8957e4946e02be1c6ff205a66eef91e56b8d8fc', '08384e0d8f8cc97a790db28b969648d033c7d469afa39bdbb79525f3326aff86e65f4322a95e5b84', 1, '2021-06-12 19:18:14'),
 	('a53773c31d7fa3fc81b5646e743bc2bc7425d537d6451d3960003bacc621372b9e85abeeae8d2424', 'a218acb381ff5a4fabd69cb5309e1eed0fe222d59530a078349852ecf136a6ef2a9773255608e94a', 1, '2021-10-28 19:31:49'),
+	('a5b0f6271884f8445bed166c8ee323e75418e0a6157d68e49bd2238fd66ce6f87365bedf6e2c65c9', '3cd26125d7a081b9faeed5c5461d75e764f594368d260eda4b56351240aac8177918c9c01aaa4de1', 1, '2022-07-28 20:03:52'),
 	('a6647747d75b4cd75a49e30404a9a279881186440a276c627154648df121d09aca6ae061622d847a', '7af80d8f846af6ec145e987ee284f5d0503e04d15792d27b68b351d82ce2bb1919599d0d87938f55', 1, '2022-03-17 20:32:12'),
 	('a69c63b7156e9a34139186882fc814dcf3bd7dab4f8c67b15e28addca037d64cdc7dd95d7638cf95', '73e608aeda1bb119136a397b5d3fd92daa44688db0f0b320e3b8d85c573afe1119be0cefd5cb6239', 1, '2022-03-18 15:51:42'),
 	('a6b4ec26c4a98d7e36ad370855b4549b626d2fbd744854a5b43885f02a6dc0d61f9aa39e4cd60113', 'ea12ae8cecc12287897d98ddfb6b2fd644e72ecb723069f7730836d7c2a399f57b4a183bfe82c8a4', 0, '2021-12-01 13:34:01'),
@@ -2887,6 +3628,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('a81465d716d768bfd0ad0538dbea4eadca10a4d6bcf1258ee15d2c495a92f7907e72a0898094811d', 'c3c60bf6f1fdded8cabe1124243c0ce13ee64ecc2528685e78db947464593237ba7bf26f6135f5d9', 1, '2022-02-01 21:30:01'),
 	('a82086b669087ae9da41457f736a0554b2bfa636616f38805b08d545fd82f8561bbf9900c0a4a35a', '9b90a2c5479e254156b2062c54e7604348479fff0e5e0d00d5a46c2b8ebc89a2fa3077a9aaa70a7c', 1, '2021-06-15 19:36:48'),
 	('a873683b589c8582eb662bda8caa2b70b6bc6fafc7e6a61df7ca18aaae0f9acf87e2d0027b984179', '6e0f30c512bd489b7c5c52e0e22874b9f6719934b32d974365530b996a91d5ca136b1247ee4d3c4a', 0, '2021-10-28 14:08:41'),
+	('a97cae07dfd9d54c048c311fc36d62d6b32140644abd2463f11f3b88eb253eb835c4e405fd2026cc', '4584fcfa2bb85bff4d1b430d497f1a728e430f391dd88d65122026f3e68f820aa4e861c094643bae', 1, '2022-07-28 20:48:56'),
 	('a9e1f080ab724c8306c2656020145d92f72da0a5922f8b60bd10953baf17e8ce90ff021de393a0cd', '093ad51d3e6889dad07f9bd014830084b4f6a25fc94ebab0d23a32959b6b1536c92f474e6167cdd9', 1, '2022-04-26 21:47:38'),
 	('aa803b595e1d465ea9c5edb628a0958496f7e321f98d474908ca9fec72a006394f17ef9be54c73f2', 'c489b76afeed0716e94615ac25ee64a8ae96b42a8b8dd2ea403e00cd389b0e7f90592aacc469d195', 1, '2022-02-10 13:39:01'),
 	('aa8071e9a78196fd8d18c592aef7d044a598eaeaadec3e40c4128f9bc91f68834e73fcf215a1fbc7', '978c4930b492b48ad0b498ebaf98ff483c57f22b36341844810499eed715ad3d7d97cd1de379e479', 1, '2022-02-02 21:11:48'),
@@ -2899,12 +3641,14 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('af2026bfd52dbcd74fa08331fdc470c48681b4cac0cfc0e7b6830809aa1dc961eb6b689767d8c10b', '244a176ac34db371da07a74e1291894aaca18a013fc652d1f9fed37d5a48715ee27de57361e1e032', 1, '2021-12-02 13:17:07'),
 	('b055f3b5e7fed7813a9873cb2a53ee952c6fae47c7c3cbf077c62eb5a0b617874ae45afdca2fb3b8', 'af98c12e71184f39ed985f4c2b6ccad97d1aa4a6e67b14fbb57375f4f2e5407ebf6a0898fe814248', 1, '2021-12-02 14:21:01'),
 	('b057a9c06e02c99a72e59f8c5aebd508a8b53a1898262c6c2f1cc16b301a15f38c91ebd747dc0a35', '702e40d81ebea02f97d7e1b109142c589d95453a9bdbc41369f34bc2ef0fd5b82be0fd47dacb7e88', 0, '2021-09-30 15:01:10'),
+	('b0f9a25f9f46d480a02bf5484688edc2c0b8e1b2601d4f43a0c6bd39a9d5346c2dfb39fad34ffd3e', '97a3cd02dce84ec8a291d86003144135ae3d57d5462306d9efd38d1f8c400f07a97ac352fd1c744c', 1, '2022-07-28 19:52:52'),
 	('b1588b35460bb16fb5d9a987cd6cee8d663a8ebbecca00a9f1617758fb90e6a49eec036342565ea0', 'c1a5d2ead87a133292f382ae9d497d83af1c1d325b07ebe2e6d8dda754fb40e2588f5f8a9ac59371', 1, '2021-06-07 13:52:11'),
 	('b158f66b537388c697b547bbf83a0dcd1b4336b7f4198f6791c36b0cbcfeaaa8eea7d1e07177201c', '66cff84106c979e719582bd2a4fb206c1adb989b6f958ad7fdd998045d473bef1612dac76545a083', 1, '2021-12-04 13:14:09'),
 	('b23f754b3833b112c3a2acd31632b62eca6a7b7fbd35ae0580558690434d04f09fdca3e239ee5bb6', '23be6135cba4d6277bd9cf5a2df31a4d5ca6d898a433dd31b84a774d8db6ac4e9d0e81743f5b5cb3', 1, '2021-06-12 20:39:27'),
 	('b2d24663e6f32cf04be685314f9587ec39b4b6621423fe6edb82603077ae852031ed55e02c2a4a48', 'c7a5481c9833729ea147ed6ac503c6f1ecc4fa52895df3222c613f4359da035393a73701a612ca6b', 1, '2022-02-05 16:01:00'),
 	('b44fd53e7440634c42f87fc1855e3b398e5589e5a16542a3bc0cf2a1df7fba63f1868b20d10cf8ad', '96ea4da4a7dc4e44c4cb1d59e54a16f44bd47697f57b3e908ca35c47a815f8cfee7e9475a4ab1d98', 0, '2022-02-22 13:53:45'),
 	('b4840bf4ef7f80e2bba073eef0462fe884132b26d03f11a7aae7f5b8ea310cb297ca27e7d45db21c', '0401f27e0369a349e1437125b7af1d2d09490f80af9343c689332880f78ffdb60d25b15b21453e25', 0, '2021-06-17 19:45:49'),
+	('b4d5b249744eb6c86aeef104830f3ab867f7fa27ad843fe4cc81830eb748790761e9acab961b4328', 'ec977551e759dd452196912c77855cf80c2da4b3e78438cfebc5c020e6d12d87300904489a8d98e0', 0, '2022-06-11 03:11:48'),
 	('b5272cd98391232282e3f9cc04ab0b1e1ca48757baa0d3c58f23c7fe080b3b26d3af13a6033c77ef', 'a88aaffe8cf52c491550b1bbd8acedcdb5b950c9b1835ec92c50985faf86b1d63a9e0cfaabd1898b', 1, '2022-04-26 21:47:00'),
 	('b53c4017583df7ef5ece6b76e59da3f8d2f6bc8b2b7049d96b8b419152d2aa413b9641360b2a2d66', '0fdb9789d9662bec0715f14c7d4218dce2a4f39d0b75619985e9ccee40db868918f378f652f45df9', 1, '2021-11-27 19:37:25'),
 	('b570a7e05e2f6529bfcb6cece547121b7c9ff7ba40bfeb5b613f9eb2c8e15925937eb27f1519be9f', '199b79d6ce9eda2dbdeeeb7b2432ca89a0735049562088e5ddd2f38cd2eb814cb1004e0def45fbe9', 0, '2021-11-25 12:51:38'),
@@ -2929,21 +3673,27 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('bdce79b4a3aaecd085e01491b2c43cfe26d97b59380cc6e3458506ab5b2992f86c9935e004a65d3d', '4af1c7f0651f7dcd676123c4f1d0b9dd23293f85e244a4609b4cf2ea08fc331adbc1363775373061', 1, '2021-06-17 20:24:45'),
 	('bf239c76c67b191dff9a0e4d38ae1323a77bcabc13b1622c44a7ed419a0e1cd875f5de4d725b5a83', '3e6fc69a5f6dac13d7882fef7fe966182a98f7f9ea68be315cda00a368f0251dcd2e6850d697d80a', 1, '2022-02-02 14:54:14'),
 	('bfa885808da9a9ffb41c3c6e12e21d8036b4d52a8c6982b3e85cd8dc360ff1f025bee846d98e832c', 'b0e2ab78ef75dc83a124d863b3c03a0a708096fb9c020f53d9dc3cf05a968a5cc042550b5d98b08d', 0, '2021-10-03 15:43:48'),
+	('bff0562923b874a158d5a41219d7e35c5dae9692cca79caa3103001aab43f1da332b3361d155a535', '661db1c3b9fbaca05a4ab272f6bb5ea5df9dab133fd84197f98d5f0cad27a9289a5041408f850c46', 1, '2022-07-08 15:27:10'),
+	('c01dcbc8113e177eec3f6402bcce658d03536f5f77c2feb1ad9cba4dacc329e7cb0d3c7db2e1f5f1', 'a744122aed99da4f8ea44b90130837a788172286c0a291642a7067e1d1e57ffba7a61c86489f2194', 1, '2022-06-11 02:33:45'),
 	('c045606c862b16fa2d61619837ac8432745d3b218faf8e235f2650c4b3da1a2f4d99514a115e5fcd', 'e280f8f186fb6254fc4581e50f8e2bedc36f16817409e0d9c9ca62818050fd92662783df1b48abcd', 1, '2022-02-02 21:24:17'),
 	('c0d2c83a1a24a8ef228754fd046427a063d21c6b3a6e5605742583ff048d3b9547cb4f9c716c979c', '56dad959fbc56d34ad60cd0d6afb60de3f84ab974ebe5d0b55ffe807cda1aa71a42518e49d0d8290', 1, '2022-02-02 13:39:39'),
 	('c10018eb7df5cfef4820f7877db32d1d160cb8472f1600e7db1ef039dd3e21b02e6f530dd313b869', '2c7524091ba57deb3bf8000cabb009501661ae760cdabaa4dce501643a603df51416c1ca5c2aa1e5', 1, '2022-04-29 15:25:42'),
+	('c3e01c78e1babe9fe04cb77957dcf51d2616ce4941ba65c7de448d596021baa79d3816805856bf1b', '5a62386b3f917779bd55b68f9a4b49841cc0fbba26c922b61516c68d9f282045b462fa3b8fea0c0c', 1, '2022-07-08 16:23:37'),
 	('c477de5ed88c2bdc2f9e27918c68fbeeefb23c03d739ceb3018f5aad6e5f78af1e12225ec13ee2ea', 'b076b1dc17f7fc1532baacc0e3412b443dd135c88b82b5d26cdfbb00fe20612f42825f81fd143dc1', 1, '2021-05-03 00:07:25'),
 	('c502294328c5c8c2eb2bd7dcd4084d4bfed2a31b60c73b2c0e0f3d1ab5b851d7e1fd613cb38dfaad', '63acad5163c146bd6461a4e07a4aa01afcbd8b750b0ac76d7f953f98ae11ae2b4a085c1c6cf0e5b2', 1, '2021-10-07 15:55:18'),
 	('c54d4b094c4396ad928e03ab5f013e7907a3d490dd54118d7b07a3c351bad3c3197633ef9d49256d', 'dc0fd89dc8c37d8ca42bcd6639951205b1325f4ca6587c95433bb89208bcda859b80779a13226ba6', 1, '2022-02-02 18:41:26'),
 	('c58ae7eb9fc0d82245df3a141d4940c543bb0ac9a0b5f19f1e68e3da64cea080a87fa6a010427987', '87df6ba258ad391f0aea9f635b55de1534f933d331d5b903f4f7724a5613f7935c68f9e55461246c', 0, '2022-01-11 15:54:11'),
 	('c61654a53304888b1a83e586647383e064ff5b0e81e442876e92650dbe176dcdf3342a7d8ffcac1f', '8545f17b4fa8a489951775eabc7ffc4fbb6c9af1fba66cc62423698d38b4d3fe7ddc63b5895e1f0c', 1, '2021-12-14 15:23:54'),
+	('c63b2e67b476966665136dbd3cdfe62319dd1fd180daea43db08d59ddd05833b97b870a8b390bd78', '4e0db3f2f6da3b7790790967eab18db1e5784825bc383f70ae3e7fd6bf6ab3e5d705e922ce349fb0', 1, '2022-07-28 19:25:16'),
 	('c6a884176103f289db841c37ad3baec3782a22c4467125be9fc6c569a0b114c20e8b8472a783d5ce', 'f27a3a3cb35bc98cb91a06d7c249f30c65afaa5bb44d920e01fe5a9f9b7941157f1965c8afca4092', 0, '2021-02-19 14:08:31'),
 	('c6bb1236c2b33f950fd8155f8c130862f10917b36126421e2755d8a6715fe8be75be91b4baa6c42a', '4a0e3b988ce627b2f2a899c36a5ebe6d5f28cae477e20eeb81e56b8a2608a39f6dd8bffacb4ec346', 1, '2022-02-01 21:27:48'),
 	('c75d0310f64518b78ffcf2b5dffae93916281ae6bfb5fe9fd74360b663e7dfe0618e785d33dd8d84', 'da10bcfc6a48499508e9d29e177285fa36aafefb828ba3e825c958d5e856bd4d022400fc20d16465', 1, '2021-06-11 23:41:33'),
 	('c79f4e6f664661c256adbda3bc5d70952437392594b998266dda615a0e20848271964b5d1aafd283', '1bb4691508d7d91cc9af0378db6d079d8d80caa7cd346a50f59e2ec50a9afde5bfc336fe6f953cd8', 1, '2022-02-25 18:29:07'),
 	('c7f8612606f97bfec952d17c70b1a86a73345be3ab43c2ea50649fa1d0bad537993053de8448154f', 'd9b9a2d6bad5f53238bc3ebae70beafbdda19048e5220ad02163ab473863222da5a08870a851cd28', 1, '2021-10-14 19:16:40'),
+	('c82eaf02904239d0abf98e542ce24b6fd80410632aef549399f19246bf21ea9f4913bc7d008ee4aa', 'a6a736a7baa0f1fcc0eff7357290d9952f69f57fa287a0676b83b0aac4d2fe9ca528d41e96993800', 0, '2022-05-25 15:21:32'),
 	('c83cdb6c1ff30c00dedf5400f5dd9707f55f3f3ed41560f5a3801149cb023ad8dd94d4971ea99763', '6c29bc2e88b3cba05260f39463cb2a9d2132effee2cb4b4e8ec8c75d6baf25400b031b44b8b7f426', 0, '2021-11-17 14:28:37'),
 	('c854831c275d070325fca82eb174890d63902d660f1c31a7a9775c4924871bc8cbca226066636e15', '6c4ad8c2156da72dbba73aa3526cc46920dfc02b06a07c9fbda90662c39ee1b474aee9ef70c09e74', 0, '2021-12-16 13:56:55'),
+	('c8be1441761bb8da1520525d21ed723c7dfbed950f9248d718a416273aca9636350745a725e1c028', '5d6cc7f1d12e46491c32cf36913a8794cbbbea3f89757ca2c9f110dc28435a715bfd261fad6928de', 0, '2022-05-20 17:25:35'),
 	('c9a8b238884f59649f0833f183245fb2bbf775124de0630f84a8c20d9001f5dcfd4fdc0ef3b1aa12', '21a3773365a20a746eb0371f9b9fae936af67a86356c2617ec82c4ce7e27bce5de3c590f459b3a23', 1, '2021-06-12 19:22:59'),
 	('c9ae4e9557dcae557795aa162e6c38b003d534c4cc81f6daa72213d4f9190d896ab871a112a8d3fc', '08537c82d88846cfb2aa9cb4e36ba0db0d808790f6c0a54c8099d63d73d666426fcec10af2080aaa', 1, '2022-04-26 20:30:17'),
 	('cb052796698d95578c6afee0840e1cc371a96c05a3971079f308551f9b009518cb74b75a8e18778d', 'd1e5de76baf423985ab63ee1854ed9d5bf5ceb7c57e3d7199e4c79aea1b65b8b6813830a07941d39', 0, '2021-12-17 15:53:49'),
@@ -2954,6 +3704,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('cd2b04412308b949d3f5f434a47c832d93e3cc3e54363fa6e023552f740c1ffa3c219414f7e26e45', 'b168ed7e80001497512da3026fa0afb7c4480445a9b55e748f28e830e4e89b560b12125e770a8fe1', 1, '2022-02-02 18:35:58'),
 	('cd7bad23789d021da4f561877db45c5a40d120fff748a7f5e543cbbb6f3d9dcbcc126fb93f3f6270', 'ab179912f241e358a9c7863ea6f73bd729d7782a1dd659ad052054e43729f122e844dd5f85a6464b', 1, '2021-10-15 15:31:16'),
 	('ce715179605c0023f0fb064e333c317b4a5f5b637d805eb408d9c814e9f249f72382c6d21a95eebe', '6d947826f545e1b50e8485736554d49038edef341921a04ab301d0fa539f05583d26753d96a9896e', 1, '2022-03-08 18:29:51'),
+	('cf6156050566d36662600c560cd620fa38eb8ecc470ed3d0dd6f2efa4ad8de7a71cfd66f6d9f8ffc', '5b8888852fa2d81a6b3fb3b8f4d0182b278ed1988ad1e383c3e49dd5ff1149ff3b2a8543bdf6788d', 1, '2022-07-06 22:25:49'),
 	('d0020b1cd7c1227deecdd8a78872ce7b0820345a5c4c1169bce6a65ba748bd109c45cc2463e642e3', '4af214e87c1acb491d59d48aa12d217825a99e5382113cff60a6e747e6b0313b1a7fcb72f144f76c', 0, '2021-09-21 14:03:40'),
 	('d05686d618f42fd932b643568a4af19393fd854f209d724866b1af5c4a023a5495d7bb90ab9ae47d', '547724d7c87ac93c359b9eb8b3fbc17c5ea8cba709be71e12189cff73d3d1e46288515f69551bddc', 1, '2022-02-02 18:18:47'),
 	('d05adb5477548fb01d34913d32951d793ed5099f5a76a5d9d256f36ab12df8fd865a6d2547b8374a', '284fd11ec2e9851d3c6ce320a889708d3fdd48cc500427738245220abf08107465d82ea147fc7799', 1, '2022-02-05 16:05:41'),
@@ -2978,6 +3729,7 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('d8edc695a5321fbf8219a04f3af09cd8cd6ae2d3227816a85364b876c4d5ae0bdce0439bd0d8280f', '3b9c78ae80740be6e94f1283e3188f7b565472ef6dc41a24be4f521d6f821a9eaa4f94cdefce4f7a', 0, '2021-05-14 00:25:52'),
 	('d970ae2293e07f24a5506f95c1c30736a1dd2be62d3f4d7f6708176d6f251d667048a5e0a1e5b1c6', '506a045337c693f8b76febc15c7d7c4b738f981c3793045d5db71d89c56a4e1d4fbfeac4630a86e8', 1, '2021-06-26 15:59:35'),
 	('da974ce97594149c1ae0df22ac19519b94e889f34aa21814f02c8d4ddd09179b64cf82ad90e4d34a', 'e76688102a2fbda105ced3d0857830fa67898ca980e09ea944d4a48a105eee98dc739079b55f92ad', 0, '2021-12-02 13:51:35'),
+	('db9adc6f382676d44fc59809d7f517ea7764dfd66fc4fe9a72879f0071111d16681d6d406fe93d64', '059e24bee53c8eb4a3f361c9ade0403bcc210ae77197dbade43e253f4ef6d10b8594864145c51007', 0, '2022-07-28 19:22:36'),
 	('dbb32963dc2b94a9677ca724090a1cc71ed7bc7aa04e7960fc42b84720afaee14ac9adfbfa84dde1', 'dae16128364f5ad2584600dcb98425773a86826deca57b03a1f91ba3ae6ac105b4344f88a6fdfa9a', 0, '2021-07-08 19:17:23'),
 	('dbb7a9460431cd5e3ec7b65a1ac5a27d47fe10ae57e9a212e209aee852dabf35dd6d8ebe2e786595', 'd4651c453d87c716fa4a64e30b0b6a90656be218bee02f01623056f78f99c843e18fa5c82a7e08e3', 1, '2022-02-03 21:20:10'),
 	('ddd9cc7d40a4f5a3883215e36541dab87241f5bc5f981705a17dff3099c8adc728893cc13f99b8d3', '010dcdfa734e70e4ceed5e47a7c9f3774d59c7eb289812eb871713a7d85a1e1e4f0c51ba367491dc', 1, '2022-02-02 20:57:26'),
@@ -3018,12 +3770,14 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('ef8e7c32f33849c4d6bce9c601e81b5a10f767ec88cf7c2873a6b4c053263e0258b9bca95e6a6096', '3623a421b2eeebf46721740a72d0b729fd4655faa9d3c09a19e7e2f7f3ac8b88d1d2b374bed603c3', 1, '2022-04-26 21:51:09'),
 	('efedc4de4a05d9a7b71280c0044cf619e8bbe66b8543a5d67a2bc33d7a1c750262ee057d966daab5', '703de1951966c2043d84568c4f99517b79a4b5f8ba1630e1e9a5fa79f9da3247769b8a8ff170096b', 1, '2021-06-15 20:42:29'),
 	('f031d26d4aae006bd1c364f086b05e3fc5b0b74082cb5536a57de6c9525682421fd328f542ea14d0', '80626d5c3074ae7b34bef5bbd64f1690c73184e7e456118235a9cb3b66843caa7b45fc895804d186', 1, '2021-06-15 22:57:42'),
+	('f0415b4020068cdb65f0784d04c46cbbdb982c9c2af4e30528945c6b2f58333bb7147d5bf9797443', 'c54e6eb5c855bf0d2d140cd8d78ce21c776e77d7ffc508476adf0929ab4e75ec0fa0eb97c539e2a2', 1, '2022-07-23 14:11:11'),
 	('f05fce2a02f275262a82d2db4d1ec853a75f3be1ef8b484665001858a9abfe914a95ff35ee864dcb', '0e9e3a40b3eabc2ef756855fea00388fbeaf2b653b156f22c7e227fcf48a024fa95182ca94aee42f', 1, '2021-10-20 17:54:37'),
 	('f0957d98041d649ad10192d38adccce0146e47c458aa82053a20757ca9bcfe2d3a669da847341464', '043f9e5d86a8cef088bb281adb9d51c4d5b835cc7079adcab562f17cd8ffa16d421486130e8f4811', 0, '2022-02-01 15:41:35'),
 	('f1c6d5f74350811c374cd1b6d590a17fc121fd1ea8d37ecd41ad641f2c8a147769b4e5967e88bbd0', '4fe684e6ca88c870c0f08b4416b51ae8a8e4d54501e23d37b666f48d09b001843cae81aa040915cc', 0, '2021-11-11 14:38:16'),
 	('f2b39cac30f19389dcdb56d7c686cd839be1af882d97bb6696b7cf0d8ef834b11dc73a700a8def8d', '5cacf7ba2883aa1a772fbd8c0874cd4fd1de40c9e395d4dcddd875829b6a8ff89b03360c29e97c35', 1, '2022-01-26 15:50:58'),
 	('f2ee45a1a109febc55f31ad5e550ffd75bb24ff9b1344db7b2c8eaeb388f29de03d566c6f3255bf1', 'fe25023c035a27a1ff44120e7c71b288b554c4a7d0ec8976c79c64e31835f24250bc378bf64f377b', 1, '2021-05-28 15:28:36'),
 	('f3c06118b8fdcd349681eb8ce250498febfb5dc52dcf024467bf96832b1e6e692d9dd4206975b35d', '2cc33e836ce2dc0f206e73f0e517b7f2a8a206aabcc7c63173978b6ff8f9446a0246826df33bd209', 1, '2022-03-18 18:43:49'),
+	('f3d23c7cece8f78a6e73b20c12aba0e5d41979a9a99907ccafb708a652c9b817780642bd8789af8f', '8bde1881727c180093164fd10980de5d869a398f6982830f3491f54011e1b9655e4b4bbd534c9f22', 0, '2022-05-25 15:20:56'),
 	('f3f2e875344fddd885bcf527527453777a2ddd3d7ea98bd719d87053cf9f711b0915726b89b9ac54', 'bf2fa9a1a96ef23a669c392404cb2e7a54798bcb795bb0751fc5d0bb1c9e17c6c166aa601c0ba4db', 1, '2022-02-05 19:34:05'),
 	('f40dadbca3e41c4d820d9c26dfaa25e0843c4e015b2a67a9bdd67d30fb5a454887f14dfc9bf82a91', '4bd292617a49da71fa962f1f327d49c9a27374155e44168aa371faba6dfd3ca7ac0c625b6001c899', 0, '2021-12-02 16:19:12'),
 	('f480de0ed7869f514b440cfb5fa12bfb71f3bb413895d4d85dbee2598f4a487fc5f5e2324a03ec35', '21682b01fa85b8e0c3f0559d0751dde36608af0e0cb612c1a806fe4bdc7f8576ab4563d4566f903e', 1, '2022-02-25 18:29:21'),
@@ -3042,13 +3796,16 @@ INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires
 	('f866d5c5d7afd04cec68ea9841aa0eb411dca7e6910f1b96690e300dcd3414c78d5713badfabf8a4', 'c4a8ed3826b297ff582497f5d8eb027c40a7313cd58a77462fe7b8902a4c3a7bac09cb901b479f2b', 1, '2021-05-26 14:57:36'),
 	('f87e807d88a64b25d8b4d086eb000cc97b03cc30c9ebece855e3d596b01b31792ac2b640aaa6f90b', 'cfd7a0856d016ce58132d6e32f27f525fe7a1a9fc31fc20576ace30cceb13e096a9565e49cb15501', 1, '2021-12-03 13:42:15'),
 	('f9551d3d2bba296189e991de0b67914bd5cce2e020a088ed4bc7edd75ecfd90f150d1e814131c9e7', '79946e6282f4cef2b95fa69ddcd5edd9300f53f94fb6309e72c3e7d6123632bed7659ea2dca86399', 1, '2022-02-02 19:37:11'),
+	('f96ea2f2b4f80ae99db724a38e3ab2ec0f2764a2f47fe56722baa0d38129ef5422767e2d42b11488', '4925f9ce9ccca7e16530b13a59d1355f7326842be04b84b9613f84b99fe02e7530fca193049a42de', 1, '2022-07-30 14:20:54'),
 	('fa1f62f6fe5cefebf8d24a114e038aa163b9eca1206ba975aea47c409500c4dcb46e98b93d65391c', 'f6c45034552be72603ee64c9c82d957703c6ba9c35825a6928a79f1888596752882ace19b2d73cba', 1, '2022-01-25 21:18:19'),
 	('fa6818dc7a6166d4b9e6116979391acf21d8a651e14c59a730c6b82f408f54a839f247891e9a341e', 'a67305ee2313dbff62e05c0d86b7b5c32b92619abd9ddc9492d7edb0d203b6f7bcdbfb01140ec195', 1, '2022-01-26 15:51:25'),
 	('fa95b8de82172a5d961e1666f135c01020beff5a1de968eecfb8387654448831ad77c0becda55282', '2ec40aab1fd88bc5c7faa227a794c02df00ce157160fcc0e6f207ba8e6316f790764060d7afb4fdb', 1, '2021-11-27 15:35:15'),
+	('fbd706288c12abba0b8eceffef8dc142fc1e943cd67998a4f7b31e753a9d110dcde5b0f849b7ec89', 'c495210533888b55857c3af0fec506cfd931e65e79cf7754833028c7d7641b48e3d7bb44530eebfa', 1, '2022-07-28 19:50:54'),
 	('fc67f168c6c2704884fdcf88ae714a817a39710ec1545c4dbf8d560a936d43f4ccb71d63aeeed1ef', 'af130e5e960816ef12c9d0b307c7791d54183612c8a73aa9506a30d853075011da810aecae6944ed', 1, '2021-06-12 14:21:46'),
 	('fc8226d97b3d3403ddad9da5f886ced645058b9a44b88abd6d7bab0085e303614abf554beb3f17ff', '3fe9e4ea9f912298052b613207bc9ebbc3ab2bfd86239f586285a6ed887a0c90d9a23ab8dd80c1a5', 1, '2021-06-15 20:37:06'),
 	('fcdd74cf1443c6f89cac0f91c68e92a6b5db83dcd15162ba0841e60dc7ccea134c6266eb8b6d87fc', '650290689d3135097c6b0f405b3d8d6f2ba1ae0423c520e9db2d6c6ef9f2de6cdbad05615e95b3c4', 1, '2022-02-02 13:42:24'),
 	('fce31996b77a61996bbe46c86d7a4adf561e0880ccbeb1ba6e2f113b8bbe2777496ed033506ae8d9', '43d88aa7c209c368018664056006cbcec58ccc39ae035235cc2a6a5b128e6e5446502e2a634830f3', 1, '2022-02-05 14:54:22'),
+	('fdca7acfbed361462e3af7d5c69e11337ce1a1201dbe223f5dac618203d8ee9bb5ec2809b5ec1f18', 'ec570254b65ace908bdd95e535f0fd6512e15aa633ac7c7ef0192ee359eca6d581011e5638b2020c', 0, '2022-06-11 02:43:20'),
 	('fdcdff4e264efa99b40fb98b49c683ef87ce6219c49b988594758d1fe3edb8f02b0e346db34fd2dd', '32f66acd0ab2e78cb21fe5c60b5c37a292dacc9919c7d40a9b73e9f1733ec2af203fac5a147b2e95', 1, '2022-03-17 19:46:28'),
 	('fdedc7b4cb56eacc1279aa4bbdca1b759796d75f87658dbcd0613b3f67b400567d9178230b9dda72', '90aa3e8a97698814a7d0e09affdb20ee2c1e639e4511369c7aafad214e62e79751c91c8f3ada1b0e', 1, '2022-04-26 21:34:38'),
 	('ff97638b6eba671ac1146a89822f4cfcfa7f9ef943b5d23439b3da602b23565dc7fede6fd09c4dc5', '83135d3423c2a1cea7880618457c383303842ef53059dc5009f61fe77d636450b5e2cb2485f5e6e4', 1, '2021-06-17 15:31:09');
@@ -3145,7 +3902,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla imagen.payments: ~36 rows (aproximadamente)
 /*!40000 ALTER TABLE `payments` DISABLE KEYS */;
@@ -3185,8 +3942,31 @@ INSERT INTO `payments` (`id`, `date`, `type`, `op`, `number`, `path`, `amount`, 
 	(38, '2021-04-12', 'Cheque', '03', 'P03', '161824277860746cda0899b.jpeg', 50.00, 46, 'App\\Invoice', '2021-04-12 15:52:58', '2021-04-12 16:26:21', NULL),
 	(39, '2021-04-14', 'Transferencia', '120', 'P1', '1618436673607762410f181.png', 320.00, 48, 'App\\Invoice', '2021-04-14 21:44:33', '2021-04-14 21:44:33', NULL),
 	(40, '2021-05-03', 'Tarjeta', '1', 'a-1', '1620075196609062bc2fffd.jpeg', 110.00, 52, 'App\\Invoice', '2021-05-03 20:53:16', '2021-05-03 20:53:16', NULL),
-	(43, '2021-05-04', 'Efectivo', '1', 'a1', '16201368266091537a94358.jpeg', 49.45, 13, 'App\\Note', '2021-05-04 14:00:26', '2021-05-04 14:00:26', NULL);
+	(43, '2021-05-04', 'Efectivo', '1', 'a1', '16201368266091537a94358.jpeg', 49.45, 13, 'App\\Note', '2021-05-04 14:00:26', '2021-05-04 14:00:26', NULL),
+	(44, '2021-07-07', 'Transferencia', 'op-101', '101', '162567616960e5d98900fe4.png', 140.55, 63, 'App\\Invoice', '2021-07-07 16:42:50', '2021-07-07 16:42:50', NULL),
+	(45, '2021-07-07', 'Transferencia', 'op-101', '101', '162567618860e5d99c6f98e.png', 1000.00, 63, 'App\\Invoice', '2021-07-07 16:43:08', '2021-07-07 16:43:08', NULL);
 /*!40000 ALTER TABLE `payments` ENABLE KEYS */;
+
+-- Volcando estructura para tabla imagen.printings
+CREATE TABLE IF NOT EXISTS `printings` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `meter_price` decimal(14,2) unsigned NOT NULL,
+  `amount` decimal(14,2) unsigned NOT NULL,
+  `campaign_id` int(10) unsigned DEFAULT NULL,
+  `rental_id` int(10) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `prints_campaign_id_foreign` (`campaign_id`),
+  KEY `prints_rental_id_foreign` (`rental_id`),
+  CONSTRAINT `prints_campaign_id_foreign` FOREIGN KEY (`campaign_id`) REFERENCES `campaigns` (`id`),
+  CONSTRAINT `prints_rental_id_foreign` FOREIGN KEY (`rental_id`) REFERENCES `rentals` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Volcando datos para la tabla imagen.printings: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `printings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `printings` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.products
 CREATE TABLE IF NOT EXISTS `products` (
@@ -3307,9 +4087,9 @@ CREATE TABLE IF NOT EXISTS `product_quotation` (
   PRIMARY KEY (`id`),
   KEY `product_quotation_product_id_foreign` (`product_id`),
   KEY `product_quotation_quotation_id_foreign` (`quotation_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=658 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=666 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla imagen.product_quotation: ~345 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.product_quotation: ~347 rows (aproximadamente)
 /*!40000 ALTER TABLE `product_quotation` DISABLE KEYS */;
 INSERT INTO `product_quotation` (`id`, `quotation_id`, `product_id`, `uuid`, `quantity`, `dimension`, `description`, `material`, `quality`, `finish`, `materialCheck`, `qualityCheck`, `finishCheck`, `price`, `subtotal`, `state`, `price_type`, `type`, `unit`, `cooldown`, `deleted_at`) VALUES
 	(30, 1, 1, 'bf371df0-2042-4de2-b511-eaa847430938', 1, '1.50 x 2.00', NULL, NULL, NULL, NULL, 0, 0, 0, 60.00, 180.00, 1, 'price_with_tax', 'price_with_tax', 0, 0, NULL),
@@ -3651,12 +4431,19 @@ INSERT INTO `product_quotation` (`id`, `quotation_id`, `product_id`, `uuid`, `qu
 	(646, 168, 1, '520259a2-e37c-4fb0-9bf6-c6cd320faef0', 1, '10.00 x 4.00', NULL, 'Acrílico de 5mm, perfil de aluminio champagne, bisagras, tornillos, ramplus, doble contacto, silicona, tek bond.', '720 dpi', 'Cortado de acrílico e instalado en pared como fotomontaje con bisagras para poder mover el panel y un triángulo de soporte, en ambos cuartos de muestras.', 1, 1, 1, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
 	(647, 169, 1, 'e9279949-1606-4763-b757-db97abb7439a', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
 	(648, 170, 1, 'da0dbb3f-9e25-4404-a61e-c480f1cebd32', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
-	(649, 171, 31, 'd3ee9b77-87e2-4c6c-9404-0b36b01f51bf', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 1500.00, 1500.00, 0, 'price_service', 'price_service', 1, 1, NULL),
+	(649, 171, 31, 'd3ee9b77-87e2-4c6c-9404-0b36b01f51bf', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 1500.00, 1500.00, 1, 'price_service', 'price_service', 1, 1, NULL),
 	(650, 172, 2, '44ab1c89-757d-49d2-aec2-c40979d175e1', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 55.00, 2200.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
 	(653, 173, 31, 'f5215239-cc16-4526-b8ed-de17e8bd58fa', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 2500.00, 2500.00, 1, 'price_service', 'price_service', 1, 1, NULL),
 	(655, 174, 1, 'be06a959-e987-42d0-9db9-ea6f0ad290d7', 1, '7.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 55.00, 1540.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
 	(656, 175, 2, '2f8e1092-663b-4ead-ac16-3d38c278fd7f', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 58.00, 2320.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
-	(657, 176, 2, '29212772-1c3e-4882-a5c1-f150e888226d', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 58.00, 2320.00, 1, 'normal_price', 'normal_price', 0, 0, NULL);
+	(657, 176, 2, '29212772-1c3e-4882-a5c1-f150e888226d', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 58.00, 2320.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
+	(659, 178, 13, 'e7e99589-50be-4fa1-aebb-1a17586336ee', 1, '0.00 x 0.00', NULL, NULL, NULL, NULL, 0, 0, 0, 485.00, 485.00, 1, 'price_service', 'normal_price', 1, 0, NULL),
+	(660, 177, 2, '0af60ce2-a19d-484f-b143-36954a6665b3', 1, '0.00 x 0.00', NULL, NULL, NULL, NULL, 0, 0, 0, 58.00, 58.00, 1, 'price_service', 'normal_price', 1, 0, NULL),
+	(661, 179, 7, 'f33150c1-97a5-45ca-bfc4-ed3d46f88b8a', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 95.00, 3800.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
+	(662, 179, 4, 'c1aa019a-eb98-4f49-bc76-f1b4bad2f210', 1, '7.00 x 3.50', NULL, NULL, NULL, NULL, 0, 0, 0, 95.00, 2327.50, 1, 'normal_price', 'normal_price', 0, 0, NULL),
+	(663, 180, 5, '82fdebb5-08dd-4d77-87eb-b3453d6cf3f9', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 95.00, 3800.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
+	(664, 181, 8, '6ccda10c-4086-4faa-b598-7c7898a4d82e', 1, '10.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 110.00, 4400.00, 1, 'normal_price', 'normal_price', 0, 0, NULL),
+	(665, 182, 4, 'a60e0c85-2245-4bc4-b03c-3c1f8e5c7240', 1, '8.00 x 4.00', NULL, NULL, NULL, NULL, 0, 0, 0, 120.00, 3840.00, 1, 'normal_price', 'normal_price', 0, 0, NULL);
 /*!40000 ALTER TABLE `product_quotation` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.profiles
@@ -3711,9 +4498,9 @@ CREATE TABLE IF NOT EXISTS `quotations` (
   KEY `date` (`date`),
   KEY `quotations_office_id_foreign` (`office_id`),
   FULLTEXT KEY `cite` (`cite`)
-) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla imagen.quotations: ~166 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.quotations: ~168 rows (aproximadamente)
 /*!40000 ALTER TABLE `quotations` DISABLE KEYS */;
 INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment`, `date`, `amount`, `discount`, `iva`, `term`, `payment`, `validity`, `note`, `cancelled`, `condition`, `state_id`, `customer_id`, `user_id`, `office_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, 'SCZ-1-20', 'Maria Guzman', '75076273', 'Barrio Guaracachi', '2020-09-11', 180.00, 0.00, NULL, '2020-09-12', 'A contra entrega', '10 dias', 'Banner acabado con tubin', 0, 0, 3, 8, 2, 1, NULL, '2020-09-11 08:55:45', '2021-04-20 11:43:50'),
@@ -3724,8 +4511,8 @@ INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment
 	(7, 'SCZ-6-20', 'MIKAELA CORDERO', '76722731', 'SANTA CRUZ', '2020-09-17', 133.40, 0.00, NULL, '2020-09-19', NULL, NULL, NULL, 0, 1, 3, 2, 2, 1, NULL, '2020-09-17 15:30:47', '2021-05-03 17:20:09'),
 	(8, 'SCZ-7-20', 'Luis Aguilar', '78988344', 'Santa Cruz', '2020-09-18', 318.00, 0.00, NULL, '2020-09-19', NULL, NULL, NULL, 0, 0, 3, 13, 2, 1, NULL, '2020-09-18 11:18:15', '2021-03-24 16:29:43'),
 	(9, 'SCZ-8-20', 'GIANINA  PACHECO', '77550924', 'MOLL LAS  BRISAS SANTA CRUZ', '2020-09-21', 318.00, 0.00, NULL, '2020-09-22', NULL, NULL, NULL, 0, 2, 3, 14, 2, 1, NULL, '2020-09-21 12:48:04', '2021-03-24 11:07:46'),
-	(10, 'SCZ-9-20', 'GIANINA PACHECO', '77550924', 'MOLL LAS BRISAS', '2020-09-22', 280.60, 0.00, NULL, '2020-09-23', NULL, NULL, NULL, 0, 1, 3, 14, 2, 1, NULL, '2020-09-22 11:34:21', '2020-09-23 09:28:43'),
-	(11, 'SCZ-10-20', 'Pablo Antezana', 'Pablo Antezana', 'SANTA CRUZ', '2020-09-22', 535.50, 0.00, NULL, '2020-09-28', 'A contra entrega', '10 dias habiles', 'El acabado debe ser  en forma de forro, de facil colocado', 0, 1, 3, 15, 2, 1, NULL, '2020-09-22 12:22:15', '2020-10-02 08:49:07'),
+	(10, 'SCZ-9-20', 'GIANINA PACHECO', '77550924', 'MOLL LAS BRISAS', '2020-09-22', 280.60, 0.00, NULL, '2020-09-23', NULL, NULL, NULL, 0, 2, 3, 14, 2, 1, NULL, '2020-09-22 11:34:21', '2021-06-11 00:40:07'),
+	(11, 'SCZ-10-20', 'Pablo Antezana', 'Pablo Antezana', 'SANTA CRUZ', '2020-09-22', 535.50, 0.00, NULL, '2020-09-28', 'A contra entrega', '10 dias habiles', 'El acabado debe ser  en forma de forro, de facil colocado', 0, 0, 3, 15, 2, 1, NULL, '2020-09-22 12:22:15', '2021-06-10 22:20:17'),
 	(12, 'SCZ-11-20', 'EHIDY N. DE JUSTINIANO', '70810444', 'LA PAZ', '2020-09-23', 1791.20, 0.00, NULL, '2020-09-25', 'A convenir el cliente', '10 habiles', 'La instalación se realizara en la Paz', 0, 0, 3, 16, 2, 1, NULL, '2020-09-23 13:31:09', '2021-05-07 10:55:40'),
 	(13, 'SCZ-12-20', 'MIKAELA CORDERO', '76722731', 'SANTA CRUZ', '2020-09-23', 392.56, 53.00, NULL, '2020-09-23', NULL, NULL, 'PRECIO NO INCLUYE FACTURA', 0, 1, 3, 2, 2, 1, NULL, '2020-09-23 14:36:53', '2020-09-28 09:48:21'),
 	(14, 'SCZ-13-20', 'Yolanda', '76799869', 'Santa cruz / mercado ramada', '2020-09-25', 1305.00, 0.00, NULL, '2020-10-01', NULL, NULL, NULL, 0, 1, 3, 14, 2, 1, NULL, '2020-09-25 10:23:13', '2020-10-01 10:31:39'),
@@ -3760,8 +4547,8 @@ INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment
 	(43, 'SCZ-42-20', 'ALEJANDRA LANCHERO', '70111791', 'OFICINA SANTA CRUZ', '2020-10-29', 979.00, 79.00, NULL, '2020-11-06', 'TRANSFERENCIA', NULL, NULL, 0, 1, 3, 21, 2, 1, NULL, '2020-10-29 17:48:12', '2020-11-26 08:13:28'),
 	(44, 'SCZ-43-20', 'LUCIA RECACOCHEA', '76086570', 'SANTA CRUZ', '2020-11-03', 679.00, 109.00, NULL, '2020-11-04', NULL, NULL, NULL, 0, 0, 3, 12, 2, 1, NULL, '2020-11-03 12:40:23', '2020-12-18 11:47:20'),
 	(45, 'SCZ-44-20', 'PAMELA COLUMBA', '000000000', 'SANTA CRUZ', '2020-11-04', 250.00, 0.00, NULL, '2020-11-10', 'A convenir el  clientes', NULL, NULL, 0, 2, 3, 34, 2, 1, NULL, '2020-11-04 11:06:10', '2021-01-05 08:42:03'),
-	(47, 'SCZ-46-20', 'MANUEL', '70111791', 'SANTA CRUZ', '2020-11-05', 979.00, 79.00, NULL, '2020-11-10', 'DEPOSITO EN CUENTA', NULL, NULL, 0, 1, 3, 21, 2, 1, NULL, '2020-11-05 13:29:52', '2020-11-24 10:10:09'),
-	(48, 'SCZ-47-20', 'VANIA ROSI', '000000000', 'SANTA CRUZ', '2020-11-05', 672.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 1, 3, 35, 2, 1, NULL, '2020-11-05 15:12:54', '2020-11-24 10:18:27'),
+	(47, 'SCZ-46-20', 'MANUEL', '70111791', 'SANTA CRUZ', '2020-11-05', 979.00, 79.00, NULL, '2020-11-10', 'DEPOSITO EN CUENTA', NULL, NULL, 0, 0, 3, 21, 2, 1, NULL, '2020-11-05 13:29:52', '2021-06-02 17:04:05'),
+	(48, 'SCZ-47-20', 'VANIA ROSI', '000000000', 'SANTA CRUZ', '2020-11-05', 672.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 35, 2, 1, NULL, '2020-11-05 15:12:54', '2021-05-20 13:26:10'),
 	(49, 'SCZ-48-20', 'YOLANDES ALANES', '76789859', 'VALLA  ISABEL AL CATOLICA SANTA CRUZ', '2020-11-10', 1305.00, 0.00, NULL, '2020-11-13', NULL, NULL, 'ORDEN DE TRABAJO  IMAGEN LA PAZ', 0, 0, 3, 14, 2, 1, NULL, '2020-11-10 09:05:26', '2021-04-26 17:41:03'),
 	(50, 'SCZ-49-20', 'LUCIA RECACOCHEA', '76086570', 'EN AGENCIAS DE LA CIUDAD DE LA   PAZ', '2020-11-10', 305.00, 20.00, NULL, '2020-11-11', NULL, NULL, NULL, 0, 0, 3, 12, 2, 1, NULL, '2020-11-10 09:25:34', '2020-12-10 06:54:37'),
 	(51, 'SCZ-50-20', 'ALEJANDRA', 'GO GREAM', 'SANTA CRUZ', '2020-11-11', 88.20, 0.00, NULL, '0001-01-01', 'A convenir el cliente', NULL, NULL, 0, 1, 1, 31, 2, 1, NULL, '2020-11-11 10:02:21', '2020-11-11 10:02:21'),
@@ -3867,7 +4654,7 @@ INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment
 	(159, 'SCZ-144-21', 'sdasdasd', 'asdasdasda', 'asdasda', '2021-02-02', 2200.00, 0.00, NULL, '2021-02-02', NULL, NULL, NULL, 0, 1, 1, 13, 4, 1, NULL, '2021-02-02 15:28:09', '2021-03-11 17:27:03'),
 	(160, 'SCZ-145-21', 'sdfdsfsdf', 'sdfsdfdsfsd', 'fsdfsdfs', '2021-02-04', 1630.40, 30.40, NULL, '2021-02-04', NULL, NULL, NULL, 0, 0, 3, 13, 4, 1, NULL, '2021-02-04 15:33:32', '2021-02-25 10:31:44'),
 	(161, 'SCZ-146-21', 'lesch.zion@gmail.com', 'asdsdasa', 'asdasd', '2021-02-05', 4400.00, 0.00, NULL, '2021-02-05', NULL, NULL, NULL, 0, 0, 3, 13, 4, 1, NULL, '2021-02-05 13:52:35', '2021-02-25 10:31:23'),
-	(162, 'SCZ-147-21', 'fdfgdfgdf', '68774551', 'dfgdfgdfgd', '2021-02-11', 5050.00, 0.00, NULL, '2021-02-11', NULL, NULL, NULL, 0, 2, 3, 64, 4, 1, NULL, '2021-02-11 18:11:26', '2021-02-25 16:20:32'),
+	(162, 'SCZ-147-21', 'fdfgdfgdf', '68774551', 'dfgdfgdfgd', '2021-02-11', 5050.00, 0.00, NULL, '2021-02-11', NULL, NULL, NULL, 0, 1, 3, 64, 4, 1, NULL, '2021-02-11 18:11:26', '2021-07-07 09:51:16'),
 	(163, 'SCZ-148-21', 'kkkkjkj', 'fhffjfjyfyjf', 'jgjgyjgyjgy', '2021-02-24', 4750.00, 0.00, NULL, '2021-02-24', NULL, NULL, NULL, 0, 2, 3, 15, 4, 1, NULL, '2021-02-24 15:49:10', '2021-02-25 17:09:34'),
 	(164, 'SCZ-149-21', 'Pablo', '77073147', 'Oficinas', '2021-02-25', 2320.00, 1120.00, NULL, '2021-02-25', NULL, NULL, NULL, 0, 2, 3, 65, 4, 1, NULL, '2021-02-25 14:59:42', '2021-02-25 15:54:50'),
 	(165, 'SCZ-150-21', 'Jorge', '77078147', 'Oficinas', '2021-02-26', 450.00, 0.00, NULL, '2021-02-26', NULL, NULL, NULL, 0, 0, 3, 84, 4, 1, NULL, '2021-02-26 13:37:42', '2021-03-17 17:05:14'),
@@ -3876,13 +4663,60 @@ INSERT INTO `quotations` (`id`, `cite`, `attends`, `attends_phone`, `installment
 	(168, 'SCZ-153-21', 'Fernando Banegas', '77078147', 'oficinas', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 2, 61, 4, 1, NULL, '2021-03-17 14:09:29', '2021-03-17 14:10:31'),
 	(169, 'SCZ-154-21', 'Manuel Banegas', '68774551', 'Oficinas', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 0, 3, 30, 4, 1, NULL, '2021-03-17 14:15:47', '2021-04-19 11:29:03'),
 	(170, 'SCZ-155-21', 'Toto Banegas', '77078147', 'oficinas', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 0, 3, 23, 4, 1, NULL, '2021-03-17 15:01:16', '2021-03-18 10:21:37'),
-	(171, 'SCZ-156-21', 'Jose Padilla', '69854123', 'Oficinas', '2021-03-17', 1500.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 1, 15, 2, 1, NULL, '2021-03-17 21:02:49', '2021-03-17 21:02:49'),
-	(172, 'LPZ-10-21', 'sdasdasda', 'asdasdasdasd', 'asdasdasda', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 1, 61, 6, 2, NULL, '2021-03-17 21:51:48', '2021-03-17 21:51:48'),
+	(171, 'SCZ-156-21', 'Jose Padilla', '69854123', 'Oficinas', '2021-03-17', 1500.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 2, 15, 2, 1, NULL, '2021-03-17 21:02:49', '2021-07-02 16:37:14'),
+	(172, 'LPZ-10-21', 'sdasdasda', 'asdasdasdasd', 'asdasdasda', '2021-03-17', 2200.00, 0.00, NULL, '2021-03-17', NULL, NULL, NULL, 0, 1, 2, 61, 6, 2, NULL, '2021-03-17 21:51:48', '2021-07-02 16:34:55'),
 	(173, 'SCZ-157-21', 'Pedro Vargas', '77078147', 'Oficina', '2021-04-05', 2500.00, 0.00, NULL, '2021-04-05', NULL, NULL, NULL, 0, 0, 3, 69, 4, 1, NULL, '2021-04-05 20:31:28', '2021-04-12 16:04:33'),
 	(174, 'SCZ-158-21', 'Jorge Cruz', '75246895', 'Oficina', '2021-04-14', 1540.00, 0.00, NULL, '2021-04-14', NULL, NULL, NULL, 0, 1, 2, 15, 4, 1, NULL, '2021-04-14 19:24:04', '2021-04-14 19:50:56'),
 	(175, 'SCZ-159-21', 'Carlos Campos', '33568974', 'Oficinas', '2021-04-14', 2320.00, 0.00, NULL, '2021-04-14', NULL, NULL, NULL, 0, 0, 3, 21, 4, 1, NULL, '2021-04-14 20:21:38', '2021-04-14 16:23:53'),
-	(176, 'SCZ-160-21', 'Toto Banegas', '69053489', 'Oficinas', '2021-04-26', 2320.00, 0.00, NULL, '2021-04-26', NULL, NULL, NULL, 0, 1, 2, 65, 4, 1, NULL, '2021-04-26 21:49:42', '2021-04-26 21:50:16');
+	(176, 'SCZ-160-21', 'Toto Banegas', '69053489', 'Oficinas', '2021-04-26', 2320.00, 0.00, NULL, '2021-04-26', NULL, NULL, NULL, 0, 1, 2, 65, 4, 1, NULL, '2021-04-26 21:49:42', '2021-04-26 21:50:16'),
+	(177, 'SCZ-161-21', 'sxxsxsxs', 'sxsxsxsxsx', 'sxsxsxsx', '2021-06-11', 58.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 2, 3, 30, 4, 1, NULL, '2021-06-11 14:12:05', '2021-06-11 10:21:22'),
+	(178, 'SCZ-162-21', 'dededede', 'dededeffff', 'fffff', '2021-06-11', 485.00, 0.00, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 84, 4, 1, NULL, '2021-06-11 14:12:43', '2021-07-05 17:30:44'),
+	(179, 'SCZ-163-21', 'Jose Melgar', '77845694', 'Oficina Central', '2021-06-24', 6127.50, 0.00, NULL, '2021-06-19', NULL, NULL, NULL, 0, 2, 3, 84, 4, 1, NULL, '2021-06-24 20:52:44', '2021-07-14 15:18:39'),
+	(180, 'SCZ-164-21', 'Maria', '77078147', 'Oficina', '2021-07-14', 3800.00, 0.00, NULL, '2021-07-14', NULL, NULL, NULL, 0, 2, 3, 84, 4, 1, NULL, '2021-07-14 20:00:15', '2021-07-14 17:08:35'),
+	(181, 'LPZ-11-21', 'Fernando', '77078147', 'Oficinas', '2021-07-28', 4400.00, 0.00, NULL, '2021-07-28', NULL, NULL, NULL, 0, 1, 2, 69, 6, 2, NULL, '2021-07-28 20:01:41', '2021-07-28 20:02:47'),
+	(182, 'LPZ-12-21', 'Manuel', '77078147', 'Oficinas', '2021-07-30', 3840.00, 0.00, NULL, '2021-07-30', NULL, NULL, NULL, 0, 1, 2, 84, 6, 2, NULL, '2021-07-30 14:19:14', '2021-07-30 14:20:17');
 /*!40000 ALTER TABLE `quotations` ENABLE KEYS */;
+
+-- Volcando estructura para tabla imagen.rentals
+CREATE TABLE IF NOT EXISTS `rentals` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `date_start` date NOT NULL,
+  `date_end` date NOT NULL,
+  `observation` varchar(128) DEFAULT NULL,
+  `illumination` char(2) NOT NULL,
+  `print` char(2) NOT NULL,
+  `amount_monthly` decimal(14,2) unsigned NOT NULL,
+  `amount_total` decimal(14,2) unsigned NOT NULL,
+  `condition_id` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `state` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `customer_id` int(10) unsigned NOT NULL,
+  `billboard_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `rental_id` int(10) unsigned DEFAULT NULL,
+  `quotation_id` int(10) unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rentals_quotation_id_foreign` (`quotation_id`),
+  KEY `rentals_billboard_id_foreign` (`billboard_id`),
+  KEY `rentals_customer_id_foreign` (`customer_id`),
+  KEY `rentals_user_id_foreign` (`user_id`),
+  KEY `rental_id` (`rental_id`),
+  CONSTRAINT `rentals_billboard_id_foreign` FOREIGN KEY (`billboard_id`) REFERENCES `billboards` (`id`),
+  CONSTRAINT `rentals_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+  CONSTRAINT `rentals_quotation_id_foreign` FOREIGN KEY (`quotation_id`) REFERENCES `quotations` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  CONSTRAINT `rentals_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+
+-- Volcando datos para la tabla imagen.rentals: ~2 rows (aproximadamente)
+/*!40000 ALTER TABLE `rentals` DISABLE KEYS */;
+INSERT INTO `rentals` (`id`, `date_start`, `date_end`, `observation`, `illumination`, `print`, `amount_monthly`, `amount_total`, `condition_id`, `state`, `customer_id`, `billboard_id`, `user_id`, `rental_id`, `quotation_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(21, '2021-04-15', '2021-05-15', NULL, 'SI', 'SI', 1500.00, 1500.00, 1, 1, 65, 536, 7, NULL, NULL, '2021-06-15 14:10:23', '2021-06-15 14:10:25', NULL),
+	(22, '2021-06-12', '2021-06-12', NULL, 'SI', 'SI', 1500.00, 1500.00, 2, 1, 65, 536, 7, NULL, NULL, '2021-07-12 10:22:34', '2021-07-12 10:22:35', NULL),
+	(23, '2021-07-12', '2021-07-12', NULL, 'SI', 'SI', 1700.00, 1700.00, 1, 1, 65, 536, 7, 22, NULL, '2021-07-12 11:50:50', '2021-07-12 11:50:52', NULL),
+	(24, '2021-07-30', '2021-08-30', NULL, 'SI', 'SI', 1600.00, 1600.00, 1, 1, 65, 536, 7, 22, NULL, '2021-07-30 16:18:29', '2021-07-30 16:18:31', NULL);
+/*!40000 ALTER TABLE `rentals` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.states
 CREATE TABLE IF NOT EXISTS `states` (
@@ -3919,9 +4753,9 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   KEY `tasks_work_order_id_foreign` (`work_order_id`),
   CONSTRAINT `tasks_employee_id_foreign` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`),
   CONSTRAINT `tasks_work_order_id_foreign` FOREIGN KEY (`work_order_id`) REFERENCES `work_orders` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.tasks: ~16 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.tasks: ~17 rows (aproximadamente)
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
 INSERT INTO `tasks` (`id`, `description`, `priority`, `completed`, `date_init`, `date_end`, `work_order_id`, `employee_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 'test de tarea', 'Baja', 0, '2021-03-04 11:10:00', NULL, 107, 3, '2021-03-04 15:10:56', '2021-03-04 15:20:59', '2021-03-04 15:20:59'),
@@ -3937,9 +4771,15 @@ INSERT INTO `tasks` (`id`, `description`, `priority`, `completed`, `date_init`, 
 	(11, 'cortar lonas', 'Alta', 1, '2021-03-17 11:07:00', '2021-03-17 11:17:53', 111, 5, '2021-03-17 11:07:31', '2021-03-17 11:17:53', NULL),
 	(12, 'sfsdfsf', 'Baja', 1, '2021-04-09 13:53:00', '2021-04-09 13:54:34', 110, 1, '2021-04-09 13:53:17', '2021-04-09 13:54:34', NULL),
 	(13, 'dsfsdfds', 'Baja', 1, '2021-04-14 16:52:00', '2021-04-14 15:51:59', 113, 1, '2021-04-14 15:51:43', '2021-04-14 15:51:59', NULL),
-	(14, 'imprimir en maquina', 'Baja', 1, '2021-04-26 10:00:00', '2021-04-26 17:51:20', 115, 1, '2021-04-26 17:51:02', '2021-04-29 11:26:29', NULL),
-	(15, 'sdfsdfsd', 'Baja', 1, '2021-04-29 11:25:00', '2021-04-29 11:29:38', 115, 1, '2021-04-29 11:25:04', '2021-04-29 11:29:38', NULL),
-	(16, 'sefsf', 'Media', 1, '2021-04-29 11:26:00', '2021-04-29 11:29:38', 115, 8, '2021-04-29 11:26:29', '2021-04-29 11:29:38', NULL);
+	(14, 'imprimir en maquina', 'Baja', 1, '2021-04-26 10:00:00', '2021-04-26 17:51:20', 115, 1, '2021-04-26 17:51:02', '2021-06-24 14:39:19', NULL),
+	(15, 'sdfsdfsd', 'Baja', 1, '2021-04-29 11:25:00', '2021-04-29 11:29:38', 115, 1, '2021-04-29 11:25:04', '2021-06-24 14:39:20', NULL),
+	(16, 'sefsf', 'Media', 1, '2021-04-29 11:26:00', '2021-04-29 11:29:38', 115, 8, '2021-04-29 11:26:29', '2021-06-24 14:39:20', NULL),
+	(17, 'dxdexexexexe', 'Media', 0, '2021-06-11 10:14:00', NULL, 116, 2, '2021-06-11 10:14:14', '2021-06-11 10:14:28', '2021-06-11 10:14:28'),
+	(18, 'sdadasda', 'Media', 0, '2021-06-24 14:39:00', NULL, 115, 3, '2021-06-24 14:39:20', '2021-06-24 14:39:20', NULL),
+	(19, 'cortas los adhesivos', 'Media', 1, '2021-07-17 17:30:00', '2021-07-02 16:43:55', 120, 3, '2021-07-02 15:31:27', '2021-07-02 16:43:55', NULL),
+	(20, 'imprimir', 'Alta', 1, '2021-07-08 12:18:00', '2021-07-08 12:19:33', 118, 1, '2021-07-08 12:19:02', '2021-07-08 12:19:33', NULL),
+	(21, 'imprimir adhesivo', 'Alta', 0, '2021-07-28 16:03:00', NULL, 122, 1, '2021-07-28 16:03:37', '2021-07-28 16:03:37', NULL),
+	(22, 'imprimir', 'Alta', 0, '2021-07-30 10:22:00', NULL, 123, 8, '2021-07-30 10:22:40', '2021-07-30 10:22:40', NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.users
@@ -3964,7 +4804,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `FK_users_offices` (`office_id`),
   KEY `users_profile_id_foreign` (`profile_id`),
   FULLTEXT KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla imagen.users: ~17 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
@@ -3977,7 +4817,7 @@ INSERT INTO `users` (`id`, `name`, `forename`, `surname`, `email`, `phone`, `ema
 	(6, 'yolanda', 'Yolanda', 'Alanes', 'yalanes@imagenpublicidad.com.bo', '76789859', NULL, '$2y$10$TzHLGzIX3UFgM/ghadNBJOuWtsjIeBePvEAAm.Hhzbz2yRX/BkwQa', NULL, 1, 2, 11, NULL, '2020-10-16 09:39:26', '2021-03-17 19:33:23'),
 	(7, 'jorge', 'Jorge', 'Sillerico', 'jorgescv17@gmail.com', '77707982', NULL, '$2y$10$TzHLGzIX3UFgM/ghadNBJOuWtsjIeBePvEAAm.Hhzbz2yRX/BkwQa', NULL, 1, 2, 10, NULL, '2020-10-16 09:42:14', '2021-03-17 19:31:20'),
 	(8, 'geraldine', '', '', 'geraldine.dlbg1@gmail.com', '60587460', NULL, '$2y$10$CGpCHxO58r1uZRQZdsCjQOLG.rOa7iK5sfwWlGlWUHjKJ8SN1TOcu', NULL, 1, 2, 10, NULL, '2020-10-16 10:23:47', '2020-10-16 10:23:47'),
-	(9, 'pablo', '', '', 'contactos@imagenpublicidad.com.bo', '76789402', NULL, '$2y$10$m6HZzamRmO7quiUsM.buGOO8kjmHXSJjRVkKCVb8FO7b57KmgSrk2', NULL, 1, 2, 10, NULL, '2020-10-28 15:38:05', '2020-10-28 15:38:05'),
+	(9, 'pablo', '', '', 'contactos@imagenpublicidad.com.bo', '76789402', NULL, '$2y$10$sFtxmeFsLEwdq.mxYV3kQe/M4pvm1pMfCOkvZEmWmDKQaFl3/LXZq', NULL, 1, 2, 10, NULL, '2020-10-28 15:38:05', '2020-10-28 15:38:05'),
 	(10, 'maria', '', '', 'publicidadvialsantacruz@gmail.com', '77110440', NULL, '$2y$10$0IWYLND4VsoIBuU04Y157eyRZOUyAEsiLlAB/bQ1fRem5P.S7zD72', NULL, 1, 1, 10, NULL, '2020-11-04 16:27:40', '2020-11-04 16:27:40'),
 	(11, 'moises', 'Moises', 'Condori', 'contabilidad@imagenpublicidad.com.bo', '77530026', NULL, '$2y$10$TzHLGzIX3UFgM/ghadNBJOuWtsjIeBePvEAAm.Hhzbz2yRX/BkwQa', NULL, 1, 1, 13, NULL, '2020-11-27 09:28:20', '2021-03-17 19:34:18'),
 	(12, 'michelle', '', '', 'mmendoza.arj@gmail.com', '69920846', NULL, '$2y$10$rit5LXDUe9Q.eo/Ftn3kGOpqf1FczNbu9cGdUmJWw2hBuebXXUAdK', NULL, 1, 2, 10, NULL, '2020-12-02 07:28:15', '2020-12-02 07:28:15'),
@@ -3985,7 +4825,8 @@ INSERT INTO `users` (`id`, `name`, `forename`, `surname`, `email`, `phone`, `ema
 	(14, 'carlosm', 'Carlos', 'Miranda', 'cmialk@hotmail.com', '69756676', NULL, '$2y$10$TzHLGzIX3UFgM/ghadNBJOuWtsjIeBePvEAAm.Hhzbz2yRX/BkwQa', NULL, 1, 2, 13, NULL, '2020-12-02 09:15:29', '2021-03-17 19:34:30'),
 	(15, 'carmen', '', '', 'carmenrodrigo31@gmail.com', '77536945', NULL, '$2y$10$QfAE4/dCYBlSrwd9KRXKtOxr58qmCeXrDFBu5Dc.wMnMoLwBSQ.bG', NULL, 1, 2, 10, NULL, '2020-12-02 10:23:44', '2020-12-02 10:23:44'),
 	(16, 'jose', 'Jose Alfredo', 'Saravia Mendoza', 'jose@gmail.com', '77856378', NULL, '$2y$10$/KofdjbFzeUQ98CZLdJGMu5b3xUIZrJrTYVOTY1hlYjGZiV778LMC', NULL, 1, 1, 10, NULL, '2021-02-01 19:21:50', '2021-02-01 19:21:50'),
-	(17, 'william', 'William', 'Rojas', 'sapo@gmail.com', '77078147', NULL, '$2y$10$rnuVhRAvYad88vb7Ti/Yg.2zW3vfIA0uFJioqivLcAbubapl.CaG6', NULL, 1, 1, 12, NULL, '2021-04-26 20:19:29', '2021-04-26 20:59:55');
+	(17, 'william', 'William', 'Rojas', 'sapo@gmail.com', '77078147', NULL, '$2y$10$rnuVhRAvYad88vb7Ti/Yg.2zW3vfIA0uFJioqivLcAbubapl.CaG6', NULL, 1, 1, 12, NULL, '2021-04-26 20:19:29', '2021-04-26 20:59:55'),
+	(18, 'wilson', 'Wilson', 'Sorioco', 'wilson@gmail.com', '73686295', NULL, '$2y$10$sFtxmeFsLEwdq.mxYV3kQe/M4pvm1pMfCOkvZEmWmDKQaFl3/LXZq', NULL, 1, 1, 12, NULL, '2021-07-08 15:26:58', '2021-07-08 15:26:58');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Volcando estructura para tabla imagen.vouchers
@@ -4004,7 +4845,7 @@ CREATE TABLE IF NOT EXISTS `vouchers` (
 -- Volcando datos para la tabla imagen.vouchers: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `vouchers` DISABLE KEYS */;
 INSERT INTO `vouchers` (`id`, `starting_number`, `office_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(1, 15, 1, '2020-12-08 20:00:00', '2020-12-08 20:00:00', NULL),
+	(1, 19, 1, '2020-12-08 20:00:00', '2020-12-08 20:00:00', NULL),
 	(2, 1, 2, '2020-12-08 20:00:00', '2020-12-08 20:00:00', NULL);
 /*!40000 ALTER TABLE `vouchers` ENABLE KEYS */;
 
@@ -4208,9 +5049,9 @@ CREATE TABLE IF NOT EXISTS `work_orders` (
   KEY `work_orders_city_id_foreign` (`city_id`),
   KEY `work_orders_quotation_id_foreign` (`quotation_id`),
   FULLTEXT KEY `number` (`number`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla imagen.work_orders: ~112 rows (aproximadamente)
+-- Volcando datos para la tabla imagen.work_orders: ~114 rows (aproximadamente)
 /*!40000 ALTER TABLE `work_orders` DISABLE KEYS */;
 INSERT INTO `work_orders` (`id`, `number`, `opening_date`, `estimated_date`, `closing_date`, `type_work`, `note`, `name_staff`, `address_work`, `quotation_id`, `city_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
 	(1, '1', '2020-09-11', '2020-09-11', '2020-09-21', 'Impresión y armado de banner', NULL, NULL, NULL, 1, NULL, NULL, '2020-09-21 10:04:59', '2020-09-21 10:06:22'),
@@ -4324,7 +5165,15 @@ INSERT INTO `work_orders` (`id`, `number`, `opening_date`, `estimated_date`, `cl
 	(112, '112', '2021-04-12', '2021-04-12', '2021-04-12', 'ghghjgjg', NULL, NULL, NULL, 173, NULL, NULL, '2021-04-12 19:09:52', '2021-04-12 19:10:01'),
 	(113, '113', '2021-04-14', '2021-04-14', NULL, 'sdfsdfs', NULL, NULL, NULL, 174, NULL, NULL, '2021-04-14 19:51:10', '2021-04-14 19:51:10'),
 	(114, '114', '2021-04-14', '2021-04-14', '2021-04-14', 'asdasdasasdas', NULL, NULL, NULL, 175, NULL, NULL, '2021-04-14 20:23:10', '2021-04-14 20:23:12'),
-	(115, '115', '2021-04-26', '2021-04-28', NULL, 'Impresion', NULL, NULL, NULL, 176, NULL, NULL, '2021-04-26 21:50:33', '2021-04-26 21:50:33');
+	(115, '115', '2021-04-26', '2021-04-28', NULL, 'Impresion', NULL, NULL, NULL, 176, NULL, NULL, '2021-04-26 21:50:33', '2021-04-26 21:50:33'),
+	(116, '116', '2021-06-12', '2021-06-11', '2021-06-11', 'ededededede', NULL, NULL, NULL, 177, NULL, NULL, '2021-06-11 14:13:54', '2021-06-11 14:14:31'),
+	(117, '117', '2021-06-19', '2021-06-26', '2021-06-11', 'edededede', NULL, NULL, NULL, 178, NULL, NULL, '2021-06-11 14:15:26', '2021-06-11 14:15:29'),
+	(118, '118', '2021-06-25', '2021-06-27', '2021-07-08', 'Impresion de lona', NULL, NULL, NULL, 179, NULL, NULL, '2021-06-25 18:15:41', '2021-07-08 16:19:55'),
+	(119, '119', '2021-07-03', '2021-07-02', NULL, 'Impresion', NULL, NULL, NULL, 172, NULL, NULL, '2021-07-02 16:35:11', '2021-07-02 16:35:11'),
+	(120, '120', '2021-07-02', '2021-07-04', NULL, 'Tecnico', NULL, NULL, NULL, 171, NULL, NULL, '2021-07-02 16:37:26', '2021-07-02 16:37:26'),
+	(121, '121', '2021-07-14', '2021-07-15', '2021-07-14', 'impresion', NULL, NULL, NULL, 180, NULL, NULL, '2021-07-14 20:01:02', '2021-07-14 20:01:06'),
+	(122, '122', '2021-07-28', '2021-07-29', NULL, 'Impresion', NULL, NULL, NULL, 181, NULL, NULL, '2021-07-28 20:03:14', '2021-07-28 20:03:14'),
+	(123, '123', '2021-07-30', '2021-08-01', NULL, 'impresion de adhesivo', NULL, NULL, NULL, 182, NULL, NULL, '2021-07-30 14:20:45', '2021-07-30 14:20:45');
 /*!40000 ALTER TABLE `work_orders` ENABLE KEYS */;
 
 -- Volcando estructura para disparador imagen.after_invoice_insert

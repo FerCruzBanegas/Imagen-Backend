@@ -80,7 +80,7 @@
 	                        <td class="text-content">{{ $billboard['zone'] }}</td>
 	                        <td class="text-content">{{ $billboard['location'] }}</td>
 	                        <td class="text-content">{{ $billboard['dimension'] }}</td>
-	                        <td class="text-content">{{ number_format($billboard['price'], 2, '.', ',') }}</td>
+	                        <td class="text-content">{{ $billboard['price'] }}</td>
                             <td class="text-content">{{ $billboard['illumination'] }}</td>
                             <td class="text-content">{{ $billboard['state'] }}</td>
                             <td class="text-content">{{ $billboard['city'] }}</td>

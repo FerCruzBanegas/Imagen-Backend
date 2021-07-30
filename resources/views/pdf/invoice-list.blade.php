@@ -67,8 +67,9 @@
         @endphp
         <thead class="text-center" style="font-weight: bold;">
           <tr>
-            <td width="130px">NÚMERO</td>
+            <td width="100px">NÚMERO</td>
             <td width="70px">FECHA</td>
+            <td width="100px">RAZÓN S.</td>
             <td width="70px">ESTADO</td>
             <td width="130px">CLIENTE</td>
             <td width="100px">COTIZACIÓN</td>
@@ -83,6 +84,7 @@
             <tr style="page-break-inside: avoid;">
               <td class="text-content">{{ $invoice['number'] }}</td>
               <td class="text-content">{{ $invoice['date'] }}</td>
+              <td class="text-content">{{ $invoice['nit_name'] }}</td>
               <td class="text-content">{{ $invoice['state'] }}</td>
               <td class="text-content">{{ $invoice['customer'] }}</td>
               <td class="text-content">{{ $invoice['cite'] }}</td>
@@ -90,7 +92,7 @@
             </tr>
           @endforeach
           <tr>
-            <td style="font-weight: bold; font-size: 20px; text-align: right; padding-right: 20px;" colspan="5">TOTAL (BS):</td>
+            <td style="font-weight: bold; font-size: 20px; text-align: right; padding-right: 20px;" colspan="6">TOTAL (BS):</td>
             <td style="font-weight: bold; font-size: 20px; text-align: center;">{{ number_format($total, 2, '.', ',') }}</td>
           </tr>
         </tbody>

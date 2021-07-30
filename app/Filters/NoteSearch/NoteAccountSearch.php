@@ -13,9 +13,16 @@ class NoteAccountSearch extends SearchMorph
     {
         if ($request->filled('sort')) {
             $sort = $request->input('sort');
-            return $query->where('cancelled', 0)->orderBy($sort[0]['field'], $sort[0]['dir'])->checklist();
+            // return $query->where('cancelled', 0)->orderBy($sort[0]['field'], $sort[0]['dir'])->checklist();
+            return $query->where(function($q) {
+                $q->where('cancelled', 0)
+                  ->where('accounts', 1);
+            })->orderBy($sort[0]['field'], $sort[0]['dir'])->checklist();
         } else {
-            return $query->where('cancelled', 0)->orderBy('id', 'DESC')->checklist();
+            return $query->where(function($q) {
+                $q->where('cancelled', 0)
+                  ->where('accounts', 1);
+            })->orderBy('id', 'DESC')->checklist();
         }
     }
     

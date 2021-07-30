@@ -15,6 +15,7 @@ class InvoiceUpdateRequest extends FormRequest
     {
         $rules = [
             'invoice.date' => 'required|date_format:Y-m-d',
+            'invoice.nit' => 'required|min:3|max:16',
             'invoice.nit_name' => 'nullable|min:3|max:120',
             'invoice.title' => 'nullable|max:120',
             'invoice.footer' => 'nullable|max:120',

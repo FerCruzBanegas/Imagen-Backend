@@ -22,6 +22,19 @@ class BillboardTransformer extends Transformer
               $state = "No Disponible";
         };
 
+        if ($data['customers']) {
+            $img = public_path('img/billboards/').$data['img_customer'];
+        } else if ($data['users']){
+            $img = public_path('img/billboards/').$data['img_user'];
+        } else {
+            if (is_null($data['img_customer']) && is_null($data['img_user'])) {
+                $img = public_path('img/').'no-image.jpg';
+            } else {
+                $img = public_path('img/billboards/').$data['img_customer'];
+            }
+        }
+        
+
         $user = auth()->user();
 
         return [
@@ -29,9 +42,10 @@ class BillboardTransformer extends Transformer
             'zone' => $data['zone'],
             'location' => $data['location'],
             'dimension'    => $data['dimension'],
-            'price' => $data['price'],
+            'price' => number_format($data['price'], 2, '.', ','),
             'illumination' => ($data['illumination']) ? 'SI' : 'NO',
             'state' => $state,
+            'img' => $img,
             'city' => $data['city']['name'],
             'type' => $data['billboard_type']['description'],
             'user' => [

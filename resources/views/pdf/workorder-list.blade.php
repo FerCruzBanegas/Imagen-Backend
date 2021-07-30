@@ -58,7 +58,7 @@
 <body>
     <div class="invoice-box">
         <div class="car-items">
-        	<div style="border: 1px solid black; border-bottom: none; text-align: center; font-size: 30px; padding: 20px; font-weight: bold;">LISTA DE ORDEN DE TRABAJO</div>
+        	<div style="border: 1px solid black; border-bottom: none; text-align: center; font-size: 30px; padding: 20px; font-weight: bold;">LISTA TRABAJOS PENDIENTES</div>
             <table>
                 <thead class="text-center" style="font-weight: bold;">
                     <tr>
@@ -80,7 +80,12 @@
 	                        <td class="text-content">{{ $workOrder['estimated_date'] }}</td>
 	                        <td class="text-content">{{ $workOrder['closing_date'] }}</td>
                             <td class="text-content">{{ $workOrder['type_work'] }}</td>
-                            <td class="text-content">{{ $workOrder['employee'] }}</td>
+                            <td class="text-content">
+                            @foreach($workOrder['employees'] as $index => $employee)
+                                @php($total = $index + 1) 
+                                <span>{{ $employee['name'] }} {{ $total < count($workOrder['employees']) ? ',' : '' }}</span>
+                            @endforeach
+                            </td>
 	                    </tr>
 	                @endforeach
                 </tbody>

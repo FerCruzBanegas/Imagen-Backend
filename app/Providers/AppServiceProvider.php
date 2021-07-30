@@ -10,6 +10,7 @@ use App\Observers\NoteObserve;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Schema;
+// use Illuminate\Database\Eloquent\Builder;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,6 +46,10 @@ class AppServiceProvider extends ServiceProvider
                 ]
             );
         });
+
+        // Builder::macro('withWhereHas', function($relation, $constraint) {
+        //     $this->whereHas($relation, $constraint)->with([$relation => $constraint]);
+        // });
 
         Invoice::observe(InvoiceObserver::class);
         Note::observe(NoteObserve::class);

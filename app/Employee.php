@@ -52,7 +52,6 @@ class Employee extends Model
         return $this->hasMany(Task::class);
     }
 
-    //cambio aqui
     public function work_orders()
     {
         return $this->belongsToMany(WorkOrder::class);

@@ -30,6 +30,12 @@ class QuotationService
         return $export->options()->letter()->download();
     }
 
+    public function singlePdfSummaryDownload(Quotation $quotation) 
+    {
+        $export = new PdfExport('pdf.quotation-summary', ['quotation' => $quotation]);
+        return $export->options()->letter()->download();
+    }
+
     public function manyPdfDownload(Request $request) 
     {
         if (empty($request->quotation)) {

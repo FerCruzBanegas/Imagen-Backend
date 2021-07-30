@@ -95,7 +95,7 @@
 <body>
   @foreach($billboards as $billboard)
     <div class="new-page">
-      <img src="http://siscoimagen.com/assets/common/img/head.png" />
+      <img src="{{url('/img/head.png')}}" />
       <div class="container">
         <div class="left">CÓDIGO: <span style="display:inline-block; float: right;">{{ $billboard['code'] }}</span></div>
           <div class="right">
@@ -106,10 +106,10 @@
               <span style="font-size: 18px; font-weight: bold;">Correo: {{ $billboard['user']['email'] }}</span>
             </p>
           </div>
-          <div class="center">ESPACIOS DISPONIBLES "SANTA CRUZ DE LA SIERRA"</div>
+          <div class="center">ESPACIO {{ strtoupper($billboard['state']) }} "{{ strtoupper($billboard['city']) }}"</div>
         </div>
         <div style='width:100%; text-align:center;'>
-          <img style='height: 600px;' src="https://www.siscoimagen.com/assets/images/uploads/USUARII.jpg"/>
+          <img style='height: 600px;' src="{{$billboard['img']}}"/>
         </div>
         <div style="width: 100%;">
           <table class="styled-table">
@@ -153,9 +153,9 @@
         </div>
         <div class="qr">
           <div style="margin-left:70%; margin-right: 0;">
-          {!! QrCode::size(220)->eye('circle')->style('dot')->generate('jajajajaj'); !!}
+          {!! QrCode::size(200)->eye('circle')->style('round')->generate('jajajajaj'); !!}
           </div>
-      </div>
+        </div>
       </div>
     </div>
   @endforeach

@@ -173,7 +173,8 @@ class TestController extends Controller
 
     public function generateCodeControl() 
     {
-    	$codigocontrol = $this->generar('457401600000321', '9470', '3011098', '2016/04/21', '42366', '(B{$$pp9i@-[%W48e]B4t2DFCZ+fKMM4J%sLK#I\2CyEk\Z=8=WXHGbVtTttXGQW');
+      $monto = round(360);
+    	$codigocontrol = $this->generar('361401100197939', '269', '2533461', '2021/07/22', $monto, '\nSSHWH$C6rj4EAEn(QscU\))8CUNL%mLL8cXR7288((ZH83mX*H=2#7{KKJXku=');
     	// $codigocontrol = $this->generar('359401600000460', '6255', '1013101027', '2016/02/27', '8067', 'FR5g)BD=%ee%e(uAeMKeMU9\L[7QMUB@)GLRz=8L(Iz)Z@f[4QS$JursIYBSswh6');
     	// $codigocontrol = $this->generar('146401600000377', '5132', '1028703022', '2016/03/18', '12049', 'EY7Cf4N$CjSFs5P_G*@V=M4)@S=vd8=2XHP5+xNrPM$gnn8+%tIS*D=B7Zu4[+3N');
     	// $codigocontrol = $this->generar('295401600000428', '3433', '963197', '2015/12/07', '58393', 'D%PubHHZcX%PF\Vmd35SqB5#[E34iTI*E\VFYDGAL_-8DmEe(AVQg[ZQ-xvN=Dr9');
@@ -190,19 +191,31 @@ class TestController extends Controller
 
     public function index()
     {
-        $customer = \App\Customer::find(21);
-        $data = $this->service->getAccounts($customer);
+        // $customer = \App\Customer::find(21);
+        // $data = $this->service->getAccounts($customer);
 
-        return view('pdf.test2', compact('data'));
+        // return view('pdf.test2', compact('data'));
+        return view('pdf.test3');
     }
 
 
     public function download()
     {
+      // $customer = \App\Customer::find(21);
+      // $data = $this->service->getAccounts($customer);
+      
+    	// $pdf = PDF::loadView('pdf.billboard-photo', compact('data'))
+	    //    ->setOption('margin-top', 1)
+	    //    ->setOption('margin-bottom', 1)
+	    //    ->setOption('margin-left', 1)
+	    //    ->setOption('margin-right', 1)
+	    //    ->setPaper('letter')
+	    //    ->setOrientation('landscape');
+      //   return $pdf->download('test.pdf');
       $customer = \App\Customer::find(21);
       $data = $this->service->getAccounts($customer);
       
-    	$pdf = PDF::loadView('pdf.billboard-photo', compact('data'))
+    	$pdf = PDF::loadView('pdf.test3')
 	       ->setOption('margin-top', 1)
 	       ->setOption('margin-bottom', 1)
 	       ->setOption('margin-left', 1)

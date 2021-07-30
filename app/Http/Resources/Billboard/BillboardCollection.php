@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Billboard;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use App\Http\Resources\Billboard\BillboardResource;
+use App\Http\Resources\Billboard\BillboardDetailResource;
 
 class BillboardCollection extends ResourceCollection
 {
@@ -11,7 +11,7 @@ class BillboardCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection->transform(function($billboard){
-                return new BillboardResource($billboard);
+                return new BillboardDetailResource($billboard);
             }),
         ];
     }

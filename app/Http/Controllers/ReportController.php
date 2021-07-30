@@ -65,6 +65,7 @@ class ReportController extends ApiController
             ->where(function($query) use ($request) {
                 $query->whereDate('n.date', '>=', $request->initial_date)
                   ->whereDate('n.date', '<=', $request->final_date)
+                  ->where('n.accounts', 1)
                   ->whereNull('n.deleted_at');
             })
             ->groupBy('n.id')
@@ -79,7 +80,7 @@ class ReportController extends ApiController
     {
         //cambiar vendedor tabla cotizacion
         $quotations = DB::table('invoices AS i')
-            ->select(DB::raw('UPPER(c.business_name) as cliente'), DB::raw('IFNULL(UPPER(i.nit_name), UPPER(c.business_name)) as "razón social"'), 'i.number AS número', DB::raw('(CASE i.state_id WHEN 1 THEN "VÁLIDA" ELSE "ANULADA" END) as estado'), DB::raw('DATE_FORMAT(i.date,"%d/%m/%Y") as fecha'), 'i.summary as detalle', 'u.name as vendedor', DB::raw('FORMAT(i.total, 2) as monto'))
+            ->select(DB::raw('UPPER(c.business_name) as cliente'), DB::raw('IFNULL(UPPER(i.nit_name), UPPER(c.business_name)) as "razón social"'), 'i.number AS número', DB::raw('(CASE i.state_id WHEN 1 THEN "VÁLIDA" ELSE "ANULADA" END) as estado'), DB::raw('DATE_FORMAT(i.date,"%d/%m/%Y") as fecha'), 'i.summary as detalle', 'u.name as vendedor', DB::raw('(CASE i.state_id WHEN 1 THEN FORMAT(i.total, 2) ELSE "0" END) as monto'))
             ->join('customers AS c', 'c.id', '=', 'i.customer_id')
             ->join('quotations AS q', 'q.id', '=', 'i.quotation_id')
             ->join('users AS u', 'u.id', '=', 'q.user_id')

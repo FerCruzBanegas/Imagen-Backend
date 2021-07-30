@@ -58,6 +58,7 @@ class InvoiceTransformer extends Transformer
             'date' => Carbon::parse($data['date'])->format('d/m/Y'),
             'total' => $data['total'],
             'state' => $data['state_id'] === 1 ? 'VÁLIDO' : 'ANULADO',
+            'nit_name' => is_null($data['nit_name']) ? $data['customer']['business_name'] : $data['nit_name'],
             'customer' => $data['customer']['business_name'],
             'cite' => $data['quotation']['cite'],
         ];

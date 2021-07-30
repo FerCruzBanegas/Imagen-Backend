@@ -15,14 +15,23 @@ class BillboardRequest extends FormRequest
     {
         $rules = [
             'zone' => 'required|min:5|max:64',
-            'location' => 'required|min:8|max:16',
-            'dimension' => 'required|min:5|max:64',
-            'price' => 'required|date_format:Y-m-d',
-            'illumination' => 'required|max:13|regex:/^-?[0-9]+(?:\.[0-9]{1,2})?$/',
-            'city_id' => 'required',
+            'location' => 'required|min:5|max:128',
+            'dimension' => 'required|min:5|max:32',
+            'price' => 'required|max:15|regex:/^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$/',
+            'illumination' => 'required|integer',
+            'city_id' => 'required|integer',
             'billboard_type_id' => 'required|integer',
         ];
 
         return $rules;
+    }
+
+    public function attributes()
+    {
+        return [
+            'zone' => 'zona',
+            'billboard_type_id' => 'tipo',
+            'illumination' => 'illuminación',
+        ];
     }
 }

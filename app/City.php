@@ -15,7 +15,7 @@ class City extends Model
     protected $hidden = ['deleted_at'];
 
     protected $fillable = [
-        'name',
+        'name', 'code_city'
     ];
 
     public static function listCities()

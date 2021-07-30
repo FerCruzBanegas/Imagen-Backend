@@ -15,7 +15,7 @@ class Note extends Model
     protected $hidden = ['deleted_at'];
 
     protected $fillable = [
-        'number', 'date', 'total', 'discount', 'nit', 'cancelled', 'summary', 'voucher_id', 'customer_id', 'user_id', 'quotation_id', 'closing_date' 
+        'number', 'date', 'total', 'discount', 'nit', 'cancelled', 'summary', 'accounts', 'voucher_id', 'customer_id', 'user_id', 'quotation_id', 'closing_date' 
     ];
 
     public function scopeDesc($query)

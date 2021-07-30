@@ -88,7 +88,7 @@
         </div>
         <div class="leftdiv" style="margin-top: 0;">
           <div style="color: #000; font-size: 19px; font-weight: bold; text-decoration: underline;">ESTADO DE CUENTAS</div>
-          @if(!is_null($customer))<div style="font-weight: bold;">CLIENTE: {{ $customer }}</div>@endif
+          @if(!is_null($customer))<div style="font-weight: bold;">CLIENTE: {{ $customer['business_name'] }}</div>@endif
           <div style="font-weight: bold;">(Expresado en Bolivianos)</div>
           <div style="font-weight: bold;">Desde: {{ date("d/m/Y", strtotime($date['initial_date'])) }} al {{ date("d/m/Y", strtotime($date['final_date'])) }}</div>
         </div>

@@ -242,6 +242,11 @@ class QuotationController extends ApiController
         return $this->service->singlePdfDownload($quotation);
     }
 
+    public function quotationSummaryPdf(Quotation $quotation)
+    {
+        return $this->service->singlePdfSummaryDownload($quotation);
+    }
+
     public function listPdf(Request $request)
     {
         return $this->service->manyPdfDownload($request);

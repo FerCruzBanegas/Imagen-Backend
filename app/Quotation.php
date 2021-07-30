@@ -116,7 +116,7 @@ class Quotation extends Model
 
     public function invoices()
     {
-        return $this->hasMany(Invoice::class);
+        return $this->hasMany(Invoice::class)->where('state_id', 1);
     }
 
     public function receipt()

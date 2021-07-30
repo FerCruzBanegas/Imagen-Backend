@@ -391,7 +391,7 @@ Route::get('test', function() {
 	// 	return $value->completed === 1;
 	// });
 	// $data = \App\Customer::with('invoices', 'notes')->whereIn('id', [21])->get();
-	$customer = \App\Customer::find(21);
+	$customer = \App\Quotation::where('office_id', 1)->get();
 
 	// return json_decode('[[0,1,2,3,4,5,6,7,8,9],[1,2,3,4,0,6,7,8,9,5],[2,3,4,0,1,7,8,9,5,6],[3,4,0,1,2,8,9,5,6,7],[4,0,1,2,3,9,5,6,7,8],[5,9,8,7,6,0,4,3,2,1],[6,5,9,8,7,1,0,4,3,2],[7,6,5,9,8,2,1,0,4,3],[8,7,6,5,9,3,2,1,0,4],[9,8,7,6,5,4,3,2,1,0]]');
 	
@@ -423,7 +423,18 @@ Route::get('test', function() {
 	// ];
 	
 	// $string = ':asdfsfs:df|';
-	return \Uuid::generate();
+	// return \Uuid::generate();
+// 	$data = \App\WorkOrder::where(function($query) {
+// 		$query->whereHas('quotation', function ($query) {
+// 		  return $query->where('office_id', 1);
+// 	  });    
+//   })
+//   ->whereNull('closing_date')
+//   ->orderBy('created_at', 'desc')
+//   ->paginate(6);
+// 	return $data;
+    return \App\Notification::all();
+	// return \App\Employee::where('office_id', 1)->pluck('id');
 });
 
 Route::get('invoice', 'TestController@index');
@@ -484,19 +495,44 @@ Route::get('users/listing', 'UserController@listing');
 Route::get('users/seller/listing', 'UserController@listSeller');
 Route::get('actions/listing', 'ActionController@listing');
 Route::get('billboard_types/listing', 'BillboardTypeController@listing');
+Route::get('billboards/listing', 'BillboardController@listing');
 
 Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
 	Route::post('logout', 'AuthController@logout');
 	
 	//billboards
 	Route::get('billboards', 'BillboardController@index');
-	Route::get('billboards/search', 'BillboardController@search');
 	Route::post('billboards', 'BillboardController@store');
+	Route::get('billboards/{billboard}/edit', 'BillboardController@show');
+	Route::get('billboards/{billboard}/detail', 'BillboardController@detail');
 	Route::put('billboards/{billboard}', 'BillboardController@update');
-    Route::delete('billboards', 'BillboardController@destroy');
+    Route::delete('billboards/{billboard}', 'BillboardController@destroy');
+    Route::get('billboards/search', 'BillboardController@search');//sin usar
+    Route::get('billboards/last-billboard', 'BillboardController@getLastBillboard');
+    Route::get('billboards/record', 'BillboardController@getRecordBillboard');
+    Route::post('billboards/save-customer-img/{billboard}', 'BillboardController@saveCustomerImage');
+    Route::post('billboards/save-user-img/{billboard}', 'BillboardController@saveUserImage');
+    Route::post('billboards/presentation-pdf', 'BillboardController@presentationPdf');
 	Route::post('billboards/list-pdf', 'BillboardController@listPdf');
 	Route::post('billboards/detail-pdf', 'BillboardController@detailPdf');
 	Route::post('billboards/list-excel', 'BillboardController@listExcel');
+	Route::post('billboards/rentals-pdf', 'BillboardController@rentalsPdf');
+	Route::post('billboards/rentals-excel', 'BillboardController@rentalsExcel');
+
+	//rentals
+	Route::get('rentals', 'RentalController@index');
+	Route::post('rentals', 'RentalController@store');
+	Route::get('rentals/{rental}/edit', 'RentalController@show');
+	Route::get('rentals/{rental}/detail', 'RentalController@detail');
+	Route::put('rentals/{rental}', 'RentalController@update');
+    Route::delete('rentals', 'RentalController@destroy');
+    Route::get('rentals/last-rental', 'RentalController@getLastRental');
+	Route::get('rentals/renovations', 'RentalController@getRenovations');
+    Route::post('rentals/list-pdf', 'RentalController@listPdf');
+	Route::post('rentals/detail-pdf', 'RentalController@detailPdf');
+	Route::post('rentals/list-excel', 'RentalController@listExcel');
+	Route::post('rentals/renovations-pdf', 'RentalController@pdfListRenovations');
+	Route::post('rentals/renovations-excel', 'RentalController@excelListRenovations');
 
 	//accounts
 	Route::get('accounts/receivable', 'AccountController@receivable')->name('accounts.index');//agregar y ver permisos
@@ -559,6 +595,7 @@ Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
     //cities
     Route::get('cities/status', 'CityController@statesByCity');
     Route::get('cities/quotes', 'CityController@quotesPerMonth');
+    Route::post('cities', 'CityController@store');
 
 	//customers
 	Route::get('customers', 'CustomerController@index')->name('customers.index');
@@ -601,6 +638,7 @@ Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
 	Route::get('quotations/products/{quotation}', 'QuotationController@getProductsQuotation');//aqui
 	Route::get('quotations/{quotation}', 'QuotationController@show')->name('quotations.show');
 	Route::get('download/quotation/{quotation}', 'QuotationController@quotationPdf');
+	Route::get('download/quotation/{quotation}/summary', 'QuotationController@quotationSummaryPdf');
 	Route::put('quotations/{quotation}', 'QuotationController@update')->name('quotations.update');
 	//todo protejer com mdw
 	//controlar que no se puedan editar los datos una vez aprovada y ejecutada la cotizacion
@@ -614,10 +652,13 @@ Route::group(['middleware' => ['auth:api', 'acl:api']], function() {
 
 	//workorders
 	Route::get('workorders', 'WorkOrderController@index')->name('workorders.index');
+        Route::get('workorders/pending', 'WorkOrderController@pending'); //agregar permisos
 	Route::post('workorders', 'WorkOrderController@store')->name('workorders.create');
 	Route::post('workorders/download', 'WorkOrderController@workOrderPdf');
 	Route::post('workorders/list-pdf', 'WorkOrderController@listPdf');
+	Route::post('workorders/list-pending-pdf', 'WorkOrderController@listPendingPdf');
 	Route::post('workorders/list-excel', 'WorkOrderController@listExcel');
+	Route::post('workorders/list-pending-excel', 'WorkOrderController@listPendingExcel');
 	Route::put('workorders/{workOrder}', 'WorkOrderController@update')->name('workorders.update');
 	//todo protejer com mdw
 	//controlar que no se puedan editar los datos una vez aprovada y ejecutada la cotizacion
